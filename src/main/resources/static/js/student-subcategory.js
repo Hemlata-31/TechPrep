@@ -25,10 +25,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     backLink.textContent = catName;
     backLink.href = `/student/category.html?id=${catId}&name=${encodeURIComponent(catName)}`;
     
-    loadTopics(subId);
+    loadTopics(subId, catId, catName, subName);
 });
 
-async function loadTopics(subId) {
+async function loadTopics(subId, catId, catName, subName) {
     const container = document.getElementById('topicsContainer');
     try {
         const topics = await api.get(`/subcategories/${subId}/topics`);
@@ -39,7 +39,7 @@ async function loadTopics(subId) {
             return;
         }
         
-        // Fetch all question counts in parallel
+        // Fetch question counts in parallel
         const topicsData = await Promise.all(topics.map(async (topic, index) => {
             let questionCount = 0;
             try {
@@ -48,19 +48,19 @@ async function loadTopics(subId) {
             return { topic, index, questionCount };
         }));
 
-        // Render sequentially to preserve numbering order
         topicsData.forEach(({ topic, index, questionCount }) => {
             const item = document.createElement('div');
             item.className = 'chapter-item';
             
+            const startPracticeUrl = `/student/practice.html?topicId=${topic.id}&topicName=${encodeURIComponent(topic.name)}&subId=${subId}&subName=${encodeURIComponent(subName)}&catId=${catId}&catName=${encodeURIComponent(catName)}`;
+
             item.innerHTML = `
                 <div class="chapter-info">
                     <h4>${index + 1}. ${topic.name}</h4>
-                    <p><i class="fas fa-list-ol"></i> ${questionCount} Questions &nbsp;|&nbsp; <i class="fas fa-clock"></i> Est. ${Math.max(10, questionCount * 2)} mins</p>
+                    <p><i class="fas fa-list-ol"></i> ${questionCount} Questions Available</p>
                 </div>
                 <div class="chapter-actions">
-                    <button class="btn btn-outline btn-small" onclick="alert('Practice module coming in Phase 4!')" ${questionCount === 0 ? 'disabled' : ''}>Practice</button>
-                    <button class="btn btn-small" onclick="alert('Test module coming in Phase 5!')" ${questionCount === 0 ? 'disabled' : ''}>Take Test</button>
+                    <a href="${startPracticeUrl}" class="btn btn-outline btn-small" ${questionCount === 0 ? 'style="pointer-events:none;opacity:0.5"' : ''}>Start Practice</a>
                 </div>
             `;
             container.appendChild(item);

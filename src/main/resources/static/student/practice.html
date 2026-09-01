@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Session - TechPrep Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <h2>TechPrep</h2>
+            <nav>
+                <ul>
+                    <li><a href="/student/dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="/student/history.html"><i class="fas fa-history"></i> Practice History</a></li>
+                    <li><a href="#"><i class="fas fa-laptop-code"></i> Mock Tests (Coming Soon)</a></li>
+                    <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <!-- Breadcrumb -->
+            <div class="breadcrumb">
+                <a href="/student/dashboard.html">Dashboard</a> <i class="fas fa-chevron-right"></i> 
+                <a href="#" id="breadCat">Category</a> <i class="fas fa-chevron-right"></i> 
+                <a href="#" id="breadSub">Subject</a> <i class="fas fa-chevron-right"></i> 
+                <span id="breadTopic">Practice Setup</span>
+            </div>
+
+            <!-- Configuration Card (Shown before starting session) -->
+            <div id="setupContainer" class="card" style="max-width: 650px; margin: 0 auto;">
+                <div class="setup-header">
+                    <div class="icon-circle"><i class="fas fa-brain"></i></div>
+                    <h2 id="topicTitle" style="margin-top: 10px; color: #1e293b;">Topic Practice Setup</h2>
+                    <p style="color: #64748b;">Configure your practice parameters before starting</p>
+                </div>
+
+                <form id="startPracticeForm" style="margin-top: 1.5rem;">
+                    <div class="alert" id="setupAlert"></div>
+
+                    <div class="form-group">
+                        <label for="difficultySelect"><i class="fas fa-signal"></i> Select Difficulty Level</label>
+                        <select id="difficultySelect">
+                            <option value="ALL">All Difficulties (Mixed)</option>
+                            <option value="EASY">Easy</option>
+                            <option value="MEDIUM">Medium</option>
+                            <option value="HARD">Hard</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="questionsCount"><i class="fas fa-list-ol"></i> Number of Questions</label>
+                        <select id="questionsCount">
+                            <option value="5">5 Questions</option>
+                            <option value="10" selected>10 Questions</option>
+                            <option value="15">15 Questions</option>
+                            <option value="20">20 Questions</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn" style="font-size: 1.1rem; padding: 0.9rem;">
+                        <i class="fas fa-play"></i> Start Practice Session
+                    </button>
+                </form>
+            </div>
+
+            <!-- Active Practice Session Card (Shown during active practice) -->
+            <div id="practiceContainer" style="display: none; max-width: 850px; margin: 0 auto;">
+                <!-- Header Info Bar -->
+                <div class="practice-header-bar">
+                    <div>
+                        <span class="badge" id="topicBadge">Topic</span>
+                        <span class="badge badge-outline" id="diffBadge">EASY</span>
+                    </div>
+                    <div style="font-weight: 600; color: #1e293b;">
+                        Question <span id="currentQIndex">1</span> of <span id="totalQCount">10</span>
+                    </div>
+                    <div>
+                        <button id="finishEarlyBtn" class="btn btn-danger btn-small">
+                            <i class="fas fa-flag-checkered"></i> Finish Session
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress-bar" style="height: 8px; margin-bottom: 1.5rem;">
+                    <div class="progress-fill" id="sessionProgressFill" style="width: 10%;"></div>
+                </div>
+
+                <!-- Question Box -->
+                <div class="card practice-card">
+                    <div class="question-meta">
+                        <span id="qDifficulty" class="badge">Difficulty: Easy</span>
+                        <span id="qMarks" style="font-size: 0.85rem; color: #64748b;"><i class="fas fa-star"></i> 1 Mark</span>
+                    </div>
+                    
+                    <h3 id="questionText" class="question-text">Question loading...</h3>
+
+                    <!-- MCQ Options -->
+                    <div class="options-grid" id="optionsGrid">
+                        <div class="option-card" data-option="A">
+                            <span class="option-label">A</span>
+                            <span class="option-text" id="optA">Option A</span>
+                        </div>
+                        <div class="option-card" data-option="B">
+                            <span class="option-label">B</span>
+                            <span class="option-text" id="optB">Option B</span>
+                        </div>
+                        <div class="option-card" data-option="C">
+                            <span class="option-label">C</span>
+                            <span class="option-text" id="optC">Option C</span>
+                        </div>
+                        <div class="option-card" data-option="D">
+                            <span class="option-label">D</span>
+                            <span class="option-text" id="optD">Option D</span>
+                        </div>
+                    </div>
+
+                    <!-- Submit Answer Button -->
+                    <div style="margin-top: 1.5rem; text-align: right;">
+                        <button id="submitAnswerBtn" class="btn btn-small" disabled>
+                            <i class="fas fa-check-circle"></i> Submit Answer
+                        </button>
+                    </div>
+
+                    <!-- Explanation Box (revealed after submitting answer) -->
+                    <div id="explanationBox" class="explanation-box" style="display: none;">
+                        <div id="resultFeedback" class="feedback-banner">
+                            <!-- Correct / Incorrect banner -->
+                        </div>
+                        <div style="margin-top: 10px;">
+                            <strong><i class="fas fa-lightbulb"></i> Explanation:</strong>
+                            <p id="explanationText" style="margin-top: 5px; color: #475569;"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Controls -->
+                <div class="nav-controls">
+                    <button id="prevBtn" class="btn btn-outline" disabled>
+                        <i class="fas fa-chevron-left"></i> Previous
+                    </button>
+                    <button id="nextBtn" class="btn btn-outline">
+                        Next <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/student-practice.js"></script>
+</body>
+</html>
