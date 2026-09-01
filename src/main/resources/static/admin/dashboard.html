@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - TechPrep Academy</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <h2>TechPrep Admin</h2>
+            <nav>
+                <ul>
+                    <li><a href="/admin/dashboard.html" class="active">Dashboard</a></li>
+                    <li><a href="/admin/categories.html">Categories & Topics</a></li>
+                    <li><a href="#">Users (Coming Soon)</a></li>
+                    <li><a href="#">Questions (Coming Soon)</a></li>
+                    <li><a href="#" id="logoutBtn">Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <div class="header">
+                <h1 id="welcomeMsg">Welcome, Admin</h1>
+            </div>
+            
+            <div class="card">
+                <h3>Admin Dashboard Overview</h3>
+                <p>Use the sidebar to navigate to the Categories and Topics management page.</p>
+                <br>
+                <a href="/admin/categories.html" class="btn" style="display:inline-block; width:auto;">Manage Categories</a>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const user = await checkAuth();
+            if (user && user.role !== 'ADMIN') {
+                window.location.href = '/login.html';
+            }
+            if (user) {
+                document.getElementById('welcomeMsg').textContent = `Welcome, ${user.name}`;
+            }
+            initLogoutBtn();
+        });
+    </script>
+</body>
+</html>

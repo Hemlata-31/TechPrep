@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructor Dashboard - TechPrep Academy</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <h2>TechPrep Instructor</h2>
+            <nav>
+                <ul>
+                    <li><a href="/instructor/dashboard.html" class="active">Dashboard</a></li>
+                    <li><a href="#">Courses (Coming Soon)</a></li>
+                    <li><a href="#">Questions (Coming Soon)</a></li>
+                    <li><a href="#" id="logoutBtn">Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <div class="header">
+                <h1 id="welcomeMsg">Welcome, Instructor</h1>
+            </div>
+            
+            <div class="card">
+                <h3>Instructor Dashboard Overview</h3>
+                <p>Course and Question management features are coming soon.</p>
+            </div>
+            
+            <div class="card">
+                <h3>Available Topics (Read Only)</h3>
+                <div id="hierarchyContainer" class="hierarchy-tree">
+                    <p>Loading hierarchy...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const user = await checkAuth();
+            if (user && user.role !== 'INSTRUCTOR') {
+                window.location.href = '/login.html';
+            }
+            if (user) {
+                document.getElementById('welcomeMsg').textContent = `Welcome, ${user.name}`;
+            }
+            initLogoutBtn();
+            loadHierarchy(); // Same function as student to view topics
+        });
+        
+        async function loadHierarchy() {
+            try {
+                const container = document.getElementById('hierarchyContainer');
+                const categories = await api.get('/categories');
+                
+                let html = '<ul>';
+                for (const cat of categories) {
+                    html += `<li><span class="tree-node"><strong>${cat.name}</strong></span>`;
+                    
+                    const subCats = await api.get(`/categories/${cat.id}/subcategories`);
+                    if (subCats.length > 0) {
+                        html += '<ul>';
+                        for (const sub of subCats) {
+                            html += `<li><span class="tree-node">${sub.name}</span>`;
+                            const topics = await api.get(`/subcategories/${sub.id}/topics`);
+                            if (topics.length > 0) {
+                                html += '<div style="margin-left: 20px; color: #555;">&rarr; ';
+                                html += topics.map(t => t.name).join(', ');
+                                html += '</div>';
+                            }
+                            html += `</li>`;
+                        }
+                        html += '</ul>';
+                    }
+                    html += `</li>`;
+                }
+                html += '</ul>';
+                container.innerHTML = html;
+            } catch (err) {
+                console.error(err);
+                document.getElementById('hierarchyContainer').innerHTML = '<p class="alert" style="display:block">Error loading topics.</p>';
+            }
+        }
+    </script>
+</body>
+</html>

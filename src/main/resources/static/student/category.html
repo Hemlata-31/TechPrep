@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category Details - TechPrep Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <h2>TechPrep</h2>
+            <nav>
+                <ul>
+                    <li><a href="/student/dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="#"><i class="fas fa-book"></i> Practice (Coming Soon)</a></li>
+                    <li><a href="#"><i class="fas fa-laptop-code"></i> Mock Tests (Coming Soon)</a></li>
+                    <li><a href="#"><i class="fas fa-code"></i> DSA Coding (Coming Soon)</a></li>
+                    <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <div class="breadcrumb">
+                <a href="/student/dashboard.html">Dashboard</a> <i class="fas fa-chevron-right"></i> <span id="catName">Category</span>
+            </div>
+            
+            <div class="header">
+                <div>
+                    <h1 id="pageTitle">Loading...</h1>
+                    <p id="pageDesc" style="color: #64748b; margin-top: 5px;">...</p>
+                </div>
+            </div>
+            
+            <div class="course-section">
+                <h3 class="section-title">Select a Subject</h3>
+                <div id="subcategoriesContainer" class="card-grid">
+                    <p>Loading subcategories...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/student-category.js"></script>
+</body>
+</html>

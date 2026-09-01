@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories Management - TechPrep Academy</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <h2>TechPrep Admin</h2>
+            <nav>
+                <ul>
+                    <li><a href="/admin/dashboard.html">Dashboard</a></li>
+                    <li><a href="/admin/categories.html" class="active">Categories & Topics</a></li>
+                    <li><a href="#">Users (Coming Soon)</a></li>
+                    <li><a href="#">Questions (Coming Soon)</a></li>
+                    <li><a href="#" id="logoutBtn">Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <div class="header">
+                <h1>Categories & Topics Hierarchy</h1>
+                <button class="btn btn-small" id="btnAddCategory" style="width: auto;">+ Add Category</button>
+            </div>
+            
+            <div class="card" id="hierarchyContainer">
+                <p>Loading hierarchy...</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal for Create/Edit -->
+    <div id="itemModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Add Item</h3>
+                <span class="close-btn" id="closeModal">&times;</span>
+            </div>
+            <form id="itemForm">
+                <input type="hidden" id="itemId">
+                <input type="hidden" id="itemType"> <!-- category, subcategory, topic -->
+                <input type="hidden" id="parentId">
+                
+                <div class="form-group">
+                    <label for="itemName">Name</label>
+                    <input type="text" id="itemName" required>
+                </div>
+                <div class="form-group">
+                    <label for="itemDesc">Description</label>
+                    <input type="text" id="itemDesc">
+                </div>
+                <button type="submit" class="btn" id="saveBtn">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/admin-categories.js"></script>
+</body>
+</html>

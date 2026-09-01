@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Bank Management - TechPrep Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .filter-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            border: 1px solid #f1f5f9;
+        }
+        .filter-bar select {
+            flex: 1;
+        }
+        .question-item {
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 1.5rem;
+        }
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        .question-text {
+            font-weight: 600;
+            font-size: 1.1rem;
+            flex: 1;
+        }
+        .question-meta {
+            display: flex;
+            gap: 10px;
+        }
+        .badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .badge-easy { background: #d1fae5; color: #065f46; }
+        .badge-medium { background: #fef3c7; color: #92400e; }
+        .badge-hard { background: #fee2e2; color: #991b1b; }
+        
+        .options-list {
+            list-style: none;
+            margin-left: 0;
+            padding-left: 0;
+            margin-bottom: 1rem;
+        }
+        .options-list li {
+            padding: 8px 12px;
+            margin-bottom: 5px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+        }
+        .options-list li.correct {
+            background: #dcfce7;
+            border-color: #86efac;
+        }
+        .explanation {
+            background: #f1f5f9;
+            padding: 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <h2>TechPrep</h2>
+            <nav>
+                <ul>
+                    <li><a href="/admin/dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="/admin/categories.html"><i class="fas fa-layer-group"></i> Categories & Topics</a></li>
+                    <li><a href="/admin/questions.html" class="active"><i class="fas fa-question-circle"></i> Question Bank</a></li>
+                    <li><a href="#"><i class="fas fa-users"></i> Users (Coming Soon)</a></li>
+                    <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <div class="header">
+                <div>
+                    <h1>Question Bank Management</h1>
+                    <p style="color: #64748b;">Manage questions for all topics</p>
+                </div>
+                <button class="btn btn-small" id="btnAddQuestion" style="display:none;" onclick="openModal()">+ Add Question</button>
+            </div>
+            
+            <div class="filter-bar">
+                <div class="form-group" style="margin-bottom:0">
+                    <label>Category</label>
+                    <select id="catSelect">
+                        <option value="">Select Category...</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin-bottom:0">
+                    <label>Subject</label>
+                    <select id="subSelect" disabled>
+                        <option value="">Select Subject...</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin-bottom:0">
+                    <label>Topic</label>
+                    <select id="topicSelect" disabled>
+                        <option value="">Select Topic...</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div id="questionsContainer">
+                <div class="card text-center" id="emptyState">
+                    <p>Please select a Topic to view or add questions.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Question Modal -->
+    <div id="qModal" class="modal">
+        <div class="modal-content" style="max-width: 700px; max-height: 90vh; overflow-y: auto;">
+            <div class="modal-header">
+                <h3 id="modalTitle">Add Question</h3>
+                <span class="close-btn" onclick="closeModal()">&times;</span>
+            </div>
+            <form id="qForm">
+                <input type="hidden" id="qId">
+                <div class="form-group">
+                    <label>Question Text</label>
+                    <textarea id="qText" required class="form-control" rows="3" style="width:100%; padding: 0.85rem; border:1px solid #cbd5e1; border-radius:6px;"></textarea>
+                </div>
+                
+                <div style="display:flex; gap:1rem;">
+                    <div class="form-group" style="flex:1">
+                        <label>Option A</label>
+                        <input type="text" id="optA" required>
+                    </div>
+                    <div class="form-group" style="flex:1">
+                        <label>Option B</label>
+                        <input type="text" id="optB" required>
+                    </div>
+                </div>
+                <div style="display:flex; gap:1rem;">
+                    <div class="form-group" style="flex:1">
+                        <label>Option C</label>
+                        <input type="text" id="optC" required>
+                    </div>
+                    <div class="form-group" style="flex:1">
+                        <label>Option D</label>
+                        <input type="text" id="optD" required>
+                    </div>
+                </div>
+                
+                <div style="display:flex; gap:1rem;">
+                    <div class="form-group" style="flex:1">
+                        <label>Correct Answer</label>
+                        <select id="correctAns" required>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex:1">
+                        <label>Difficulty</label>
+                        <select id="qDiff" required>
+                            <option value="EASY">Easy</option>
+                            <option value="MEDIUM">Medium</option>
+                            <option value="HARD">Hard</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex:1">
+                        <label>Marks</label>
+                        <input type="number" id="qMarks" value="1" required min="1">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Explanation (Optional)</label>
+                    <textarea id="qExp" class="form-control" rows="2" style="width:100%; padding: 0.85rem; border:1px solid #cbd5e1; border-radius:6px;"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="qActive">
+                        <option value="true">Active</option>
+                        <option value="false">Inactive</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn" id="saveBtn">Save Question</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/admin-questions.js"></script>
+</body>
+</html>
