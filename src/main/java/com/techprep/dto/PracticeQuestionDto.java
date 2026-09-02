@@ -1,11 +1,15 @@
 package com.techprep.dto;
 
 import com.techprep.entity.Difficulty;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class PracticeQuestionDto {
     private Long attemptId;
     private Long questionId;
