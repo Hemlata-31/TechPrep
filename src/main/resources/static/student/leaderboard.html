@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard & Ranking - TechPrep Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .my-rank-banner {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: #ffffff;
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .my-rank-details {
+            display: flex;
+            gap: 2rem;
+        }
+        .my-rank-item h4 {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .my-rank-item p {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #f8fafc;
+            line-height: 1.2;
+        }
+        .tab-bar {
+            display: flex;
+            gap: 0.75rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1.5rem;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 0.5rem 1.25rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #64748b;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+        .tab-btn:hover {
+            color: #1e293b;
+            background: #f1f5f9;
+        }
+        .tab-btn.active {
+            color: #3b82f6;
+            background: #eff6ff;
+        }
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+        .leaderboard-table th {
+            padding: 1rem 1.25rem;
+            background: #f8fafc;
+            color: #475569;
+            font-weight: 600;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .leaderboard-table td {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid #f1f5f9;
+            vertical-align: middle;
+        }
+        .highlight-user {
+            background: #eff6ff !important;
+            font-weight: 600;
+        }
+        .rank-badge {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        .rank-1 { background: #fef3c7; color: #d97706; border: 1px solid #fcd34d; }
+        .rank-2 { background: #e2e8f0; color: #475569; border: 1px solid #cbd5e1; }
+        .rank-3 { background: #ffedd5; color: #c2410c; border: 1px solid #fdba74; }
+        .rank-other { background: #f1f5f9; color: #64748b; }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <h2>TechPrep</h2>
+            <nav>
+                <ul>
+                    <li><a href="/student/dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="/student/categories.html"><i class="fas fa-th-list"></i> Categories</a></li>
+                    <li><a href="/student/progress.html"><i class="fas fa-chart-line"></i> Progress</a></li>
+                    <li><a href="/student/leaderboard.html" class="active"><i class="fas fa-trophy"></i> Leaderboard</a></li>
+                    <li><a href="/student/mock-tests.html"><i class="fas fa-laptop-code"></i> Mock Tests</a></li>
+                    <li><a href="/student/history.html"><i class="fas fa-history"></i> Practice History</a></li>
+                    <li><a href="/student/saved-questions.html"><i class="fas fa-bookmark"></i> Saved Questions</a></li>
+                    <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <div class="header">
+                <div>
+                    <h1>Leaderboard & Rankings</h1>
+                    <p style="color: #64748b; margin-top: 5px;">See how you rank among fellow students based on score, accuracy, and practice</p>
+                </div>
+            </div>
+
+            <!-- Current Logged-in Student Stats Banner -->
+            <div class="my-rank-banner">
+                <div>
+                    <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.25rem;" id="myStudentName">Your Ranking</h3>
+                    <p style="font-size: 0.9rem; color: #cbd5e1;">Live performance position</p>
+                </div>
+                <div class="my-rank-details">
+                    <div class="my-rank-item">
+                        <h4>Rank</h4>
+                        <p id="myRank">#--</p>
+                    </div>
+                    <div class="my-rank-item">
+                        <h4>Score</h4>
+                        <p id="myScore">0</p>
+                    </div>
+                    <div class="my-rank-item">
+                        <h4>Accuracy</h4>
+                        <p id="myAccuracy">0%</p>
+                    </div>
+                    <div class="my-rank-item">
+                        <h4>Attempted</h4>
+                        <p id="myAttempted">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Leaderboard Filters & Tabs -->
+            <div class="tab-bar">
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="tab-btn active" data-timeframe="OVERALL"><i class="fas fa-globe"></i> Overall</button>
+                    <button class="tab-btn" data-timeframe="WEEKLY"><i class="fas fa-calendar-week"></i> Weekly</button>
+                    <button class="tab-btn" data-timeframe="MONTHLY"><i class="fas fa-calendar-alt"></i> Monthly</button>
+                </div>
+                
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <label for="categoryFilter" style="font-size: 0.9rem; font-weight: 500; color: #475569;">Category:</label>
+                    <select id="categoryFilter" style="padding: 0.4rem 0.8rem; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 0.9rem;">
+                        <option value="">All Categories</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Leaderboard Table Card -->
+            <div class="card" style="padding: 0; overflow: hidden;">
+                <div style="overflow-x: auto;">
+                    <table class="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 80px;">Rank</th>
+                                <th>Student Name</th>
+                                <th>Total Score</th>
+                                <th>Accuracy</th>
+                                <th>Questions Attempted</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboardTbody">
+                            <tr>
+                                <td colspan="5" style="text-align: center; color: #64748b; padding: 2rem;">Loading leaderboard...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/student-leaderboard.js"></script>
+</body>
+</html>

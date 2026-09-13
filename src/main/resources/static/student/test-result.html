@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mock Test Scorecard - TechPrep Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <h2>TechPrep</h2>
+            <nav>
+                <ul>
+                    <li><a href="/student/dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="/student/mock-tests.html" class="active"><i class="fas fa-laptop-code"></i> Mock Tests</a></li>
+                    <li><a href="/student/history.html"><i class="fas fa-history"></i> Practice History</a></li>
+                    <li><a href="/student/saved-questions.html"><i class="fas fa-bookmark"></i> Saved Questions</a></li>
+                    <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <div style="max-width: 1100px; margin: 0 auto;">
+                <div class="header">
+                    <div>
+                        <h1 id="resTitle">Mock Test Report</h1>
+                        <p style="color: #64748b; margin-top: 5px;" id="resCategory">Exam Scorecard & Answer Key Analysis</p>
+                    </div>
+                    <a href="/student/mock-tests.html" class="btn btn-outline btn-small"><i class="fas fa-arrow-left"></i> Back to Mock Tests</a>
+                </div>
+
+                <!-- Stats Overview Grid -->
+                <div class="stats-overview" style="grid-template-columns: repeat(4, 1fr);">
+                    <div class="stat-card">
+                        <div class="stat-icon icon-blue"><i class="fas fa-trophy"></i></div>
+                        <div class="stat-details">
+                            <h3 id="resScore">0</h3>
+                            <p>Final Score</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon icon-green"><i class="fas fa-bullseye"></i></div>
+                        <div class="stat-details">
+                            <h3 id="resAccuracy">0%</h3>
+                            <p>Accuracy</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon icon-purple"><i class="fas fa-chart-line"></i></div>
+                        <div class="stat-details">
+                            <h3 id="resPercentage">0%</h3>
+                            <p>Percentage</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon icon-orange"><i class="fas fa-stopwatch"></i></div>
+                        <div class="stat-details">
+                            <h3 id="resTimeTaken">0m</h3>
+                            <p>Time Taken</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Breakdown Cards -->
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem;">
+                    <div class="card" style="padding: 1.25rem; text-align: center;">
+                        <span style="color: #64748b; font-size: 0.9rem;">Total Questions</span>
+                        <h3 id="resTotalQ" style="margin-top: 5px; font-size: 1.5rem;">0</h3>
+                    </div>
+                    <div class="card" style="padding: 1.25rem; text-align: center; border-left: 4px solid #22c55e;">
+                        <span style="color: #22c55e; font-size: 0.9rem;">Correct</span>
+                        <h3 id="resCorrect" style="margin-top: 5px; font-size: 1.5rem; color: #16a34a;">0</h3>
+                    </div>
+                    <div class="card" style="padding: 1.25rem; text-align: center; border-left: 4px solid #ef4444;">
+                        <span style="color: #ef4444; font-size: 0.9rem;">Incorrect</span>
+                        <h3 id="resWrong" style="margin-top: 5px; font-size: 1.5rem; color: #dc2626;">0</h3>
+                    </div>
+                    <div class="card" style="padding: 1.25rem; text-align: center; border-left: 4px solid #94a3b8;">
+                        <span style="color: #64748b; font-size: 0.9rem;">Unattempted</span>
+                        <h3 id="resUnattempted" style="margin-top: 5px; font-size: 1.5rem; color: #475569;">0</h3>
+                    </div>
+                </div>
+
+                <!-- Question Solutions List -->
+                <div class="card" style="padding: 2rem;">
+                    <h3 style="margin-top: 0; margin-bottom: 1.5rem; color: #1e293b;">Question-by-Question Solution & Explanations</h3>
+                    <div id="solutionsContainer">
+                        <p>Loading question breakdown...</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/student-test-result.js"></script>
+</body>
+</html>

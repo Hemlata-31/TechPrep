@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress & Performance Dashboard - TechPrep Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <h2>TechPrep</h2>
+            <nav>
+                <ul>
+                    <li><a href="/student/dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="/student/categories.html"><i class="fas fa-th-list"></i> Categories</a></li>
+                    <li><a href="/student/progress.html" class="active"><i class="fas fa-chart-line"></i> Progress</a></li>
+                    <li><a href="/student/leaderboard.html"><i class="fas fa-trophy"></i> Leaderboard</a></li>
+                    <li><a href="/student/mock-tests.html"><i class="fas fa-laptop-code"></i> Mock Tests</a></li>
+                    <li><a href="/student/history.html"><i class="fas fa-history"></i> Practice History</a></li>
+                    <li><a href="/student/saved-questions.html"><i class="fas fa-bookmark"></i> Saved Questions</a></li>
+                    <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <div class="header">
+                <div>
+                    <h1>Student Progress & Performance Dashboard</h1>
+                    <p style="color: #64748b; margin-top: 5px;">Comprehensive overview of your practice sessions and mock test performance</p>
+                </div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="stats-overview" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+                <div class="stat-card">
+                    <div class="stat-icon icon-blue"><i class="fas fa-list-check"></i></div>
+                    <div class="stat-details">
+                        <h3 id="statAttempted">0</h3>
+                        <p>Questions Attempted</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon icon-green"><i class="fas fa-bullseye"></i></div>
+                    <div class="stat-details">
+                        <h3 id="statAccuracy">0%</h3>
+                        <p>Overall Accuracy</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon icon-purple"><i class="fas fa-laptop-code"></i></div>
+                    <div class="stat-details">
+                        <h3 id="statTestsCompleted">0</h3>
+                        <p>Tests Completed</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon icon-blue"><i class="fas fa-check-double"></i></div>
+                    <div class="stat-details">
+                        <h3 id="statPracticeCompleted">0</h3>
+                        <p>Practice Completed</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Strongest vs Weakest Topics Grid -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem;">
+                <div class="card" style="margin-bottom: 0;">
+                    <h3 style="display: flex; align-items: center; gap: 0.5rem; color: #15803d;">
+                        <i class="fas fa-trophy"></i> Strongest Topics
+                    </h3>
+                    <div id="strongestTopicsContainer" style="margin-top: 1rem;">
+                        <p>Loading strongest topics...</p>
+                    </div>
+                </div>
+                
+                <div class="card" style="margin-bottom: 0;">
+                    <h3 style="display: flex; align-items: center; gap: 0.5rem; color: #b91c1c;">
+                        <i class="fas fa-triangle-exclamation"></i> Weakest Topics
+                    </h3>
+                    <div id="weakestTopicsContainer" style="margin-top: 1rem;">
+                        <p>Loading weakest topics...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category-wise Progress -->
+            <div class="course-section">
+                <h3 class="section-title">Category-wise Progress</h3>
+                <div class="card">
+                    <div id="categoryProgressContainer">
+                        <p>Loading category progress...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic-wise Performance -->
+            <div class="course-section">
+                <h3 class="section-title">Topic-wise Performance</h3>
+                <div class="card">
+                    <div id="topicPerformanceContainer">
+                        <p>Loading topic performance...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Attempts -->
+            <div class="course-section">
+                <h3 class="section-title">Recent Practice & Mock Test Attempts</h3>
+                <div id="recentAttemptsContainer" class="chapter-list">
+                    <p>Loading recent attempts...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/student-progress.js"></script>
+</body>
+</html>

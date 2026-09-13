@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Mock Tests - TechPrep Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <h2>TechPrep Admin</h2>
+            <nav>
+                <ul>
+                    <li><a href="/admin/dashboard.html">Dashboard</a></li>
+                    <li><a href="/admin/categories.html">Categories & Topics</a></li>
+                    <li><a href="/admin/tests.html" class="active">Manage Mock Tests</a></li>
+                    <li><a href="#" id="logoutBtn">Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <div class="header">
+                <div>
+                    <h1>Manage Mock Tests</h1>
+                    <p style="color: #64748b; margin-top: 5px;">Create, update, activate or deactivate exam simulations</p>
+                </div>
+            </div>
+
+            <!-- Create Test Form Card -->
+            <div class="card" style="margin-bottom: 2rem;">
+                <h3>Create New Mock Test</h3>
+                <form id="createTestForm" style="margin-top: 1.25rem;">
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                        <div class="form-group">
+                            <label>Test Title *</label>
+                            <input type="text" id="testTitle" class="form-control" placeholder="e.g. TCS NQT Aptitude Test 1" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Category *</label>
+                            <select id="testCategory" class="form-control" required>
+                                <option value="">Select Category</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Duration (Minutes) *</label>
+                            <input type="number" id="testDuration" class="form-control" value="20" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Total Questions *</label>
+                            <input type="number" id="testQuestionsCount" class="form-control" value="10" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Difficulty *</label>
+                            <select id="testDifficulty" class="form-control" required>
+                                <option value="ALL">ALL (Mixed)</option>
+                                <option value="EASY">EASY</option>
+                                <option value="MEDIUM" selected>MEDIUM</option>
+                                <option value="HARD">HARD</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <input type="text" id="testDesc" class="form-control" placeholder="Brief mock test details">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-small" style="margin-top: 1rem; width: auto;"><i class="fas fa-plus"></i> Generate Mock Test</button>
+                </form>
+            </div>
+
+            <!-- Existing Tests List -->
+            <div class="card">
+                <h3>Existing Mock Tests</h3>
+                <div id="testsTableContainer" style="margin-top: 1rem;">
+                    <p>Loading tests...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/admin-tests.js"></script>
+</body>
+</html>

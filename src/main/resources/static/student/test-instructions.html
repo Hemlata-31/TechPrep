@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Instructions - TechPrep Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <h2>TechPrep</h2>
+            <nav>
+                <ul>
+                    <li><a href="/student/dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="/student/mock-tests.html" class="active"><i class="fas fa-laptop-code"></i> Mock Tests</a></li>
+                    <li><a href="/student/history.html"><i class="fas fa-history"></i> Practice History</a></li>
+                    <li><a href="/student/saved-questions.html"><i class="fas fa-bookmark"></i> Saved Questions</a></li>
+                    <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div class="card" style="padding: 2.5rem;">
+                    <div class="setup-header">
+                        <div class="icon-circle"><i class="fas fa-clipboard-check"></i></div>
+                        <h2 id="testTitle" style="margin-top: 1rem;">Mock Test Instructions</h2>
+                        <p id="testCategory" style="color: #64748b; font-size: 0.95rem; margin-top: 5px;"></p>
+                    </div>
+
+                    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.25rem; margin: 1.5rem 0;">
+                        <h4 style="margin-bottom: 0.75rem; color: #1e293b;"><i class="fas fa-info-circle" style="color: #3b82f6;"></i> Test Specification</h4>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; font-size: 0.95rem;">
+                            <div><strong>Duration:</strong> <span id="testDuration">-</span> Minutes</div>
+                            <div><strong>Total Questions:</strong> <span id="testTotalQ">-</span></div>
+                            <div><strong>Total Marks:</strong> <span id="testTotalMarks">-</span></div>
+                            <div><strong>Difficulty Level:</strong> <span id="testDifficulty">-</span></div>
+                        </div>
+                    </div>
+
+                    <h4 style="color: #1e293b; margin-bottom: 0.75rem;"><i class="fas fa-exclamation-triangle" style="color: #f59e0b;"></i> Guidelines & Rules:</h4>
+                    <ul style="line-height: 1.8; color: #475569; padding-left: 1.25rem; margin-bottom: 2rem;">
+                        <li>Ensure a stable internet connection before launching the exam.</li>
+                        <li>The countdown timer starts as soon as you click <strong>Start Test</strong>.</li>
+                        <li>You can navigate back and forth between questions using the Question Palette.</li>
+                        <li>Use <strong>Mark for Review</strong> to flag questions you wish to review later.</li>
+                        <li>Answers are automatically saved. The test will auto-submit when the timer reaches zero.</li>
+                    </ul>
+
+                    <div style="display: flex; gap: 1rem;">
+                        <a href="/student/mock-tests.html" class="btn btn-outline">Cancel</a>
+                        <button id="startTestBtn" class="btn" style="flex: 1;">Start Test Now</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/student-test-instructions.js"></script>
+</body>
+</html>

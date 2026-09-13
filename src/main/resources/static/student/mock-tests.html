@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mock Tests - TechPrep Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <h2>TechPrep</h2>
+            <nav>
+                <ul>
+                    <li><a href="/student/dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="/student/categories.html"><i class="fas fa-th-list"></i> Categories</a></li>
+                    <li><a href="/student/progress.html"><i class="fas fa-chart-line"></i> Progress</a></li>
+                    <li><a href="/student/leaderboard.html"><i class="fas fa-trophy"></i> Leaderboard</a></li>
+                    <li><a href="/student/mock-tests.html" class="active"><i class="fas fa-laptop-code"></i> Mock Tests</a></li>
+                    <li><a href="/student/history.html"><i class="fas fa-history"></i> Practice History</a></li>
+                    <li><a href="/student/saved-questions.html"><i class="fas fa-bookmark"></i> Saved Questions</a></li>
+                    <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <div class="header">
+                <div>
+                    <h1>Placement Mock Tests</h1>
+                    <p style="color: #64748b; margin-top: 5px;">Take full-length exam simulations with timed sections</p>
+                </div>
+            </div>
+
+            <!-- Tab Switching for Active Tests vs Attempt History -->
+            <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem;">
+                <button id="tabAvailable" class="btn btn-small" style="width: auto;">Available Tests</button>
+                <button id="tabHistory" class="btn btn-outline btn-small" style="width: auto;">My Test Attempts History</button>
+            </div>
+
+            <!-- Available Tests View -->
+            <div id="availableTestsSection">
+                <div id="testsGrid" class="course-grid">
+                    <p>Loading available placement mock tests...</p>
+                </div>
+            </div>
+
+            <!-- Test Attempt History View -->
+            <div id="historySection" style="display: none;">
+                <div id="testHistoryList" class="chapter-list">
+                    <p>Loading attempt history...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/student-mock-tests.js"></script>
+</body>
+</html>

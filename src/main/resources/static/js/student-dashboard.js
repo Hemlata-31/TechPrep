@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('welcomeMsg').textContent = `Welcome, ${user.name}`;
     }
     initLogoutBtn();
-    loadCategories();
     loadStudentStats();
 });
 
@@ -30,7 +29,7 @@ async function loadStudentStats() {
 
         const container = document.getElementById('recentActivityContainer');
         if (!stats.recentSessions || stats.recentSessions.length === 0) {
-            container.innerHTML = '<div class="card" style="padding: 1rem; color: #64748b;">No recent practice activity yet. Select a category below to start practicing!</div>';
+            container.innerHTML = '<div class="card" style="padding: 1rem; color: #64748b;">No recent practice activity yet. Select Categories from the sidebar to start practicing!</div>';
             return;
         }
 
@@ -53,33 +52,5 @@ async function loadStudentStats() {
 
     } catch (e) {
         console.error('Error loading stats:', e);
-    }
-}
-
-async function loadCategories() {
-    const container = document.getElementById('categoriesContainer');
-    try {
-        const categories = await api.get('/categories');
-        container.innerHTML = '';
-        
-        categories.forEach(cat => {
-            const icon = categoryIcons[cat.name] || 'fa-book';
-            
-            const card = document.createElement('div');
-            card.className = 'course-card';
-            card.innerHTML = `
-                <div class="course-icon">
-                    <i class="fas ${icon}"></i>
-                </div>
-                <h4>${cat.name}</h4>
-                <p>${cat.description || 'Prepare for ' + cat.name}</p>
-                <a href="/student/category.html?id=${cat.id}&name=${encodeURIComponent(cat.name)}" class="btn">Explore Subjects</a>
-            `;
-            container.appendChild(card);
-        });
-        
-    } catch (err) {
-        console.error(err);
-        container.innerHTML = `<div class="alert" style="display:block">Failed to load categories.</div>`;
     }
 }

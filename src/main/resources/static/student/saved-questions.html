@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saved Questions - TechPrep Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <h2>TechPrep</h2>
+            <nav>
+                <ul>
+                    <li><a href="/student/dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="/student/categories.html"><i class="fas fa-th-list"></i> Categories</a></li>
+                    <li><a href="/student/progress.html"><i class="fas fa-chart-line"></i> Progress</a></li>
+                    <li><a href="/student/leaderboard.html"><i class="fas fa-trophy"></i> Leaderboard</a></li>
+                    <li><a href="/student/mock-tests.html"><i class="fas fa-laptop-code"></i> Mock Tests</a></li>
+                    <li><a href="/student/history.html"><i class="fas fa-history"></i> Practice History</a></li>
+                    <li><a href="/student/saved-questions.html" class="active"><i class="fas fa-bookmark"></i> Saved Questions</a></li>
+                    <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <div class="header">
+                <div>
+                    <h1>Saved Questions</h1>
+                    <p style="color: #64748b; margin-top: 5px;">Review and practice your bookmarked questions</p>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="course-section" style="margin-bottom: 2rem;">
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <select id="categoryFilter" class="form-group input" style="width: auto;">
+                        <option value="">All Categories</option>
+                    </select>
+                    <select id="topicFilter" class="form-group input" style="width: auto;">
+                        <option value="">All Topics</option>
+                    </select>
+                    <select id="difficultyFilter" class="form-group input" style="width: auto;">
+                        <option value="">All Difficulties</option>
+                        <option value="EASY">Easy</option>
+                        <option value="MEDIUM">Medium</option>
+                        <option value="HARD">Hard</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="course-section">
+                <div id="savedQuestionsContainer" class="chapter-list">
+                    <p>Loading saved questions...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/student-saved-questions.js"></script>
+</body>
+</html>

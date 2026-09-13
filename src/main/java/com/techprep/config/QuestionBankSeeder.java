@@ -19,6 +19,7 @@ public class QuestionBankSeeder implements CommandLineRunner {
     private final SubCategoryRepository subCategoryRepository;
     private final TopicRepository topicRepository;
     private final QuestionRepository questionRepository;
+    private final TestRepository testRepository;
 
     @Override
     @Transactional
@@ -32,6 +33,9 @@ public class QuestionBankSeeder implements CommandLineRunner {
         
         // We populate comprehensive placement questions for topics
         seedQuestions();
+
+        // Seed initial Placement Mock Tests
+        seedMockTests();
     }
 
     private void ensureHierarchy() {
@@ -438,5 +442,70 @@ public class QuestionBankSeeder implements CommandLineRunner {
                 Difficulty.EASY, 2));
 
         return list;
+    }
+
+    private final TestQuestionRepository testQuestionRepository;
+
+    private void seedMockTests() {
+        if (testRepository.count() == 0) {
+            Category aptCat = categoryRepository.findByName("Aptitude").orElse(null);
+            Category techCat = categoryRepository.findByName("Technical").orElse(null);
+            Category dsaCat = categoryRepository.findByName("DSA").orElse(null);
+
+            createDefaultMockTest("TCS NQT Quantitative Aptitude Mock Test", "Comprehensive placement mock test covering Quantitative Aptitude concepts.", aptCat, 20, 10, Difficulty.MEDIUM);
+            createDefaultMockTest("Java & Core CS Technical Placement Assessment", "Technical assessment covering Java OOP, Spring Boot, SQL, and CS Fundamentals.", techCat, 30, 15, Difficulty.MEDIUM);
+            createDefaultMockTest("Data Structures & Algorithms Speed Challenge", "High-yield interview mock test on Arrays, Trees, Dynamic Programming and Graphs.", dsaCat, 25, 10, Difficulty.HARD);
+            
+            System.out.println("Default Mock Tests successfully initialized.");
+        }
+    }
+
+    private void createDefaultMockTest(String title, String desc, Category cat, int durationMins, int targetQuestions, Difficulty difficulty) {
+        List<Question> candidateQuestions = new ArrayList<>();
+        if (cat != null) {
+            List<SubCategory> subs = subCategoryRepository.findByCategoryId(cat.getId());
+            for (SubCategory s : subs) {
+                List<Topic> topics = topicRepository.findBySubCategoryId(s.getId());
+                for (Topic t : topics) {
+                    candidateQuestions.addAll(questionRepository.findByTopicIdAndActiveTrue(t.getId(), org.springframework.data.domain.PageRequest.of(0, 50)).getContent());
+                }
+            }
+        }
+        if (candidateQuestions.isEmpty()) {
+            candidateQuestions.addAll(questionRepository.findAll());
+        }
+
+        if (candidateQuestions.isEmpty()) return;
+
+        Collections.shuffle(candidateQuestions);
+        int totalQ = Math.min(targetQuestions, candidateQuestions.size());
+        List<Question> selected = candidateQuestions.subList(0, totalQ);
+
+        int totalMarks = selected.stream().mapToInt(q -> q.getMarks() != null ? q.getMarks() : 2).sum();
+
+        TestEntity test = TestEntity.builder()
+                .title(title)
+                .description(desc)
+                .category(cat)
+                .durationMinutes(durationMins)
+                .totalQuestions(totalQ)
+                .totalMarks(totalMarks)
+                .difficulty(difficulty)
+                .selectedDifficulty(difficulty.name())
+                .active(true)
+                .build();
+
+        TestEntity savedTest = testRepository.save(test);
+
+        List<TestQuestion> tqList = new ArrayList<>();
+        int order = 1;
+        for (Question q : selected) {
+            tqList.add(TestQuestion.builder()
+                    .test(savedTest)
+                    .question(q)
+                    .questionOrder(order++)
+                    .build());
+        }
+        testQuestionRepository.saveAll(tqList);
     }
 }

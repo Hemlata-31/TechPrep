@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Interface - TechPrep Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        body {
+            background-color: #f1f5f9;
+            font-family: 'Inter', system-ui, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .exam-header {
+            background: #1e293b;
+            color: #ffffff;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .timer-box {
+            background: #0f172a;
+            border: 1px solid #334155;
+            padding: 0.5rem 1.25rem;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #38bdf8;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .timer-warning {
+            color: #ef4444 !important;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .exam-layout {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 1.5rem;
+            max-width: 1400px;
+            margin: 1.5rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .question-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .option-btn {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 1rem 1.25rem;
+            margin-bottom: 0.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            background: #ffffff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+
+        .option-btn:hover {
+            border-color: #94a3b8;
+            background: #f8fafc;
+        }
+
+        .option-btn.selected {
+            border-color: #3b82f6;
+            background: #eff6ff;
+            font-weight: 600;
+            color: #1d4ed8;
+        }
+
+        .palette-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0.5rem;
+            margin-top: 1rem;
+            max-height: 280px;
+            overflow-y: auto;
+        }
+
+        .palette-btn {
+            height: 42px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+            background: #f8fafc;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .palette-btn.current {
+            border: 2px solid #2563eb !important;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.3);
+        }
+
+        .palette-btn.answered {
+            background: #22c55e !important;
+            color: white !important;
+            border-color: #16a34a !important;
+        }
+
+        .palette-btn.review {
+            background: #a855f7 !important;
+            color: white !important;
+            border-color: #9333ea !important;
+        }
+
+        .palette-btn.unanswered {
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: #475569;
+        }
+
+        .legend-badge {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+
+        /* Modal styling */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <header class="exam-header">
+        <div>
+            <h3 id="examTitle" style="margin:0; font-size: 1.25rem;">Mock Test</h3>
+            <span id="examCategory" style="font-size: 0.85rem; color: #94a3b8;">General</span>
+        </div>
+        <div class="timer-box" id="timerBox">
+            <i class="fas fa-clock"></i> <span id="timerDisplay">00:00</span>
+        </div>
+    </header>
+
+    <div class="exam-layout">
+        <!-- Question Content -->
+        <main class="question-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.75rem;">
+                <h4 style="margin:0; color: #3b82f6; font-size: 1.1rem;">
+                    Question <span id="qNumber">1</span> of <span id="qTotal">10</span>
+                </h4>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span class="badge badge-outline" id="qMarks">Marks: 2</span>
+                    <button id="bookmarkBtn" class="btn btn-outline" style="padding: 4px 10px; font-size: 0.85rem; display: none;">
+                        <i id="bookmarkIcon" class="far fa-bookmark"></i> <span id="bookmarkText">Save</span>
+                    </button>
+                </div>
+            </div>
+
+            <p id="qText" style="font-size: 1.15rem; color: #0f172a; line-height: 1.6; font-weight: 500; margin-bottom: 2rem;">
+                Loading question...
+            </p>
+
+            <!-- Options -->
+            <div id="optionsContainer">
+                <button class="option-btn" data-option="A"><strong style="margin-right: 12px;">A.</strong> <span class="opt-text">Option A</span></button>
+                <button class="option-btn" data-option="B"><strong style="margin-right: 12px;">B.</strong> <span class="opt-text">Option B</span></button>
+                <button class="option-btn" data-option="C"><strong style="margin-right: 12px;">C.</strong> <span class="opt-text">Option C</span></button>
+                <button class="option-btn" data-option="D"><strong style="margin-right: 12px;">D.</strong> <span class="opt-text">Option D</span></button>
+            </div>
+
+            <!-- Action Controls -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2.5rem; border-top: 1px solid #e2e8f0; padding-top: 1.5rem;">
+                <div style="display: flex; gap: 0.75rem;">
+                    <button id="markReviewBtn" class="btn btn-outline btn-small" style="color: #9333ea; border-color: #a855f7;">
+                        <i class="fas fa-bookmark"></i> Mark for Review
+                    </button>
+                    <button id="clearAnswerBtn" class="btn btn-outline btn-small" style="color: #64748b;">
+                        Clear Answer
+                    </button>
+                </div>
+                <div style="display: flex; gap: 0.75rem;">
+                    <button id="prevBtn" class="btn btn-outline btn-small"><i class="fas fa-chevron-left"></i> Previous</button>
+                    <button id="nextBtn" class="btn btn-small">Next <i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Right Side Navigation Palette -->
+        <aside style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <div class="question-card" style="padding: 1.5rem;">
+                <h4 style="margin-top:0; color: #1e293b; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem;">Question Palette</h4>
+                
+                <!-- Palette Legend -->
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin-top: 0.75rem; margin-bottom: 1rem;">
+                    <div class="legend-item"><div class="legend-badge" style="background:#22c55e;"></div> Answered</div>
+                    <div class="legend-item"><div class="legend-badge" style="background:#f1f5f9; border: 1px solid #cbd5e1;"></div> Unanswered</div>
+                    <div class="legend-item"><div class="legend-badge" style="background:#a855f7;"></div> Marked Review</div>
+                    <div class="legend-item"><div class="legend-badge" style="background:#ffffff; border: 2px solid #2563eb;"></div> Current</div>
+                </div>
+
+                <!-- Palette Grid -->
+                <div class="palette-grid" id="paletteGrid">
+                    <!-- Dynamic Palette buttons -->
+                </div>
+            </div>
+
+            <!-- Finish Test Button -->
+            <button id="submitTestModalTriggerBtn" class="btn" style="background: #ef4444; width: 100%; padding: 0.9rem; font-size: 1.05rem;">
+                <i class="fas fa-paper-plane"></i> Submit Test
+            </button>
+        </aside>
+    </div>
+
+    <!-- Submit Confirmation Modal -->
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal-card">
+            <h3 style="margin-top:0; color:#1e293b;"><i class="fas fa-question-circle" style="color:#3b82f6;"></i> Submit Mock Test?</h3>
+            <p style="color:#64748b; font-size:0.95rem; margin:1rem 0;">Are you sure you want to finish and submit your exam? You cannot change your answers after submission.</p>
+
+            <div style="background:#f8fafc; border-radius:8px; padding:1rem; margin-bottom:1.5rem; font-size:0.9rem;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;"><span>Answered Questions:</span><strong id="modalAnswered">0</strong></div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;"><span>Unanswered Questions:</span><strong id="modalUnanswered">0</strong></div>
+                <div style="display:flex; justify-content:space-between;"><span>Marked for Review:</span><strong id="modalReview">0</strong></div>
+            </div>
+
+            <div style="display:flex; gap:1rem;">
+                <button id="cancelModalBtn" class="btn btn-outline" style="flex:1;">Return to Test</button>
+                <button id="confirmSubmitBtn" class="btn" style="background:#ef4444; flex:1;">Confirm Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/student-exam-interface.js"></script>
+</body>
+</html>

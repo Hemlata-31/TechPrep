@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('prevBtn').addEventListener('click', () => navigateQuestion(-1));
     document.getElementById('nextBtn').addEventListener('click', () => navigateQuestion(1));
     document.getElementById('finishEarlyBtn').addEventListener('click', finishSession);
+    document.getElementById('bookmarkBtn').addEventListener('click', toggleBookmark);
 });
 
 async function startSession(topicId, difficulty, numberOfQuestions, topicName) {
@@ -144,6 +145,15 @@ async function loadQuestion(order) {
                 isCorrect: currentQuestionData.isCorrect,
                 explanation: currentQuestionData.explanation
             });
+        }
+
+        // Check bookmark status
+        try {
+            const status = await api.get(`/student/bookmarks/${currentQuestionData.questionId}/status`);
+            updateBookmarkBtn(status.bookmarked);
+        } catch (err) {
+            console.error('Failed to get bookmark status', err);
+            document.getElementById('bookmarkBtn').style.display = 'none';
         }
 
     } catch (err) {
@@ -225,5 +235,50 @@ async function finishSession() {
             console.error(err);
             window.location.href = `/student/result.html?sessionId=${currentSessionId}`;
         }
+    }
+}
+
+let isBookmarked = false;
+
+function updateBookmarkBtn(bookmarked) {
+    isBookmarked = bookmarked;
+    const btn = document.getElementById('bookmarkBtn');
+    const icon = document.getElementById('bookmarkIcon');
+    const text = document.getElementById('bookmarkText');
+    
+    btn.style.display = 'inline-block';
+    if (bookmarked) {
+        icon.className = 'fas fa-bookmark';
+        icon.style.color = '#ef4444';
+        text.textContent = 'Saved';
+        btn.style.borderColor = '#ef4444';
+        btn.style.color = '#ef4444';
+    } else {
+        icon.className = 'far fa-bookmark';
+        icon.style.color = '';
+        text.textContent = 'Save';
+        btn.style.borderColor = '';
+        btn.style.color = '';
+    }
+}
+
+async function toggleBookmark() {
+    if (!currentQuestionData) return;
+    const btn = document.getElementById('bookmarkBtn');
+    btn.disabled = true;
+
+    try {
+        if (isBookmarked) {
+            await api.delete(`/student/bookmarks/${currentQuestionData.questionId}`);
+            updateBookmarkBtn(false);
+        } else {
+            await api.post(`/student/bookmarks/${currentQuestionData.questionId}`);
+            updateBookmarkBtn(true);
+        }
+    } catch (error) {
+        console.error('Bookmark toggle failed', error);
+        alert('Failed to update bookmark.');
+    } finally {
+        btn.disabled = false;
     }
 }
