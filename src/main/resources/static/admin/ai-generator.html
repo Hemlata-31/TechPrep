@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Question Generator - TechPrep Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .ai-generator-form { max-width: 700px; }
+
+        .result-card {
+            background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px;
+            padding: 20px; margin-top: 24px; display: none;
+        }
+        .result-card .count-big {
+            font-size: 2.5rem; font-weight: 800; color: #16a34a; line-height: 1;
+        }
+        .result-card .result-label {
+            font-size: 1rem; color: #15803d; margin-top: 4px;
+        }
+        .result-card .result-note {
+            font-size: 0.85rem; color: #64748b; margin-top: 8px;
+        }
+
+        .loading-overlay { text-align: center; padding: 40px; color: #6366f1; font-size: 1.1rem; }
+
+        .info-box {
+            background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px;
+            padding: 14px 18px; margin-bottom: 20px; font-size: 0.9rem; color: #1e40af;
+        }
+        .info-box i { margin-right: 6px; }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <h2>TechPrep Admin</h2>
+            <nav>
+                <ul>
+                    <li><a href="/admin/dashboard.html">Dashboard</a></li>
+                    <li><a href="/admin/categories.html">Categories &amp; Topics</a></li>
+                    <li><a href="/admin/tests.html">Manage Mock Tests</a></li>
+                    <li><a href="/admin/ai-generator.html" class="active"><i class="fas fa-robot"></i> AI Generator</a></li>
+                    <li><a href="#" id="logoutBtn">Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="header">
+                <h1><i class="fas fa-robot"></i> AI Question Generator</h1>
+                <p style="color: #64748b;">Generate placement-focused MCQs using Google Gemini AI</p>
+            </div>
+
+            <div class="info-box">
+                <i class="fas fa-circle-info"></i>
+                Questions are generated and saved <strong>directly</strong> to the question bank.
+                Students can use them immediately in Practice &amp; Mock Tests — no review step needed.
+                Duplicate questions are automatically skipped.
+            </div>
+
+            <!-- Generator Form -->
+            <div class="card ai-generator-form">
+                <h3><i class="fas fa-wand-magic-sparkles"></i> Generate New Questions</h3>
+                <div class="alert" id="genAlert" style="display:none;"></div>
+
+                <div class="form-group">
+                    <label for="categorySelect"><i class="fas fa-folder"></i> Category</label>
+                    <select id="categorySelect"><option value="">-- Select Category --</option></select>
+                </div>
+                <div class="form-group">
+                    <label for="subCategorySelect"><i class="fas fa-folder-open"></i> SubCategory</label>
+                    <select id="subCategorySelect" disabled><option value="">-- Select SubCategory --</option></select>
+                </div>
+                <div class="form-group">
+                    <label for="topicSelect"><i class="fas fa-bookmark"></i> Topic</label>
+                    <select id="topicSelect" disabled><option value="">-- Select Topic --</option></select>
+                </div>
+                <div class="form-group">
+                    <label for="difficultySelect"><i class="fas fa-signal"></i> Difficulty</label>
+                    <select id="difficultySelect">
+                        <option value="EASY">Easy (1 mark)</option>
+                        <option value="MEDIUM" selected>Medium (2 marks)</option>
+                        <option value="HARD">Hard (3 marks)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="numQuestions"><i class="fas fa-list-ol"></i> Number of Questions</label>
+                    <select id="numQuestions">
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="5" selected>5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="50">50</option>
+                    </select>
+                </div>
+
+                <button id="generateBtn" class="btn" style="font-size: 1rem; padding: 0.8rem; width: 100%;">
+                    <i class="fas fa-wand-magic-sparkles"></i> Generate &amp; Save Questions
+                </button>
+            </div>
+
+            <!-- Loading State -->
+            <div id="generatingLoader" class="loading-overlay" style="display:none;">
+                <i class="fas fa-spinner fa-spin fa-2x"></i>
+                <p style="margin-top: 10px;">Generating questions with Gemini AI...<br>
+                    <small id="loaderNote">This may take 10–20 seconds</small>
+                </p>
+            </div>
+
+            <!-- Result Card -->
+            <div class="result-card" id="resultCard">
+                <div class="count-big" id="savedCount">0</div>
+                <div class="result-label">questions added to the question bank</div>
+                <div class="result-note" id="resultNote"></div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/admin-ai-generator.js"></script>
+</body>
+</html>

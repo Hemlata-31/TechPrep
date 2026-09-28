@@ -144,6 +144,22 @@
                             <strong><i class="fas fa-lightbulb"></i> Explanation:</strong>
                             <p id="explanationText" style="margin-top: 5px; color: #475569;"></p>
                         </div>
+                        <!-- AI Explanation Section -->
+                        <div style="margin-top: 15px; border-top: 1px solid #e2e8f0; padding-top: 12px;">
+                            <button id="aiExplainBtn" class="btn btn-outline" style="font-size: 0.9rem; padding: 6px 14px;">
+                                <i class="fas fa-robot"></i> AI Explain ✨
+                            </button>
+                            <div id="aiExplanationLoading" style="display:none; margin-top: 10px; color: #6366f1;">
+                                <i class="fas fa-spinner fa-spin"></i> Generating AI explanation...
+                            </div>
+                            <div id="aiExplanationResult" style="display:none; margin-top: 10px; background: #f0f4ff; border-radius: 8px; padding: 14px; border-left: 4px solid #6366f1;">
+                                <strong style="color: #6366f1;"><i class="fas fa-robot"></i> AI Explanation:</strong>
+                                <p id="aiExplanationText" style="margin-top: 6px; color: #334155; line-height: 1.6; white-space: pre-wrap;"></p>
+                            </div>
+                            <div id="aiExplanationError" style="display:none; margin-top: 10px; color: #ef4444;">
+                                <i class="fas fa-exclamation-circle"></i> <span id="aiErrorMsg"></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

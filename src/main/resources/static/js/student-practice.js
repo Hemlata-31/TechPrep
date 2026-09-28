@@ -67,6 +67,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('nextBtn').addEventListener('click', () => navigateQuestion(1));
     document.getElementById('finishEarlyBtn').addEventListener('click', finishSession);
     document.getElementById('bookmarkBtn').addEventListener('click', toggleBookmark);
+    document.getElementById('aiExplainBtn').addEventListener('click', fetchAIExplanation);
 });
 
 async function startSession(topicId, difficulty, numberOfQuestions, topicName) {
@@ -104,6 +105,11 @@ async function loadQuestion(order) {
     selectedOption = null;
     document.getElementById('submitAnswerBtn').disabled = true;
     document.getElementById('explanationBox').style.display = 'none';
+    // Reset AI explanation state
+    document.getElementById('aiExplainBtn').style.display = 'inline-block';
+    document.getElementById('aiExplanationLoading').style.display = 'none';
+    document.getElementById('aiExplanationResult').style.display = 'none';
+    document.getElementById('aiExplanationError').style.display = 'none';
 
     // Reset option card classes
     const optionCards = document.querySelectorAll('.option-card');
@@ -280,5 +286,40 @@ async function toggleBookmark() {
         alert('Failed to update bookmark.');
     } finally {
         btn.disabled = false;
+    }
+}
+
+async function fetchAIExplanation() {
+    if (!currentQuestionData) return;
+
+    const btn = document.getElementById('aiExplainBtn');
+    const loading = document.getElementById('aiExplanationLoading');
+    const result = document.getElementById('aiExplanationResult');
+    const errorDiv = document.getElementById('aiExplanationError');
+
+    btn.style.display = 'none';
+    loading.style.display = 'block';
+    result.style.display = 'none';
+    errorDiv.style.display = 'none';
+
+    try {
+        const response = await api.post('/ai/explain', {
+            questionText: currentQuestionData.questionText,
+            optionA: currentQuestionData.optionA,
+            optionB: currentQuestionData.optionB,
+            optionC: currentQuestionData.optionC,
+            optionD: currentQuestionData.optionD,
+            correctAnswer: currentQuestionData.correctAnswer,
+            explanation: currentQuestionData.explanation
+        });
+
+        loading.style.display = 'none';
+        document.getElementById('aiExplanationText').textContent = response.aiExplanation;
+        result.style.display = 'block';
+    } catch (err) {
+        loading.style.display = 'none';
+        document.getElementById('aiErrorMsg').textContent = err.message || 'Failed to get AI explanation.';
+        errorDiv.style.display = 'block';
+        btn.style.display = 'inline-block';
     }
 }

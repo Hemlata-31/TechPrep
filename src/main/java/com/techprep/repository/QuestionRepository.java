@@ -14,7 +14,10 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     Page<Question> findByTopicId(Long topicId, Pageable pageable);
     Page<Question> findByTopicIdAndActiveTrue(Long topicId, Pageable pageable);
     Page<Question> findByTopicIdAndDifficulty(Long topicId, Difficulty difficulty, Pageable pageable);
-    
+
+    // Duplicate detection: check if a question with the same text already exists for a topic
+    boolean existsByTopicIdAndQuestionTextIgnoreCase(Long topicId, String questionText);
+
     // For counts
     long countByTopicId(Long topicId);
     long countByTopicIdAndActiveTrue(Long topicId);
