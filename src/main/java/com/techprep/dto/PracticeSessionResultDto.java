@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -30,4 +31,5 @@ public class PracticeSessionResultDto {
     private LocalDateTime startedAt;
     private LocalDateTime completedAt;
     private Long timeTakenSeconds;
+    private List<PracticeQuestionDto> questions;
 }

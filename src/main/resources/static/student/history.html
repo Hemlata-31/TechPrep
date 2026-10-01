@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Practice History - TechPrep Academy</title>
+    <title>History & Review - TechPrep Academy</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/style.css">
 </head>
@@ -18,7 +18,7 @@
                     <li><a href="/student/progress.html"><i class="fas fa-chart-line"></i> Progress</a></li>
                     <li><a href="/student/leaderboard.html"><i class="fas fa-trophy"></i> Leaderboard</a></li>
                     <li><a href="/student/mock-tests.html"><i class="fas fa-laptop-code"></i> Mock Tests</a></li>
-                    <li><a href="/student/history.html" class="active"><i class="fas fa-history"></i> Practice History</a></li>
+                    <li><a href="/student/history.html" class="active"><i class="fas fa-history"></i> History</a></li>
                     <li><a href="/student/saved-questions.html"><i class="fas fa-bookmark"></i> Saved Questions</a></li>
                     <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                 </ul>
@@ -28,14 +28,19 @@
         <main class="main-content">
             <div class="header">
                 <div>
-                    <h1>Practice History & Logs</h1>
-                    <p style="color: #64748b; margin-top: 5px;">Review all your past practice sessions and performance</p>
+                    <h1>History & Review</h1>
+                    <p style="color: #64748b; margin-top: 5px;">Review all your past practice sessions and mock tests</p>
                 </div>
+            </div>
+
+            <div class="tabs" style="display: flex; gap: 1rem; margin-bottom: 2rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 1rem;">
+                <button id="tabPractice" class="btn btn-outline" style="border: none; background: #3b82f6; color: white;">Practice History</button>
+                <button id="tabMockTest" class="btn btn-outline" style="border: none; background: transparent; color: #64748b;">Mock Test History</button>
             </div>
 
             <div class="course-section">
                 <div id="historyContainer" class="chapter-list">
-                    <p>Loading practice history...</p>
+                    <p>Loading history...</p>
                 </div>
             </div>
         </main>

@@ -17,5 +17,12 @@ public class StudentPracticeStatsDto {
     private Long totalCorrectAnswers;
     private Long totalWrongAnswers;
     private Double overallAccuracy;
+    
+    // Daily Goals & Streaks
+    private Integer dailyGoalQuestions;
+    private Long questionsAttemptedToday;
+    private Integer currentStreak;
+    private Integer longestStreak;
+
     private List<PracticeSessionSummaryDto> recentSessions;
 }

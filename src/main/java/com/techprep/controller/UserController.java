@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,5 +33,20 @@ public class UserController {
                 .build();
                 
         return ResponseEntity.ok(dto);
+    }
+
+    @PutMapping("/me/daily-goal")
+    public ResponseEntity<Void> updateDailyGoal(@RequestParam Integer goal) {
+        if (goal == null || goal < 1) {
+            throw new IllegalArgumentException("Daily goal must be at least 1");
+        }
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        
+        user.setDailyGoalQuestions(goal);
+        userRepository.save(user);
+        
+        return ResponseEntity.ok().build();
     }
 }

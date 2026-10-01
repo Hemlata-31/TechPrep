@@ -35,6 +35,25 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private Role role;
 
+    @Builder.Default
+    @Column(name = "daily_goal_questions", nullable = false)
+    private Integer dailyGoalQuestions = 10;
+
+    @Builder.Default
+    @Column(name = "current_streak", nullable = false)
+    private Integer currentStreak = 0;
+
+    @Builder.Default
+    @Column(name = "longest_streak", nullable = false)
+    private Integer longestStreak = 0;
+
+    @Column(name = "last_active_date")
+    private java.time.LocalDate lastActiveDate;
+
+    @Builder.Default
+    @Column(name = "questions_attempted_today", nullable = false)
+    private Integer questionsAttemptedToday = 0;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));

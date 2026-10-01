@@ -169,6 +169,25 @@ public class PracticeServiceImpl implements PracticeService {
         // Update session metrics
         if (firstTimeAnswering) {
             session.setAttemptedQuestions(session.getAttemptedQuestions() + 1);
+            
+            // Record daily user activity
+            User user = session.getUser();
+            java.time.LocalDate today = java.time.LocalDate.now();
+            if (user.getLastActiveDate() == null || user.getLastActiveDate().isBefore(today)) {
+                if (user.getLastActiveDate() != null && user.getLastActiveDate().equals(today.minusDays(1))) {
+                    user.setCurrentStreak(user.getCurrentStreak() + 1);
+                } else {
+                    user.setCurrentStreak(1);
+                }
+                if (user.getCurrentStreak() > user.getLongestStreak()) {
+                    user.setLongestStreak(user.getCurrentStreak());
+                }
+                user.setQuestionsAttemptedToday(1);
+                user.setLastActiveDate(today);
+            } else {
+                user.setQuestionsAttemptedToday(user.getQuestionsAttemptedToday() + 1);
+            }
+            userRepository.save(user);
         }
         
         // Recalculate stats from all attempts
@@ -257,12 +276,22 @@ public class PracticeServiceImpl implements PracticeService {
         List<PracticeSession> recentList = sessionRepository.findByUserIdOrderByStartedAtDesc(user.getId(), PageRequest.of(0, 5)).getContent();
         List<PracticeSessionSummaryDto> recentSummaries = recentList.stream().map(this::mapToSummaryDto).collect(Collectors.toList());
 
+        java.time.LocalDate today = java.time.LocalDate.now();
+        Long questionsToday = 0L;
+        if (user.getLastActiveDate() != null && user.getLastActiveDate().equals(today)) {
+            questionsToday = user.getQuestionsAttemptedToday() != null ? user.getQuestionsAttemptedToday().longValue() : 0L;
+        }
+
         return StudentPracticeStatsDto.builder()
                 .totalSessionsCompleted(completedCount != null ? completedCount : 0L)
                 .totalQuestionsAttempted(attemptedCount != null ? attemptedCount : 0L)
                 .totalCorrectAnswers(correctCount != null ? correctCount : 0L)
                 .totalWrongAnswers(wrongCount != null ? wrongCount : 0L)
                 .overallAccuracy(Math.round(overallAccuracy * 10.0) / 10.0)
+                .dailyGoalQuestions(user.getDailyGoalQuestions())
+                .questionsAttemptedToday(questionsToday)
+                .currentStreak(user.getCurrentStreak())
+                .longestStreak(user.getLongestStreak())
                 .recentSessions(recentSummaries)
                 .build();
     }
@@ -315,6 +344,32 @@ public class PracticeServiceImpl implements PracticeService {
             timeTakenSeconds = Duration.between(session.getStartedAt(), end).getSeconds();
         }
 
+        List<PracticeQuestionDto> questionDtos = session.getAttempts().stream()
+                .sorted(Comparator.comparing(PracticeAttempt::getQuestionOrder))
+                .map(attempt -> {
+                    Question q = attempt.getQuestion();
+                    boolean isAnswered = attempt.getSelectedAnswer() != null;
+                    return PracticeQuestionDto.builder()
+                            .attemptId(attempt.getId())
+                            .questionId(q.getId())
+                            .questionIndex(attempt.getQuestionOrder())
+                            .totalQuestions(session.getTotalQuestions())
+                            .questionText(q.getQuestionText())
+                            .optionA(q.getOptionA())
+                            .optionB(q.getOptionB())
+                            .optionC(q.getOptionC())
+                            .optionD(q.getOptionD())
+                            .difficulty(q.getDifficulty())
+                            .marks(q.getMarks())
+                            .isAnswered(isAnswered)
+                            .selectedAnswer(attempt.getSelectedAnswer())
+                            .correctAnswer(q.getCorrectAnswer()) // always reveal in result/review
+                            .isCorrect(attempt.getIsCorrect())
+                            .explanation(q.getExplanation())     // always reveal in result/review
+                            .build();
+                })
+                .collect(Collectors.toList());
+
         return PracticeSessionResultDto.builder()
                 .sessionId(session.getId())
                 .topicId(topic.getId())
@@ -333,6 +388,7 @@ public class PracticeServiceImpl implements PracticeService {
                 .startedAt(session.getStartedAt())
                 .completedAt(session.getCompletedAt())
                 .timeTakenSeconds(timeTakenSeconds)
+                .questions(questionDtos)
                 .build();
     }
 }

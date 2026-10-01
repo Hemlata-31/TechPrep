@@ -8,6 +8,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('welcomeMsg').textContent = `Welcome, ${user.name}`;
     }
     initLogoutBtn();
+    
+    document.getElementById('editGoalBtn').addEventListener('click', async () => {
+        const newGoal = prompt("Enter your new Daily Goal (number of questions):", "");
+        if (newGoal && !isNaN(newGoal) && parseInt(newGoal) > 0) {
+            try {
+                await api.put(`/users/me/daily-goal?goal=${parseInt(newGoal)}`);
+                alert('Daily goal updated successfully!');
+                loadStudentStats();
+            } catch (err) {
+                alert('Failed to update daily goal: ' + err.message);
+            }
+        } else if (newGoal) {
+            alert('Please enter a valid number greater than 0.');
+        }
+    });
+
     loadStudentStats();
 });
 
@@ -26,6 +42,28 @@ async function loadStudentStats() {
         document.getElementById('statAttempted').textContent = stats.totalQuestionsAttempted || 0;
         document.getElementById('statAccuracy').textContent = (stats.overallAccuracy || 0) + '%';
         document.getElementById('statCompleted').textContent = stats.totalSessionsCompleted || 0;
+
+        // Populate Streaks & Goals
+        const dailyGoal = stats.dailyGoalQuestions || 10;
+        const attemptedToday = stats.questionsAttemptedToday || 0;
+        const currentStreak = stats.currentStreak || 0;
+        const longestStreak = stats.longestStreak || 0;
+
+        document.getElementById('currentStreak').textContent = currentStreak;
+        document.getElementById('longestStreak').textContent = longestStreak;
+        document.getElementById('dailyGoalText').textContent = `${attemptedToday} / ${dailyGoal} Questions`;
+
+        let progressPct = (attemptedToday / dailyGoal) * 100;
+        if (progressPct > 100) progressPct = 100;
+        document.getElementById('dailyGoalProgress').style.width = `${progressPct}%`;
+
+        if (attemptedToday >= dailyGoal) {
+            document.getElementById('dailyGoalMessage').innerHTML = '<i class="fas fa-check-circle" style="color:#22c55e;"></i> Goal achieved! Great job today.';
+            document.getElementById('dailyGoalProgress').style.background = 'linear-gradient(90deg, #22c55e, #4ade80)';
+        } else {
+            document.getElementById('dailyGoalMessage').innerHTML = `Keep practicing! ${dailyGoal - attemptedToday} more to hit your goal.`;
+            document.getElementById('dailyGoalProgress').style.background = 'linear-gradient(90deg, #3b82f6, #60a5fa)';
+        }
 
         const container = document.getElementById('recentActivityContainer');
         if (!stats.recentSessions || stats.recentSessions.length === 0) {

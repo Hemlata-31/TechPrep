@@ -242,6 +242,8 @@ public class TestServiceImpl implements TestService {
         TestQuestionAnswer tqa = testQuestionAnswerRepository.findByTestAttemptIdAndQuestionOrder(attemptId, questionOrder)
                 .orElseThrow(() -> new ResourceNotFoundException("Question #" + questionOrder + " not found in attempt " + attemptId));
 
+        boolean wasAnswered = tqa.getSelectedAnswer() != null && !tqa.getSelectedAnswer().trim().isEmpty();
+
         if (request.getSelectedAnswer() != null) {
             String selected = request.getSelectedAnswer().trim().toUpperCase();
             tqa.setSelectedAnswer(selected.isEmpty() ? null : selected);
@@ -251,6 +253,27 @@ public class TestServiceImpl implements TestService {
         }
         tqa.setAnsweredAt(LocalDateTime.now());
         testQuestionAnswerRepository.save(tqa);
+
+        boolean isNowAnswered = tqa.getSelectedAnswer() != null && !tqa.getSelectedAnswer().trim().isEmpty();
+        if (!wasAnswered && isNowAnswered) {
+            User user = attempt.getUser();
+            java.time.LocalDate today = java.time.LocalDate.now();
+            if (user.getLastActiveDate() == null || user.getLastActiveDate().isBefore(today)) {
+                if (user.getLastActiveDate() != null && user.getLastActiveDate().equals(today.minusDays(1))) {
+                    user.setCurrentStreak(user.getCurrentStreak() + 1);
+                } else {
+                    user.setCurrentStreak(1);
+                }
+                if (user.getCurrentStreak() > user.getLongestStreak()) {
+                    user.setLongestStreak(user.getCurrentStreak());
+                }
+                user.setQuestionsAttemptedToday(1);
+                user.setLastActiveDate(today);
+            } else {
+                user.setQuestionsAttemptedToday(user.getQuestionsAttemptedToday() + 1);
+            }
+            userRepository.save(user);
+        }
 
         return mapToQuestionDto(tqa, attempt.getTest().getTotalQuestions(), false);
     }

@@ -33,6 +33,39 @@
                 </div>
             </div>
 
+            <!-- Daily Goal & Streak Widget -->
+            <div class="stats-overview" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 2rem;">
+                <!-- Daily Goal -->
+                <div class="card" style="padding: 1.5rem;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <h3 style="margin:0; font-size: 1.1rem; color: #1e293b; display:flex; align-items:center;">
+                            <i class="fas fa-bullseye" style="color:#ef4444; margin-right:5px;"></i> Daily Practice Goal
+                            <button id="editGoalBtn" style="background:none; border:none; color:#3b82f6; cursor:pointer; margin-left: 10px; font-size: 0.9rem;" title="Edit Goal"><i class="fas fa-edit"></i></button>
+                        </h3>
+                        <span id="dailyGoalText" style="font-weight: 600; color: #64748b; font-size: 0.9rem;">0 / 10 Questions</span>
+                    </div>
+                    <div style="background: #e2e8f0; border-radius: 99px; height: 10px; margin-top: 1rem; overflow: hidden;">
+                        <div id="dailyGoalProgress" style="background: linear-gradient(90deg, #ef4444, #f87171); height: 100%; width: 0%; transition: width 0.5s ease;"></div>
+                    </div>
+                    <p id="dailyGoalMessage" style="margin-top: 1rem; font-size: 0.85rem; color: #64748b; margin-bottom: 0;">Keep practicing to maintain your streak!</p>
+                </div>
+
+                <!-- Streaks -->
+                <div class="card" style="padding: 1.5rem; display:flex; justify-content:space-around; align-items:center;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; color: #f59e0b; margin-bottom: 5px;"><i class="fas fa-fire"></i></div>
+                        <h2 id="currentStreak" style="margin: 0; color: #1e293b;">0</h2>
+                        <p style="font-size: 0.85rem; color: #64748b; margin: 0;">Day Streak</p>
+                    </div>
+                    <div style="width: 1px; height: 50px; background: #e2e8f0;"></div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 1.5rem; color: #3b82f6; margin-bottom: 5px;"><i class="fas fa-crown"></i></div>
+                        <h3 id="longestStreak" style="margin: 0; color: #1e293b;">0</h3>
+                        <p style="font-size: 0.85rem; color: #64748b; margin: 0;">Longest Streak</p>
+                    </div>
+                </div>
+            </div>
+
             <!-- Basic Practice Stats Widget -->
             <div class="stats-overview">
                 <div class="stat-card">
