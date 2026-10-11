@@ -80,3 +80,31 @@ function initLogoutBtn() {
         logout();
     });
 }
+
+// Theme Management
+function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-theme');
+    }
+    
+    const themeBtn = document.getElementById('themeToggleBtn');
+    if (themeBtn) {
+        updateThemeBtn(themeBtn);
+        themeBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            document.body.classList.toggle('dark-theme');
+            const isDark = document.body.classList.contains('dark-theme');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            updateThemeBtn(themeBtn);
+        });
+    }
+}
+
+function updateThemeBtn(btn) {
+    const isDark = document.body.classList.contains('dark-theme');
+    btn.innerHTML = isDark ? '<i class="fas fa-sun"></i> Light Mode' : '<i class="fas fa-moon"></i> Dark Mode';
+}
+
+// Call on load
+document.addEventListener('DOMContentLoaded', initTheme);

@@ -76,12 +76,24 @@ public class SavedQuestionServiceImpl implements SavedQuestionService {
 
     private SavedQuestionDto mapToDto(SavedQuestion savedQuestion) {
         Question q = savedQuestion.getQuestion();
+        String topicName = "General";
+        String categoryName = "General";
+        try {
+            if (q.getTopic() != null) {
+                topicName = q.getTopic().getName();
+                if (q.getTopic().getSubCategory() != null && q.getTopic().getSubCategory().getCategory() != null) {
+                    categoryName = q.getTopic().getSubCategory().getCategory().getName();
+                }
+            }
+        } catch (Exception ignored) {
+            // lazy-load guard
+        }
         return SavedQuestionDto.builder()
                 .id(savedQuestion.getId())
                 .questionId(q.getId())
                 .questionText(q.getQuestionText())
-                .categoryName(q.getTopic().getSubCategory().getCategory().getName())
-                .topicName(q.getTopic().getName())
+                .categoryName(categoryName)
+                .topicName(topicName)
                 .difficulty(q.getDifficulty())
                 .marks(q.getMarks())
                 .savedAt(savedQuestion.getCreatedAt())

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,6 +6,18 @@
     <title>Student Dashboard - TechPrep Academy</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .analysis-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+        .analysis-card { background: #fff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        .topic-row { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid #f1f5f9; }
+        .topic-row:last-child { border-bottom: none; }
+        .topic-bar-wrap { width: 80px; background: #e2e8f0; border-radius: 99px; height: 6px; }
+        .topic-bar { height: 6px; border-radius: 99px; transition: width 0.5s; }
+        .tip-item { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.75rem 0; border-bottom: 1px solid #f1f5f9; font-size: 0.9rem; color: #374151; }
+        .tip-item:last-child { border-bottom: none; }
+        .tip-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; flex-shrink: 0; margin-top: 2px; }
+        @media (max-width: 900px) { .analysis-grid { grid-template-columns: 1fr; } }
+    </style>
 </head>
 <body>
     <div class="dashboard-layout">
@@ -18,8 +30,9 @@
                     <li><a href="/student/progress.html"><i class="fas fa-chart-line"></i> Progress</a></li>
                     <li><a href="/student/leaderboard.html"><i class="fas fa-trophy"></i> Leaderboard</a></li>
                     <li><a href="/student/mock-tests.html"><i class="fas fa-laptop-code"></i> Mock Tests</a></li>
-                    <li><a href="/student/history.html"><i class="fas fa-history"></i> Practice History</a></li>
+                    <li><a href="/student/history.html"><i class="fas fa-history"></i> History</a></li>
                     <li><a href="/student/saved-questions.html"><i class="fas fa-bookmark"></i> Saved Questions</a></li>
+                    <li><a href="#" id="themeToggleBtn"><i class="fas fa-moon"></i> Dark Mode</a></li>
                     <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                 </ul>
             </nav>
@@ -29,13 +42,12 @@
             <div class="header">
                 <div>
                     <h1 id="welcomeMsg">Welcome, Student</h1>
-                    <p style="color: #64748b; margin-top: 5px;">Ready to practice for your placement preparation?</p>
+                    <p style="color: #64748b; margin-top: 5px;">Your personalized performance overview</p>
                 </div>
             </div>
 
             <!-- Daily Goal & Streak Widget -->
             <div class="stats-overview" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 2rem;">
-                <!-- Daily Goal -->
                 <div class="card" style="padding: 1.5rem;">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <h3 style="margin:0; font-size: 1.1rem; color: #1e293b; display:flex; align-items:center;">
@@ -45,12 +57,10 @@
                         <span id="dailyGoalText" style="font-weight: 600; color: #64748b; font-size: 0.9rem;">0 / 10 Questions</span>
                     </div>
                     <div style="background: #e2e8f0; border-radius: 99px; height: 10px; margin-top: 1rem; overflow: hidden;">
-                        <div id="dailyGoalProgress" style="background: linear-gradient(90deg, #ef4444, #f87171); height: 100%; width: 0%; transition: width 0.5s ease;"></div>
+                        <div id="dailyGoalProgress" style="background: linear-gradient(90deg, #3b82f6, #60a5fa); height: 100%; width: 0%; transition: width 0.5s ease;"></div>
                     </div>
-                    <p id="dailyGoalMessage" style="margin-top: 1rem; font-size: 0.85rem; color: #64748b; margin-bottom: 0;">Keep practicing to maintain your streak!</p>
+                    <p id="dailyGoalMessage" style="margin-top: 0.75rem; font-size: 0.85rem; color: #64748b; margin-bottom: 0;">Keep practicing to maintain your streak!</p>
                 </div>
-
-                <!-- Streaks -->
                 <div class="card" style="padding: 1.5rem; display:flex; justify-content:space-around; align-items:center;">
                     <div style="text-align: center;">
                         <div style="font-size: 2rem; color: #f59e0b; margin-bottom: 5px;"><i class="fas fa-fire"></i></div>
@@ -66,13 +76,13 @@
                 </div>
             </div>
 
-            <!-- Basic Practice Stats Widget -->
-            <div class="stats-overview">
+            <!-- Overall Performance Stats -->
+            <div class="stats-overview" style="margin-bottom: 2rem;">
                 <div class="stat-card">
                     <div class="stat-icon icon-blue"><i class="fas fa-list-check"></i></div>
                     <div class="stat-details">
                         <h3 id="statAttempted">0</h3>
-                        <p>Questions Attempted</p>
+                        <p>Total Attempted</p>
                     </div>
                 </div>
                 <div class="stat-card">
@@ -91,10 +101,50 @@
                 </div>
             </div>
 
-            <!-- Recent Activity Section -->
+            <!-- Topic Analysis: Weak / Hard / Strong -->
+            <div class="analysis-grid">
+                <!-- Weak Topics -->
+                <div class="analysis-card">
+                    <h3 style="margin:0 0 1rem; font-size:1rem; color:#ef4444; display:flex; align-items:center; gap:6px;">
+                        <i class="fas fa-arrow-trend-down"></i> Weak Topics
+                        <span style="font-size:0.75rem; color:#94a3b8; font-weight:400; margin-left:4px;">(low accuracy)</span>
+                    </h3>
+                    <div id="weakTopicsContainer"><p style="color:#94a3b8; font-size:0.9rem;">Loading...</p></div>
+                </div>
+
+                <!-- Hard Topics -->
+                <div class="analysis-card">
+                    <h3 style="margin:0 0 1rem; font-size:1rem; color:#f59e0b; display:flex; align-items:center; gap:6px;">
+                        <i class="fas fa-fire-flame-curved"></i> Hard Topics
+                        <span style="font-size:0.75rem; color:#94a3b8; font-weight:400; margin-left:4px;">(repeated mistakes)</span>
+                    </h3>
+                    <div id="hardTopicsContainer"><p style="color:#94a3b8; font-size:0.9rem;">Loading...</p></div>
+                </div>
+
+                <!-- Strong Topics -->
+                <div class="analysis-card">
+                    <h3 style="margin:0 0 1rem; font-size:1rem; color:#22c55e; display:flex; align-items:center; gap:6px;">
+                        <i class="fas fa-arrow-trend-up"></i> Strong Topics
+                        <span style="font-size:0.75rem; color:#94a3b8; font-weight:400; margin-left:4px;">(high accuracy)</span>
+                    </h3>
+                    <div id="strongTopicsContainer"><p style="color:#94a3b8; font-size:0.9rem;">Loading...</p></div>
+                </div>
+            </div>
+
+            <!-- Improvement Tips -->
+            <div class="course-section" style="margin-bottom: 2rem;">
+                <h3 class="section-title" style="margin-bottom: 1rem;">
+                    <i class="fas fa-lightbulb" style="color:#f59e0b;"></i> Personalized Improvement Tips
+                </h3>
+                <div class="card" style="padding: 1.25rem;">
+                    <div id="tipsContainer"><p style="color:#94a3b8; font-size:0.9rem;">Loading tips...</p></div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
             <div class="course-section" style="margin-bottom: 2rem;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <h3 class="section-title" style="margin-bottom:0;">Recent Practice Activity</h3>
+                    <h3 class="section-title" style="margin-bottom:0;">Recent Activity</h3>
                     <a href="/student/history.html" style="font-size: 0.9rem; font-weight: 500;">View All <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <div id="recentActivityContainer" class="chapter-list">
@@ -108,3 +158,4 @@
     <script src="/js/student-dashboard.js"></script>
 </body>
 </html>
+
