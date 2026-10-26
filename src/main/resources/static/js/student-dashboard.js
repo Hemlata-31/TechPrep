@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 async function loadDashboard() {
     try {
-        const progress = await api.get('/api/progress');
+        const progress = await api.get('/progress');
         renderGoalAndStreak(progress);
         renderOverallStats(progress);
         renderTopicAnalysis(progress);

@@ -33,6 +33,7 @@ public class PracticeAttempt {
 
     private Boolean isCorrect;
 
+    @Builder.Default
     private Integer marksObtained = 0;
 
     private LocalDateTime answeredAt;

@@ -86,7 +86,7 @@ public class QuestionTopUpSeeder implements CommandLineRunner {
     }
 
     // -------------------------------------------------------------------------
-    private record QSpec(String cat, String sub, String topic,
+    public record QSpec(String cat, String sub, String topic,
                          String text, String a, String b, String c, String d,
                          String ans, String explanation, Difficulty difficulty, int marks) {}
 
@@ -123,99 +123,12 @@ public class QuestionTopUpSeeder implements CommandLineRunner {
         addDsaGreedy(list);
         addDsaDynamicProgramming(list);
         addDsaBitManipulation(list);
-        // Future top-up topics (to be implemented):
-        /*
-        addAptNumberSystem(list);
-        addAptHcfLcm(list);
-        addAptPercentage(list);
-        addAptProfitLoss(list);
-        addAptRatioProportions(list);
-        addAptAverage(list);
-        addAptInterest(list);
-        addAptTimeWork(list);
-        addAptTimeSpeedDistance(list);
-        addAptProbability(list);
-        addAptPermCombination(list);
-        addAptAlgebra(list);
-        addAptGeometry(list);
-        addAptMensuration(list);
-        addAptDataInterpretation(list);
-        addRsnNumberSeries(list);
-        addRsnAlphabetSeries(list);
-        addRsnCodingDecoding(list);
-        addRsnBloodRelations(list);
-        addRsnDirectionSense(list);
-        addRsnSyllogism(list);
-        addRsnAnalogy(list);
-        addRsnClassification(list);
-        addRsnSeatingArrangement(list);
-        addRsnPuzzles(list);
-        addRsnRanking(list);
-        addRsnDataSufficiency(list);
-        addRsnClock(list);
-        addRsnCalendar(list);
-        addRsnVennDiagram(list);
-        addVrbGrammar(list);
-        addVrbTenses(list);
-        addVrbArticles(list);
-        addVrbPrepositions(list);
-        addVrbSva(list);
-        addVrbSynonymsAntonyms(list);
-        addVrbVocabulary(list);
-        addVrbErrorDetection(list);
-        addVrbSentenceCorrection(list);
-        addVrbFillBlanks(list);
-        addVrbParaJumbles(list);
-        addVrbReadingComp(list);
-        addVrbSentenceCompletion(list);
-        addComSpeaking(list);
-        addComListening(list);
-        addComGroupDiscussion(list);
-        addComPresentation(list);
-        addComPublicSpeaking(list);
-        addComInterviewComm(list);
-        addComBodyLanguage(list);
-        addComEmailWriting(list);
-        addJavaBasics(list);
-        addJavaOop(list);
-        addJavaCollections(list);
-        addJavaExceptions(list);
-        addJavaMultithreading(list);
-        addJava8(list);
-        addJavaJdbc(list);
-        addCppBasics(list);
-        addCppOop(list);
-        addCppStl(list);
-        addCppPointers(list);
-        addCppMemoryManagement(list);
-        addCppExceptions(list);
-        addPythonBasics(list);
-        addPythonDataTypes(list);
-        addPythonFunctions(list);
-        addPythonOop(list);
-        addPythonExceptions(list);
-        addPythonFileHandling(list);
-        addJsBasics(list);
-        addJsFunctions(list);
-        addJsArrays(list);
-        addJsObjects(list);
-        addJsEs6(list);
-        addJavaBackendSpring(list);
-        addJavaBackendSpringBoot(list);
-        addJavaBackendRestApi(list);
-        addJavaBackendSecurity(list);
-        addJavaBackendJpa(list);
-        addJavaBackendHibernate(list);
-        addDbSql(list);
-        addDbDbms(list);
-        addDbMysql(list);
-        addDbPostgresql(list);
-        addCsOs(list);
-        addCsNetworks(list);
-        addCsSoftwareEngineering(list);
-        addCsGit(list);
-        addCsSystemDesign(list);
-        */
+        // Top up remaining categories to guarantee >= 15 questions per topic:
+        AptitudeTopUp.populate(list);
+        ReasoningTopUp.populate(list);
+        VerbalAndCommTopUp.populate(list);
+        TechnicalTopUpPart1.populate(list);
+        TechnicalTopUpPart2.populate(list);
         return list;
     }
 

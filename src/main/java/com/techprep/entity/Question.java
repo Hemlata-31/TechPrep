@@ -46,6 +46,7 @@ public class Question {
     @Column(nullable = false)
     private Integer marks;
 
+    @Builder.Default
     @Column(nullable = false)
     private Boolean active = true;
 

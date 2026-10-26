@@ -38,21 +38,27 @@ public class PracticeSession {
     @Column(nullable = false)
     private Integer totalQuestions;
 
+    @Builder.Default
     @Column(nullable = false)
     private Integer attemptedQuestions = 0;
 
+    @Builder.Default
     @Column(nullable = false)
     private Integer correctAnswers = 0;
 
+    @Builder.Default
     @Column(nullable = false)
     private Integer wrongAnswers = 0;
 
+    @Builder.Default
     @Column(nullable = false)
     private Integer score = 0;
 
+    @Builder.Default
     @Column(nullable = false)
     private Double accuracy = 0.0; // Percentage e.g. 80.0
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private PracticeStatus status = PracticeStatus.IN_PROGRESS;

@@ -10,7 +10,8 @@ const api = {
         };
 
         try {
-            const response = await fetch(`${BASE_URL}${endpoint}`, {
+            const cleanEndpoint = endpoint.startsWith('/api/') ? endpoint.substring(4) : endpoint;
+            const response = await fetch(`${BASE_URL}${cleanEndpoint.startsWith('/') ? cleanEndpoint : '/' + cleanEndpoint}`, {
                 ...options,
                 headers
             });
