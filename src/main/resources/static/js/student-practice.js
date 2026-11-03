@@ -27,12 +27,28 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Set up breadcrumbs
     const bCat = document.getElementById('breadCat');
-    bCat.textContent = catName || 'Category';
-    bCat.href = `/student/category.html?id=${catId}&name=${encodeURIComponent(catName || '')}`;
+    const validCatName = (catName && catName !== 'null' && catName.trim() !== '') ? catName : null;
+    const validCatId = (catId && catId !== 'null') ? catId : null;
+    if (validCatName && validCatId) {
+        bCat.textContent = validCatName;
+        bCat.href = `/student/category.html?id=${validCatId}&name=${encodeURIComponent(validCatName)}`;
+    } else {
+        bCat.textContent = 'Categories';
+        bCat.href = '/student/categories.html';
+    }
 
     const bSub = document.getElementById('breadSub');
-    bSub.textContent = subName || 'Subject';
-    bSub.href = `/student/subcategory.html?id=${subId}&name=${encodeURIComponent(subName || '')}&catId=${catId}&catName=${encodeURIComponent(catName || '')}`;
+    const validSubName = (subName && subName !== 'null' && subName.trim() !== '') ? subName : null;
+    const validSubId = (subId && subId !== 'null') ? subId : null;
+    if (validSubName && validSubId) {
+        bSub.textContent = validSubName;
+        bSub.href = `/student/subcategory.html?id=${validSubId}&name=${encodeURIComponent(validSubName)}${validCatId ? `&catId=${validCatId}&catName=${encodeURIComponent(validCatName || '')}` : ''}`;
+    } else {
+        if (bSub.nextElementSibling && bSub.nextElementSibling.classList.contains('fa-chevron-right')) {
+            bSub.nextElementSibling.style.display = 'none';
+        }
+        bSub.style.display = 'none';
+    }
 
     document.getElementById('breadTopic').textContent = topicName;
     document.getElementById('topicTitle').textContent = `Practice: ${topicName}`;
@@ -42,7 +58,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const difficulty = document.getElementById('difficultySelect').value;
-        const numQuestions = parseInt(document.getElementById('questionsCount').value);
+        const qCountEl = document.getElementById('questionsCount');
+        const numQuestions = qCountEl ? parseInt(qCountEl.value) : 10;
 
         await startSession(topicId, difficulty, numQuestions, topicName);
     });

@@ -33,7 +33,7 @@ async function loadCategories() {
                     </div>
                     <h4>${escapeHtml(cat.name)}</h4>
                     <p>${escapeHtml(cat.description || 'Practice questions and mock tests for placement prep.')}</p>
-                    <a href="/student/category.html?id=${cat.id}" class="btn btn-outline btn-small" style="text-align: center;">Explore Subjects <i class="fas fa-arrow-right"></i></a>
+                    <a href="/student/category.html?id=${cat.id}&name=${encodeURIComponent(cat.name)}" class="btn btn-outline btn-small" style="text-align: center;">Explore Subjects <i class="fas fa-arrow-right"></i></a>
                 </div>
             `;
         }).join('');
