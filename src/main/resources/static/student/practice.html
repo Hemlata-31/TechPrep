@@ -6,6 +6,56 @@
     <title>Practice Session - TechPrep Academy</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/style.css">
+    <style>
+        /* ── Per-question timer ── */
+        #questionTimerWrapper {
+            display: flex; align-items: center; gap: 10px;
+            font-weight: 700; font-size: 1rem; color: #1e293b;
+        }
+        #questionTimerWrapper.warning { color: #f59e0b; }
+        #questionTimerWrapper.danger  { color: #ef4444; animation: pulse 0.8s ease-in-out infinite; }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.55} }
+        .timer-arc-wrap {
+            position: relative; width: 48px; height: 48px; flex-shrink: 0;
+        }
+        .timer-arc-wrap svg { transform: rotate(-90deg); }
+        .timer-arc-bg  { fill: none; stroke: #e2e8f0; stroke-width: 4; }
+        .timer-arc-fill{ fill: none; stroke: #3b82f6; stroke-width: 4;
+                         stroke-linecap: round; transition: stroke-dashoffset 0.9s linear, stroke 0.3s; }
+        .timer-arc-fill.warning { stroke: #f59e0b; }
+        .timer-arc-fill.danger  { stroke: #ef4444; }
+        .timer-arc-label {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.72rem; font-weight: 700;
+        }
+        /* Timed-mode toggle on setup card */
+        .timed-toggle-row {
+            display: flex; align-items: center; justify-content: space-between;
+            background: #f8fafc; border: 1px solid #e2e8f0;
+            border-radius: 10px; padding: 0.9rem 1rem;
+            margin-bottom: 1.25rem; cursor: pointer;
+        }
+        .timed-toggle-row:hover { background: #f1f5f9; }
+        .toggle-switch {
+            position: relative; width: 44px; height: 24px; flex-shrink: 0;
+        }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .toggle-slider {
+            position: absolute; cursor: pointer;
+            inset: 0; background: #cbd5e1; border-radius: 24px; transition: .3s;
+        }
+        .toggle-slider::before {
+            content: ""; position: absolute;
+            width: 18px; height: 18px; border-radius: 50%;
+            background: white; left: 3px; top: 3px;
+            transition: .3s; box-shadow: 0 1px 3px rgba(0,0,0,.2);
+        }
+        input:checked + .toggle-slider { background: #3b82f6; }
+        input:checked + .toggle-slider::before { transform: translateX(20px); }
+        @keyframes autoFlash { 0%,100%{background:#fff} 50%{background:#fef9c3} }
+        .auto-submit-flash { animation: autoFlash 0.6s ease 2; }
+    </style>
 </head>
 <body>
     <div class="dashboard-layout">
@@ -55,6 +105,18 @@
                         </select>
                     </div>
 
+                    <!-- Timed Mode Toggle -->
+                    <label class="timed-toggle-row" for="timedModeToggle">
+                        <div>
+                            <div style="font-weight:600; color:#1e293b;"><i class="fas fa-stopwatch" style="color:#3b82f6;"></i> Timed Mode</div>
+                            <div style="font-size:0.82rem; color:#64748b; margin-top:3px;">Easy: 60s &nbsp;|&nbsp; Medium: 90s &nbsp;|&nbsp; Hard: 120s — auto-submits on timeout</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="timedModeToggle" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </label>
+
                     <button type="submit" class="btn" style="font-size: 1.1rem; padding: 0.9rem;">
                         <i class="fas fa-play"></i> Start Practice Session
                     </button>
@@ -69,8 +131,22 @@
                         <span class="badge" id="topicBadge">Topic</span>
                         <span class="badge badge-outline" id="diffBadge">EASY</span>
                     </div>
-                    <div style="font-weight: 600; color: #1e293b;">
-                        Question <span id="currentQIndex">1</span> of <span id="totalQCount">10</span>
+                    <div style="display:flex; flex-direction:column; align-items:center; gap:4px;">
+                        <div style="font-weight: 600; color: #1e293b;">
+                            Question <span id="currentQIndex">1</span> of <span id="totalQCount">10</span>
+                        </div>
+                        <!-- Per-question Timer (hidden when timed mode off or question answered) -->
+                        <div id="questionTimerWrapper" style="display:none;">
+                            <div class="timer-arc-wrap">
+                                <svg width="48" height="48" viewBox="0 0 48 48">
+                                    <circle class="timer-arc-bg"  cx="24" cy="24" r="20"/>
+                                    <circle class="timer-arc-fill" id="timerArc" cx="24" cy="24" r="20"
+                                            stroke-dasharray="125.66" stroke-dashoffset="0"/>
+                                </svg>
+                                <div class="timer-arc-label" id="timerLabel">60</div>
+                            </div>
+                            <span id="timerText">60s</span>
+                        </div>
                     </div>
                     <div>
                         <button id="finishEarlyBtn" class="btn btn-danger btn-small">
