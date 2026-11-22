@@ -31,6 +31,7 @@ async function loadDashboard() {
         const progress = await api.get('/progress');
         renderGoalAndStreak(progress);
         renderOverallStats(progress);
+        renderDashCategoryMini(progress);
         renderTopicAnalysis(progress);
         renderImprovementTips(progress);
         renderRecentActivity(progress);
@@ -62,10 +63,87 @@ function renderGoalAndStreak(progress) {
     }
 }
 
+let _dashDonut = null;
+
 function renderOverallStats(progress) {
     document.getElementById('statAttempted').textContent = progress.questionsAttempted || 0;
-    document.getElementById('statAccuracy').textContent = (progress.overallAccuracy || 0) + '%';
+    document.getElementById('statAccuracy').textContent = (progress.overallAccuracy || 0).toFixed(1) + '%';
     document.getElementById('statCompleted').textContent = progress.practiceSessionsCompleted || 0;
+
+    // Mini donut on dashboard
+    const correct    = progress.questionsCorrect    || 0;
+    const wrong      = progress.questionsWrong      || 0;
+    const unattempted= progress.questionsUnattempted|| 0;
+
+    const correctEl = document.getElementById('dashCorrectCount');
+    const wrongEl   = document.getElementById('dashWrongCount');
+    if (correctEl) correctEl.textContent = correct;
+    if (wrongEl)   wrongEl.textContent   = wrong;
+
+    const canvas = document.getElementById('dashDonutChart');
+    if (!canvas) return;
+    if (_dashDonut) { _dashDonut.destroy(); _dashDonut = null; }
+
+    const total = correct + wrong + unattempted;
+    _dashDonut = new Chart(canvas.getContext('2d'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Correct', 'Wrong', 'Unattempted'],
+            datasets: [{
+                data: total > 0 ? [correct, wrong, unattempted] : [1, 0, 0],
+                backgroundColor: total > 0
+                    ? ['#10b981', '#ef4444', '#cbd5e1']
+                    : ['#e2e8f0', '#e2e8f0', '#e2e8f0'],
+                borderWidth: 0,
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '72%',
+            plugins: { legend: { display: false }, tooltip: { enabled: total > 0 } }
+        },
+        plugins: [{
+            id: 'center',
+            beforeDraw(chart) {
+                const { width, height, ctx } = chart;
+                const acc = total > 0 ? ((correct / total) * 100).toFixed(0) : 0;
+                ctx.save();
+                ctx.font = `bold ${width / 5}px sans-serif`;
+                ctx.fillStyle = '#1e293b';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(acc + '%', width / 2, height / 2);
+                ctx.restore();
+            }
+        }]
+    });
+}
+
+function renderDashCategoryMini(progress) {
+    const container = document.getElementById('dashCategoryMini');
+    if (!container) return;
+    const cats = (progress.categoryProgress || []).slice(0, 4);
+    if (cats.length === 0) {
+        container.innerHTML = '<p style="color:#94a3b8; font-size:0.85rem;">No category data yet.</p>';
+        return;
+    }
+    container.innerHTML = cats.map(c => {
+        const pct = parseFloat(c.accuracy || 0).toFixed(0);
+        const color = pct >= 70 ? '#10b981' : pct >= 40 ? '#f59e0b' : '#ef4444';
+        return `
+            <div style="margin-bottom: 0.6rem;">
+                <div style="display:flex; justify-content:space-between; font-size:0.82rem; margin-bottom:3px;">
+                    <span style="color:#374151; font-weight:500;">${c.categoryName}</span>
+                    <span style="color:${color}; font-weight:600;">${pct}%</span>
+                </div>
+                <div style="background:#e2e8f0; border-radius:99px; height:5px;">
+                    <div style="background:${color}; width:${pct}%; height:5px; border-radius:99px; transition:width 0.5s;"></div>
+                </div>
+            </div>
+        `;
+    }).join('');
 }
 
 function renderTopicAnalysis(progress) {

@@ -6,6 +6,7 @@
     <title>Student Dashboard - TechPrep Academy</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         .analysis-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
         .analysis-card { background: #fff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
@@ -97,6 +98,36 @@
                     <div class="stat-details">
                         <h3 id="statCompleted">0</h3>
                         <p>Sessions Completed</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mini Charts Row -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                <!-- Mini Accuracy Donut -->
+                <div class="card" style="padding: 1.25rem; display: flex; align-items: center; gap: 1.5rem;">
+                    <div style="position: relative; width: 100px; height: 100px; flex-shrink: 0;">
+                        <canvas id="dashDonutChart"></canvas>
+                    </div>
+                    <div>
+                        <h4 style="margin: 0 0 0.25rem; color: #1e293b;">Score Breakdown</h4>
+                        <p style="font-size: 0.82rem; color: #64748b; margin: 0 0 0.5rem;">
+                            <span style="color:#10b981; font-weight:600;" id="dashCorrectCount">0</span> correct &nbsp;
+                            <span style="color:#ef4444; font-weight:600;" id="dashWrongCount">0</span> wrong
+                        </p>
+                        <a href="/student/progress.html" style="font-size: 0.85rem; color: #3b82f6; font-weight: 500;">
+                            Full Analytics <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Category Progress -->
+                <div class="card" style="padding: 1.25rem;">
+                    <h4 style="margin: 0 0 0.75rem; color: #1e293b; font-size: 0.95rem;">
+                        <i class="fas fa-layer-group" style="color:#f59e0b;"></i> Category Accuracy
+                    </h4>
+                    <div id="dashCategoryMini" style="font-size: 0.85rem;">
+                        <p style="color:#94a3b8;">Loading...</p>
                     </div>
                 </div>
             </div>

@@ -6,6 +6,57 @@
     <title>Progress & Performance Dashboard - TechPrep Academy</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+        .chart-card {
+            background: #fff;
+            border-radius: 14px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        }
+        .chart-card h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 0 0 1.25rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .chart-card h3 i { font-size: 0.95rem; }
+        .chart-wrap { position: relative; height: 240px; }
+        .chart-wrap-tall { position: relative; height: 300px; }
+        .chart-timeline-wrap { position: relative; height: 220px; }
+        .diff-legend {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.82rem;
+            color: #64748b;
+        }
+        .diff-legend span { display: flex; align-items: center; gap: 5px; }
+        .diff-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+        .no-data-msg {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 180px;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            gap: 0.5rem;
+        }
+        .no-data-msg i { font-size: 2rem; }
+        body.dark-mode .chart-card { background: #1e293b; }
+        body.dark-mode .chart-card h3 { color: #f1f5f9; }
+    </style>
 </head>
 <body>
     <div class="dashboard-layout">
@@ -29,7 +80,7 @@
         <main class="main-content">
             <div class="header">
                 <div>
-                    <h1>Student Progress & Performance Dashboard</h1>
+                    <h1>Student Progress &amp; Performance Dashboard</h1>
                     <p style="color: #64748b; margin-top: 5px;">Comprehensive overview of your practice sessions and mock test performance</p>
                 </div>
             </div>
@@ -66,6 +117,68 @@
                 </div>
             </div>
 
+            <!-- ======= CHARTS ROW 1 ======= -->
+            <div class="charts-grid">
+
+                <!-- Accuracy Donut -->
+                <div class="chart-card">
+                    <h3><i class="fas fa-bullseye" style="color:#3b82f6;"></i> Overall Score Breakdown</h3>
+                    <div class="chart-wrap">
+                        <canvas id="accuracyDonutChart"></canvas>
+                    </div>
+                    <div class="diff-legend" id="donutLegend">
+                        <span><span class="diff-dot" style="background:#10b981;"></span>Correct</span>
+                        <span><span class="diff-dot" style="background:#ef4444;"></span>Wrong</span>
+                        <span><span class="diff-dot" style="background:#cbd5e1;"></span>Unattempted</span>
+                    </div>
+                </div>
+
+                <!-- Difficulty Breakdown Bar -->
+                <div class="chart-card">
+                    <h3><i class="fas fa-signal" style="color:#8b5cf6;"></i> Accuracy by Difficulty</h3>
+                    <div class="chart-wrap">
+                        <canvas id="difficultyBarChart"></canvas>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ======= CHARTS ROW 2 ======= -->
+            <div class="charts-grid">
+
+                <!-- Performance Timeline Line Chart -->
+                <div class="chart-card" style="grid-column: 1 / -1;">
+                    <h3><i class="fas fa-chart-line" style="color:#0ea5e9;"></i> Performance Timeline
+                        <span style="font-size:0.78rem; color:#94a3b8; font-weight:400; margin-left:8px;">(last 15 sessions)</span>
+                    </h3>
+                    <div class="chart-timeline-wrap">
+                        <canvas id="timelineChart"></canvas>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ======= CHARTS ROW 3 ======= -->
+            <div class="charts-grid">
+
+                <!-- Category Accuracy Bar -->
+                <div class="chart-card">
+                    <h3><i class="fas fa-layer-group" style="color:#f59e0b;"></i> Category-wise Accuracy</h3>
+                    <div class="chart-wrap-tall">
+                        <canvas id="categoryBarChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Topic Top/Bottom Horizontal Bar -->
+                <div class="chart-card">
+                    <h3><i class="fas fa-ranking-star" style="color:#06b6d4;"></i> Top 8 Topics by Accuracy</h3>
+                    <div class="chart-wrap-tall">
+                        <canvas id="topicBarChart"></canvas>
+                    </div>
+                </div>
+
+            </div>
+
             <!-- Strongest vs Weakest Topics Grid -->
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem;">
                 <div class="card" style="margin-bottom: 0;">
@@ -87,17 +200,7 @@
                 </div>
             </div>
 
-            <!-- Category-wise Progress -->
-            <div class="course-section">
-                <h3 class="section-title">Category-wise Progress</h3>
-                <div class="card">
-                    <div id="categoryProgressContainer">
-                        <p>Loading category progress...</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Topic-wise Performance -->
+            <!-- Topic-wise Performance Table -->
             <div class="course-section">
                 <h3 class="section-title">Topic-wise Performance</h3>
                 <div class="card">
@@ -109,7 +212,7 @@
 
             <!-- Recent Attempts -->
             <div class="course-section">
-                <h3 class="section-title">Recent Practice & Mock Test Attempts</h3>
+                <h3 class="section-title">Recent Practice &amp; Mock Test Attempts</h3>
                 <div id="recentAttemptsContainer" class="chapter-list">
                     <p>Loading recent attempts...</p>
                 </div>
@@ -121,4 +224,3 @@
     <script src="/js/student-progress.js"></script>
 </body>
 </html>
-
