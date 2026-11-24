@@ -21,4 +21,6 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     // For counts
     long countByTopicId(Long topicId);
     long countByTopicIdAndActiveTrue(Long topicId);
+    long countByActiveTrue();
+    Page<Question> findByActiveTrue(Pageable pageable);
 }

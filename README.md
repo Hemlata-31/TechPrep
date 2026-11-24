@@ -26,6 +26,7 @@
 | Feature | Description |
 |---|---|
 | 🔐 **Secure Authentication** | JWT-based login & registration with BCrypt password hashing |
+| 📅 **Daily Challenge** | Fresh Question of the Day with streak multiplier, live success rate, and countdown timer |
 | 📚 **Organized Question Bank** | 3-level hierarchy: Category → SubCategory → Topic (15+ questions per topic) |
 | 🎯 **Practice Sessions** | Topic-wise practice with difficulty selection, shuffle, streak tracking |
 | 📝 **Mock Tests** | Timed tests auto-built from the question bank with instant evaluation |
@@ -283,6 +284,12 @@ TestEntity
 | POST | `/api/student/bookmarks/{questionId}` | Bookmark a question |
 | DELETE | `/api/student/bookmarks/{questionId}` | Remove bookmark |
 | GET | `/api/student/bookmarks` | List all saved questions |
+
+### Daily Challenge
+| Method | Endpoint | Access | Description |
+|---|---|---|---|
+| GET | `/api/daily-challenge` | Any auth user | Fetch Question of the Day & participant statistics |
+| POST | `/api/daily-challenge/submit` | Student only | Submit answer, earn bonus points, and extend streak |
 
 ### AI
 | Method | Endpoint | Access | Description |

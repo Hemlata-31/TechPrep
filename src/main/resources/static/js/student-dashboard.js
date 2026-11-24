@@ -38,6 +38,9 @@ async function loadDashboard() {
     } catch (e) {
         console.error('Dashboard load error:', e);
     }
+
+    loadDailyChallenge();
+    startDailyCountdown();
 }
 
 function renderGoalAndStreak(progress) {
@@ -294,4 +297,224 @@ function renderRecentActivity(progress) {
         `;
         container.appendChild(item);
     });
+}
+
+// =====================================================================
+// DAILY CHALLENGE (QUESTION OF THE DAY) ENGINE
+// =====================================================================
+let currentDailyChallenge = null;
+let selectedDcOption = null;
+let dcStartTime = Date.now();
+
+async function loadDailyChallenge() {
+    const loadingEl = document.getElementById('dcLoading');
+    const contentEl = document.getElementById('dcContent');
+
+    try {
+        currentDailyChallenge = await api.get('/daily-challenge');
+        if (!currentDailyChallenge) {
+            loadingEl.innerHTML = '<p style="color:#94a3b8;">No challenge available today.</p>';
+            return;
+        }
+
+        renderDailyChallenge(currentDailyChallenge);
+        loadingEl.style.display = 'none';
+        contentEl.style.display = 'block';
+        dcStartTime = Date.now();
+
+    } catch (err) {
+        console.error('Failed to load daily challenge:', err);
+        loadingEl.innerHTML = '<p style="color:#ef4444;"><i class="fas fa-exclamation-triangle"></i> Failed to load today\'s challenge.</p>';
+    }
+}
+
+function renderDailyChallenge(dc) {
+    const topicBadge = document.getElementById('dcTopicBadge');
+    const diffBadge = document.getElementById('dcDiffBadge');
+    const qText = document.getElementById('dcQuestionText');
+    const optA = document.getElementById('dcOptA');
+    const optB = document.getElementById('dcOptB');
+    const optC = document.getElementById('dcOptC');
+    const optD = document.getElementById('dcOptD');
+    const submitBtn = document.getElementById('dcSubmitBtn');
+    const participants = document.getElementById('dcParticipants');
+    const successRate = document.getElementById('dcSuccessRate');
+
+    topicBadge.textContent = `${dc.categoryName || 'General'} • ${dc.topicName}`;
+    diffBadge.textContent = dc.difficulty || 'Medium';
+    qText.textContent = dc.questionText;
+
+    optA.textContent = dc.optionA;
+    optB.textContent = dc.optionB;
+    optC.textContent = dc.optionC;
+    optD.textContent = dc.optionD;
+
+    participants.textContent = dc.participantsToday || 0;
+    successRate.textContent = (dc.successRate || 0) + '%';
+
+    const optionItems = document.querySelectorAll('.dc-option-item');
+
+    if (dc.isAttempted) {
+        // Already attempted today
+        submitBtn.style.display = 'none';
+        optionItems.forEach(item => {
+            const opt = item.getAttribute('data-option');
+            item.style.cursor = 'default';
+            if (opt === dc.correctAnswer) {
+                item.classList.add('correct');
+            }
+            if (opt === dc.userSelectedAnswer && !dc.isCorrect) {
+                item.classList.add('wrong');
+            }
+        });
+
+        displayDailyChallengeResult({
+            isCorrect: dc.isCorrect,
+            selectedAnswer: dc.userSelectedAnswer,
+            correctAnswer: dc.correctAnswer,
+            explanation: dc.explanation,
+            bonusPointsAwarded: dc.isCorrect ? dc.bonusPoints : 0
+        });
+
+    } else {
+        // Not yet attempted
+        submitBtn.style.display = 'inline-flex';
+        submitBtn.disabled = true;
+
+        optionItems.forEach(item => {
+            item.className = 'dc-option-item';
+            item.style.cursor = 'pointer';
+
+            item.onclick = () => {
+                if (currentDailyChallenge && currentDailyChallenge.isAttempted) return;
+                optionItems.forEach(i => i.classList.remove('selected'));
+                item.classList.add('selected');
+                selectedDcOption = item.getAttribute('data-option');
+                submitBtn.disabled = false;
+            };
+        });
+
+        submitBtn.onclick = submitDailyChallenge;
+    }
+}
+
+async function submitDailyChallenge() {
+    if (!selectedDcOption || !currentDailyChallenge || currentDailyChallenge.isAttempted) return;
+
+    const submitBtn = document.getElementById('dcSubmitBtn');
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+
+    const timeTaken = Math.max(1, Math.round((Date.now() - dcStartTime) / 1000));
+
+    try {
+        const response = await api.post('/daily-challenge/submit', {
+            selectedAnswer: selectedDcOption,
+            timeTakenSeconds: timeTaken
+        });
+
+        currentDailyChallenge.isAttempted = true;
+        currentDailyChallenge.isCorrect = response.isCorrect;
+        currentDailyChallenge.userSelectedAnswer = response.selectedAnswer;
+        currentDailyChallenge.correctAnswer = response.correctAnswer;
+        currentDailyChallenge.explanation = response.explanation;
+
+        // Visual feedback on option cards
+        document.querySelectorAll('.dc-option-item').forEach(item => {
+            const opt = item.getAttribute('data-option');
+            item.style.cursor = 'default';
+            if (opt === response.correctAnswer) {
+                item.classList.add('correct');
+            }
+            if (opt === response.selectedAnswer && !response.isCorrect) {
+                item.classList.add('wrong');
+            }
+        });
+
+        submitBtn.style.display = 'none';
+
+        // Update stats counters
+        document.getElementById('dcParticipants').textContent = response.participantsToday || 1;
+        document.getElementById('dcSuccessRate').textContent = (response.successRate || 0) + '%';
+
+        // Update streaks on dashboard widget
+        if (response.currentStreak) {
+            document.getElementById('currentStreak').textContent = response.currentStreak;
+        }
+        if (response.longestStreak) {
+            document.getElementById('longestStreak').textContent = response.longestStreak;
+        }
+
+        displayDailyChallengeResult(response);
+
+        // Confetti celebration if solved correctly!
+        if (response.isCorrect && typeof confetti === 'function') {
+            confetti({
+                particleCount: 120,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+        }
+
+    } catch (err) {
+        console.error('Error submitting daily challenge:', err);
+        alert(err.message || 'Failed to submit daily challenge.');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Challenge';
+    }
+}
+
+function displayDailyChallengeResult(res) {
+    const resultBox = document.getElementById('dcResultBox');
+    const banner = document.getElementById('dcFeedbackBanner');
+    const expText = document.getElementById('dcExplanation');
+
+    resultBox.style.display = 'block';
+
+    if (res.isCorrect) {
+        banner.style.background = '#ecfdf5';
+        banner.style.color = '#065f46';
+        banner.style.border = '1px solid #a7f3d0';
+        banner.innerHTML = `<i class="fas fa-check-circle" style="font-size:1.2rem; color:#10b981;"></i> 
+            <div>
+                <div><strong>Outstanding! You solved today's challenge!</strong></div>
+                <div style="font-size:0.85rem; font-weight:normal; margin-top:2px;">You earned <span style="font-weight:700; color:#047857;">+${res.bonusPointsAwarded || 15} Bonus Points</span> & kept your streak alive 🔥</div>
+            </div>`;
+    } else {
+        banner.style.background = '#fef2f2';
+        banner.style.color = '#991b1b';
+        banner.style.border = '1px solid #fecaca';
+        banner.innerHTML = `<i class="fas fa-times-circle" style="font-size:1.2rem; color:#ef4444;"></i>
+            <div>
+                <div><strong>Good try! Correct answer was Option ${res.correctAnswer}.</strong></div>
+                <div style="font-size:0.85rem; font-weight:normal; margin-top:2px;">Review the solution below to learn the concept.</div>
+            </div>`;
+    }
+
+    expText.textContent = res.explanation || 'No detailed explanation provided for this question.';
+}
+
+function startDailyCountdown() {
+    const countdownEl = document.getElementById('dcCountdown');
+    if (!countdownEl) return;
+
+    function update() {
+        const now = new Date();
+        const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
+        const diff = midnight - now;
+
+        if (diff <= 0) {
+            countdownEl.textContent = '00:00:00';
+            return;
+        }
+
+        const hrs = Math.floor(diff / (1000 * 60 * 60));
+        const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+        countdownEl.textContent = `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+
+    update();
+    setInterval(update, 1000);
 }
