@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solve Problem - TechPrep Coding Arena</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+    <style>
+        body { margin: 0; background: #f1f5f9; }
+        .arena-topbar {
+            display: flex; justify-content: space-between; align-items: center;
+            background: #0f172a; color: #fff; padding: 0.65rem 1.25rem;
+        }
+        .arena-topbar a { color: #cbd5e1; text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; gap: 6px; }
+        .arena-topbar a:hover { color: #fff; }
+        .arena-grid {
+            display: grid; grid-template-columns: 44% 56%; gap: 0.75rem;
+            padding: 0.75rem; height: calc(100vh - 54px); box-sizing: border-box;
+        }
+        @media (max-width: 960px) { .arena-grid { grid-template-columns: 1fr; height: auto; } }
+        .pane-card {
+            background: #fff; border-radius: 10px; border: 1px solid #e2e8f0;
+            display: flex; flex-direction: column; overflow: hidden;
+        }
+        .pane-tabs {
+            display: flex; gap: 1rem; padding: 0.65rem 1rem;
+            border-bottom: 1px solid #e2e8f0; background: #f8fafc;
+        }
+        .pane-tab {
+            background: none; border: none; font-weight: 600; color: #64748b;
+            cursor: pointer; padding: 4px 8px; border-radius: 6px; font-size: 0.88rem;
+        }
+        .pane-tab.active { color: #2563eb; background: #eff6ff; }
+        .pane-scroll { padding: 1.25rem; overflow-y: auto; flex: 1; }
+        .diff-badge { padding: 3px 10px; border-radius: 99px; font-size: 0.75rem; font-weight: 700; }
+        .diff-EASY { color: #16a34a; background: #dcfce7; }
+        .diff-MEDIUM { color: #d97706; background: #fef3c7; }
+        .diff-HARD { color: #dc2626; background: #fee2e2; }
+        .sample-box {
+            background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
+            padding: 0.85rem; margin-top: 0.75rem; font-size: 0.88rem;
+        }
+        .sample-box pre { margin: 4px 0 0; font-family: Consolas, monospace; white-space: pre-wrap; color: #1e293b; }
+        .editor-toolbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0.55rem 0.9rem; border-bottom: 1px solid #e2e8f0; background: #f8fafc;
+        }
+        .editor-toolbar select {
+            padding: 0.38rem 0.75rem; border-radius: 6px; border: 1px solid #cbd5e1; font-weight: 600;
+        }
+        #monacoContainer { flex: 1; min-height: 320px; width: 100%; }
+        .console-panel {
+            border-top: 1px solid #e2e8f0; background: #f8fafc;
+            max-height: 230px; overflow-y: auto; padding: 0.85rem 1rem;
+        }
+        .verdict-ACCEPTED { color: #16a34a; font-weight: 700; font-size: 1rem; }
+        .verdict-WRONG_ANSWER, .verdict-COMPILATION_ERROR, .verdict-RUNTIME_ERROR, .verdict-API_ERROR {
+            color: #dc2626; font-weight: 700; font-size: 1rem;
+        }
+        .tc-pill {
+            display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem;
+            font-weight: 600; margin: 4px 4px 4px 0;
+        }
+        .tc-pass { background: #dcfce7; color: #166534; }
+        .tc-fail { background: #fee2e2; color: #991b1b; }
+    </style>
+</head>
+<body>
+    <div class="arena-topbar">
+        <a href="/student/coding.html"><i class="fas fa-arrow-left"></i> Back to Problems</a>
+        <div style="font-weight:700; font-size:0.95rem;" id="topbarTitle">TechPrep Coding Arena</div>
+        <a href="/student/dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+    </div>
+
+    <div class="arena-grid">
+        <!-- Left: Problem Description & Submissions -->
+        <div class="pane-card">
+            <div class="pane-tabs">
+                <button class="pane-tab active" id="tabDescBtn" onclick="switchLeftTab('desc')">
+                    <i class="fas fa-file-alt"></i> Description
+                </button>
+                <button class="pane-tab" id="tabSubBtn" onclick="switchLeftTab('subs')">
+                    <i class="fas fa-history"></i> Submissions
+                </button>
+            </div>
+
+            <div class="pane-scroll" id="descPane">
+                <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+                    <h2 id="problemTitle" style="margin:0;">Loading...</h2>
+                    <span id="problemDiff" class="diff-badge"></span>
+                    <span id="problemTag" style="background:#eff6ff; color:#2563eb; padding:3px 9px; border-radius:6px; font-size:0.75rem; font-weight:600;"></span>
+                    <span id="solvedBadge" style="display:none; color:#10b981; font-weight:700; font-size:0.85rem;">
+                        <i class="fas fa-check-circle"></i> Solved
+                    </span>
+                </div>
+
+                <div id="problemDescription" style="margin-top:1rem; line-height:1.65; color:#334155; white-space:pre-line;"></div>
+
+                <div id="sampleCasesContainer" style="margin-top:1.25rem;"></div>
+
+                <div id="constraintsBox" style="margin-top:1.25rem; display:none;">
+                    <h4 style="margin-bottom:6px; color:#1e293b;">Constraints</h4>
+                    <pre id="constraintsText" style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:0.75rem; font-size:0.84rem; color:#475569; white-space:pre-wrap;"></pre>
+                </div>
+            </div>
+
+            <div class="pane-scroll" id="subsPane" style="display:none;">
+                <h4 style="margin-top:0;">Your Submissions</h4>
+                <div id="submissionsList" style="color:#64748b;">Loading submissions...</div>
+            </div>
+        </div>
+
+        <!-- Right: Code Editor & Output Console -->
+        <div class="pane-card">
+            <div class="editor-toolbar">
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <label for="languageSelect" style="font-size:0.85rem; font-weight:600; color:#475569;">Language:</label>
+                    <select id="languageSelect">
+                        <option value="JAVA">Java</option>
+                        <option value="PYTHON">Python 3</option>
+                        <option value="CPP">C++</option>
+                    </select>
+                </div>
+                <div style="display:flex; gap:8px;">
+                    <button id="resetCodeBtn" class="btn btn-outline btn-small" title="Reset to starter code">
+                        <i class="fas fa-undo"></i> Reset
+                    </button>
+                    <button id="runCodeBtn" class="btn btn-outline btn-small" style="border-color:#3b82f6; color:#2563eb;">
+                        <i class="fas fa-play"></i> Run
+                    </button>
+                    <button id="submitCodeBtn" class="btn btn-small" style="background:#10b981; border-color:#10b981;">
+                        <i class="fas fa-cloud-upload-alt"></i> Submit
+                    </button>
+                </div>
+            </div>
+
+            <div id="monacoContainer"></div>
+
+            <div class="console-panel" id="consolePanel">
+                <div style="color:#64748b; font-size:0.88rem;">
+                    <i class="fas fa-terminal"></i> Click <strong>Run</strong> to test against sample cases, or <strong>Submit</strong> to evaluate all test cases.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/loader.min.js"></script>
+    <script src="/js/student-coding-problem.js"></script>
+</body>
+</html>
+

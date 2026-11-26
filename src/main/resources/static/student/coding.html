@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSA Coding Arena - TechPrep Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .coding-stats { display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .stat-pill { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 0.9rem 1.25rem; display: flex; align-items: center; gap: 0.75rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .filter-bar { display: flex; gap: 0.75rem; margin-bottom: 1.25rem; flex-wrap: wrap; align-items: center; }
+        .filter-bar select, .filter-bar input { padding: 0.55rem 0.85rem; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.9rem; background: #fff; }
+        .problem-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+        .problem-table th, .problem-table td { padding: 0.95rem 1.15rem; text-align: left; border-bottom: 1px solid #f1f5f9; }
+        .problem-table th { background: #f8fafc; color: #475569; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.04em; }
+        .problem-table tr:hover { background: #f8fafc; }
+        .diff-EASY { color: #16a34a; background: #dcfce7; padding: 3px 10px; border-radius: 99px; font-size: 0.78rem; font-weight: 700; }
+        .diff-MEDIUM { color: #d97706; background: #fef3c7; padding: 3px 10px; border-radius: 99px; font-size: 0.78rem; font-weight: 700; }
+        .diff-HARD { color: #dc2626; background: #fee2e2; padding: 3px 10px; border-radius: 99px; font-size: 0.78rem; font-weight: 700; }
+        .tag-pill { background: #eff6ff; color: #2563eb; padding: 3px 9px; border-radius: 6px; font-size: 0.78rem; font-weight: 600; }
+        .status-solved { color: #10b981; font-weight: 700; }
+        .status-todo { color: #94a3b8; }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <h2>TechPrep</h2>
+            <nav>
+                <ul>
+                    <li><a href="/student/dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="/student/categories.html"><i class="fas fa-th-list"></i> Categories</a></li>
+                    <li><a href="/student/coding.html" class="active"><i class="fas fa-code"></i> Coding Arena</a></li>
+                    <li><a href="/student/progress.html"><i class="fas fa-chart-line"></i> Progress</a></li>
+                    <li><a href="/student/leaderboard.html"><i class="fas fa-trophy"></i> Leaderboard</a></li>
+                    <li><a href="/student/mock-tests.html"><i class="fas fa-laptop-code"></i> Mock Tests</a></li>
+                    <li><a href="/student/history.html"><i class="fas fa-history"></i> Practice History</a></li>
+                    <li><a href="/student/saved-questions.html"><i class="fas fa-bookmark"></i> Saved Questions</a></li>
+                    <li><a href="#" id="themeToggleBtn"><i class="fas fa-moon"></i> Dark Mode</a></li>
+                    <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:1.25rem;">
+                <div>
+                    <h1 style="margin:0;"><i class="fas fa-code" style="color:#3b82f6;"></i> DSA Coding Arena</h1>
+                    <p style="color:#64748b; margin-top:4px;">Practice classic interview coding problems in Java, Python, or C++ with live test-case execution.</p>
+                </div>
+            </div>
+
+            <div class="coding-stats">
+                <div class="stat-pill">
+                    <i class="fas fa-check-circle" style="color:#10b981; font-size:1.4rem;"></i>
+                    <div>
+                        <div style="font-size:0.78rem; color:#64748b;">Solved</div>
+                        <div style="font-size:1.15rem; font-weight:700;" id="solvedStat">0 / 0</div>
+                    </div>
+                </div>
+                <div class="stat-pill">
+                    <i class="fas fa-bolt" style="color:#f59e0b; font-size:1.4rem;"></i>
+                    <div>
+                        <div style="font-size:0.78rem; color:#64748b;">Runner</div>
+                        <div style="font-size:0.95rem; font-weight:600;">Java · Python · C++ (Free Sandbox)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-bar">
+                <input type="text" id="searchInput" placeholder="Search problems (e.g. Two Sum)..." style="min-width:240px;">
+                <select id="difficultyFilter">
+                    <option value="">All Difficulties</option>
+                    <option value="EASY">Easy</option>
+                    <option value="MEDIUM">Medium</option>
+                    <option value="HARD">Hard</option>
+                </select>
+                <select id="tagFilter">
+                    <option value="">All Topics</option>
+                </select>
+            </div>
+
+            <table class="problem-table">
+                <thead>
+                    <tr>
+                        <th style="width:70px;">Status</th>
+                        <th>Problem</th>
+                        <th>Topic</th>
+                        <th>Difficulty</th>
+                        <th style="text-align:right;">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="problemsTableBody">
+                    <tr><td colspan="5" style="text-align:center; padding:2rem; color:#64748b;">Loading problems...</td></tr>
+                </tbody>
+            </table>
+        </main>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/student-coding.js"></script>
+</body>
+</html>
+
