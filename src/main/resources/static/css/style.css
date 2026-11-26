@@ -216,8 +216,8 @@ a:hover {
 }
 
 .sidebar nav ul li a:hover, .sidebar nav ul li a.active {
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--bg-card);
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--sidebar-text);
 }
 
 .sidebar nav ul li a#logoutBtn {
@@ -984,5 +984,34 @@ body.dark-theme .diff-HARD { background: rgba(220, 38, 38, 0.2) !important; colo
 
 body.dark-theme .tc-pass { background: rgba(22, 163, 74, 0.22) !important; color: #4ade80 !important; }
 body.dark-theme .tc-fail { background: rgba(220, 38, 38, 0.22) !important; color: #f87171 !important; }
+
+body.dark-theme .highlight-user,
+body.dark-theme tr.highlight-user td {
+    background: rgba(59, 130, 246, 0.22) !important;
+    color: #f8fafc !important;
+}
+
+body.dark-theme .tab-bar {
+    border-bottom-color: #334155 !important;
+}
+
+body.dark-theme .tab-btn {
+    color: #94a3b8 !important;
+}
+
+body.dark-theme .tab-btn:hover {
+    background: #263348 !important;
+    color: #f1f5f9 !important;
+}
+
+body.dark-theme .tab-btn.active {
+    background: rgba(59, 130, 246, 0.22) !important;
+    color: #93c5fd !important;
+}
+
+body.dark-theme .my-rank-banner {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important;
+    border: 1px solid #334155;
+}
 
 
