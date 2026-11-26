@@ -18,6 +18,10 @@ const CIRCUMFERENCE    = 2 * Math.PI * 20; // r=20 → 125.66
 
 const DIFFICULTY_TIME = { EASY: 60, MEDIUM: 90, HARD: 120 };
 
+// ── Notes state ──
+let activeTopicId      = null;    // set from URL param at DOMContentLoaded
+let notesDebounceTimer = null;    // debounce for auto-save
+
 // ─────────────────────────────────────────────
 // INIT
 // ─────────────────────────────────────────────
@@ -31,6 +35,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const params    = new URLSearchParams(window.location.search);
     const topicId   = params.get('topicId');
+    activeTopicId   = topicId;    // keep globally for Notes panel
     const topicName = params.get('topicName');
     const subId     = params.get('subId');
     const subName   = params.get('subName');
@@ -147,6 +152,9 @@ async function startSession(topicId, difficulty, numberOfQuestions, topicName) {
 
         currentQuestionOrder = 1;
         await loadQuestion(currentQuestionOrder);
+
+        // Load existing note for this topic (non-blocking)
+        loadNoteForTopic();
 
     } catch (err) {
         console.error(err);
@@ -495,4 +503,71 @@ async function fetchAIExplanation() {
         errorDiv.style.display   = 'block';
         btn.style.display = 'inline-block';
     }
+}
+
+// ─────────────────────────────────────────────
+// NOTES PANEL
+// ─────────────────────────────────────────────
+
+function toggleNotesPanel() {
+    const body = document.getElementById('notesBody');
+    const icon = document.getElementById('notesToggleIcon');
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    icon.classList.toggle('open', !isOpen);
+}
+
+async function loadNoteForTopic() {
+    if (!activeTopicId) return;
+    try {
+        const note = await api.get(`/api/notes/${activeTopicId}`);
+        if (note && note.content) {
+            document.getElementById('notesTextarea').value = note.content;
+        }
+    } catch (err) {
+        // 204 No Content or error — textarea stays empty, that's fine
+        if (err.status !== 204) {
+            console.debug('No existing note for this topic or error loading note:', err);
+        }
+    }
+
+    // Attach debounce auto-save listener (once)
+    const textarea = document.getElementById('notesTextarea');
+    textarea.addEventListener('input', () => {
+        clearTimeout(notesDebounceTimer);
+        showNoteStatus('saving');
+        notesDebounceTimer = setTimeout(saveNote, 1500);
+    });
+}
+
+async function saveNote() {
+    if (!activeTopicId) return;
+    clearTimeout(notesDebounceTimer);
+    const content = document.getElementById('notesTextarea').value;
+    showNoteStatus('saving');
+    try {
+        await api.put(`/api/notes/${activeTopicId}`, { content });
+        showNoteStatus('saved');
+        setTimeout(() => hideNoteStatus(), 2500);
+    } catch (err) {
+        console.error('Failed to save note:', err);
+        hideNoteStatus();
+    }
+}
+
+function showNoteStatus(state) {
+    const savedMsg  = document.getElementById('notesSavedMsg');
+    const savingMsg = document.getElementById('notesSavingMsg');
+    if (state === 'saved') {
+        savingMsg.style.display = 'none';
+        savedMsg.style.display  = 'inline';
+    } else {
+        savedMsg.style.display  = 'none';
+        savingMsg.style.display = 'inline';
+    }
+}
+
+function hideNoteStatus() {
+    document.getElementById('notesSavedMsg').style.display  = 'none';
+    document.getElementById('notesSavingMsg').style.display = 'none';
 }
