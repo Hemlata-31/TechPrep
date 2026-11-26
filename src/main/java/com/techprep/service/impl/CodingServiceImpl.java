@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CodingServiceImpl implements CodingService {
 
-    private static final String PISTON_EXECUTE_URL = "https://emkc.org/api/v2/piston/execute";
+    private static final String JUDGE0_EXECUTE_URL = "https://ce.judge0.com/submissions?base64_encoded=false&wait=true";
 
     private final CodingProblemRepository problemRepository;
     private final CodingTestCaseRepository testCaseRepository;
@@ -278,54 +278,53 @@ public class CodingServiceImpl implements CodingService {
     }
 
     private PistonResult callPiston(String lang, String source, String stdin) {
-        String pistonLang;
-        String version;
-        String fileName;
-
+        int languageId;
         switch (lang) {
             case "JAVA":
-                pistonLang = "java"; version = "15.0.2"; fileName = "Main.java";
+                languageId = 91; // Java (JDK 17.0.6)
                 break;
             case "PYTHON":
-                pistonLang = "python"; version = "3.10.0"; fileName = "main.py";
+                languageId = 100; // Python (3.12.5)
                 break;
             case "CPP":
-                pistonLang = "c++"; version = "10.2.0"; fileName = "main.cpp";
+                languageId = 105; // C++ (GCC 14.1.0)
                 break;
             default:
                 return PistonResult.apiError("Unsupported language: " + lang);
         }
 
         try {
-            Map<String, Object> fileMap = new HashMap<>();
-            fileMap.put("name", fileName);
-            fileMap.put("content", source);
-
             Map<String, Object> payload = new HashMap<>();
-            payload.put("language", pistonLang);
-            payload.put("version", version);
-            payload.put("files", List.of(fileMap));
+            payload.put("source_code", source);
+            payload.put("language_id", languageId);
             payload.put("stdin", stdin != null ? stdin : "");
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
 
             ResponseEntity<String> resp = restTemplate.postForEntity(
-                    PISTON_EXECUTE_URL, new HttpEntity<>(payload, headers), String.class);
+                    JUDGE0_EXECUTE_URL, new HttpEntity<>(payload, headers), String.class);
 
             JsonNode root = objectMapper.readTree(resp.getBody());
-            JsonNode compile = root.path("compile");
-            if (!compile.isMissingNode() && compile.path("code").asInt(0) != 0) {
-                String cErr = compile.path("stderr").asText("");
-                if (cErr.isBlank()) cErr = compile.path("output").asText("Compilation failed");
+            int statusId = root.path("status").path("id").asInt(0);
+
+            if (statusId == 6) {
+                String cErr = root.path("compile_output").asText("Compilation failed");
                 return PistonResult.compileError(cErr);
             }
 
-            JsonNode run = root.path("run");
             PistonResult result = new PistonResult();
-            result.stdout = run.path("stdout").asText("");
-            result.stderr = run.path("stderr").asText("");
-            result.exitCode = run.path("code").asInt(0);
+            result.stdout = root.path("stdout").isNull() ? "" : root.path("stdout").asText("");
+            String errOut = root.path("stderr").isNull() ? "" : root.path("stderr").asText("");
+            if (errOut.isBlank() && !root.path("message").isNull()) {
+                errOut = root.path("message").asText("");
+            }
+            result.stderr = errOut;
+            // Status 3 = Accepted (ran without runtime error/TLE); anything else > 4 is runtime/TLE error
+            result.exitCode = (statusId == 3) ? 0 : 1;
+            if (statusId == 5 && result.stderr.isBlank()) {
+                result.stderr = "Time Limit Exceeded";
+            }
             return result;
         } catch (Exception e) {
             return PistonResult.apiError("Code runner service unavailable: " + e.getMessage());

@@ -25,21 +25,21 @@
 }
 
 body.dark-theme {
-    --bg-main: #0B1120;
-    --bg-card: #111827;
-    --text-primary: #F8FAFC;
-    --text-secondary: #94A3B8;
+    --bg-main: #0f172a;
+    --bg-card: #1e293b;
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
     --border: #334155;
-    --border-light: #1e293b;
-    --sidebar-bg: #0B1120;
-    --sidebar-text: #F8FAFC;
+    --border-light: #263348;
+    --sidebar-bg: #0b1120;
+    --sidebar-text: #f8fafc;
     --sidebar-text-muted: #94a3b8;
-    --sidebar-hover: rgba(255, 255, 255, 0.05);
-    --shadow: 0 4px 6px rgba(0,0,0,0.2);
-    --shadow-hover: 0 10px 25px rgba(0,0,0,0.4);
-    --input-bg: #1e293b;
-    --success-bg: rgba(34, 197, 94, 0.15);
-    --danger-bg: rgba(239, 68, 68, 0.15);
+    --sidebar-hover: rgba(255, 255, 255, 0.08);
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    --shadow-hover: 0 10px 25px rgba(0, 0, 0, 0.5);
+    --input-bg: #0f172a;
+    --success-bg: rgba(34, 197, 94, 0.16);
+    --danger-bg: rgba(239, 68, 68, 0.16);
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -803,4 +803,186 @@ a:hover {
 .result-row:last-child {
     border-bottom: none;
 }
+
+/* ── Comprehensive Dark Theme Overrides ── */
+body.dark-theme {
+    background-color: #0f172a !important;
+    color: #f1f5f9 !important;
+}
+
+body.dark-theme .main-content {
+    background-color: #0f172a;
+    color: #f1f5f9;
+}
+
+body.dark-theme .card,
+body.dark-theme .analysis-card,
+body.dark-theme .stat-pill,
+body.dark-theme .pane-card,
+body.dark-theme .daily-challenge-card,
+body.dark-theme .practice-card,
+body.dark-theme .modal-content,
+body.dark-theme .problem-table,
+body.dark-theme .auth-card {
+    background: #1e293b !important;
+    background-color: #1e293b !important;
+    color: #f1f5f9 !important;
+    border-color: #334155 !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+body.dark-theme [style*="background: #fff"],
+body.dark-theme [style*="background:#fff"],
+body.dark-theme [style*="background: #ffffff"],
+body.dark-theme [style*="background:#ffffff"],
+body.dark-theme [style*="background: white"],
+body.dark-theme [style*="background-color: #fff"],
+body.dark-theme [style*="background-color: white"] {
+    background: #1e293b !important;
+    background-color: #1e293b !important;
+    color: #f1f5f9 !important;
+}
+
+body.dark-theme [style*="background: #f8fafc"],
+body.dark-theme [style*="background:#f8fafc"],
+body.dark-theme [style*="background: #f1f5f9"],
+body.dark-theme [style*="background:#f1f5f9"] {
+    background: #263348 !important;
+    background-color: #263348 !important;
+    color: #e2e8f0 !important;
+}
+
+body.dark-theme h1,
+body.dark-theme h2,
+body.dark-theme h3,
+body.dark-theme h4,
+body.dark-theme strong,
+body.dark-theme label,
+body.dark-theme .problem-table a,
+body.dark-theme [style*="color: #1e293b"],
+body.dark-theme [style*="color:#1e293b"],
+body.dark-theme [style*="color: #0f172a"],
+body.dark-theme [style*="color:#0f172a"] {
+    color: #f1f5f9 !important;
+}
+
+body.dark-theme [style*="color: #334155"],
+body.dark-theme [style*="color:#334155"],
+body.dark-theme [style*="color: #475569"],
+body.dark-theme [style*="color:#475569"],
+body.dark-theme [style*="color: #374151"],
+body.dark-theme [style*="color:#374151"] {
+    color: #cbd5e1 !important;
+}
+
+body.dark-theme [style*="color: #64748b"],
+body.dark-theme [style*="color:#64748b"],
+body.dark-theme .breadcrumb,
+body.dark-theme .breadcrumb a {
+    color: #94a3b8 !important;
+}
+
+body.dark-theme input,
+body.dark-theme select,
+body.dark-theme textarea,
+body.dark-theme #notesTextarea {
+    background: #0f172a !important;
+    color: #f1f5f9 !important;
+    border-color: #334155 !important;
+}
+
+body.dark-theme input::placeholder,
+body.dark-theme textarea::placeholder {
+    color: #64748b !important;
+}
+
+body.dark-theme .problem-table th,
+body.dark-theme table th {
+    background: #263348 !important;
+    color: #cbd5e1 !important;
+    border-bottom-color: #334155 !important;
+}
+
+body.dark-theme .problem-table td,
+body.dark-theme table td,
+body.dark-theme .topic-row,
+body.dark-theme .tip-item {
+    border-bottom-color: #334155 !important;
+    color: #e2e8f0;
+}
+
+body.dark-theme .problem-table tr:hover,
+body.dark-theme table tr:hover {
+    background: #263348 !important;
+}
+
+body.dark-theme .option-card,
+body.dark-theme .dc-option-card,
+body.dark-theme .timed-toggle-row,
+body.dark-theme .sample-box,
+body.dark-theme .explanation-box,
+body.dark-theme .pane-tabs,
+body.dark-theme .editor-toolbar,
+body.dark-theme .console-panel,
+body.dark-theme #notesPanel,
+body.dark-theme #constraintsText {
+    background: #162032 !important;
+    border-color: #334155 !important;
+    color: #e2e8f0 !important;
+}
+
+body.dark-theme .option-card:hover,
+body.dark-theme .dc-option-card:hover,
+body.dark-theme .timed-toggle-row:hover {
+    background: #263348 !important;
+}
+
+body.dark-theme .option-card.selected,
+body.dark-theme .dc-option-card.selected {
+    background: rgba(20, 184, 166, 0.18) !important;
+    border-color: var(--primary) !important;
+}
+
+body.dark-theme .sample-box pre {
+    color: #e2e8f0 !important;
+}
+
+body.dark-theme #notesPanelHeader {
+    background: linear-gradient(135deg, #162a45, #1e3a5f) !important;
+    border-bottom-color: #334155 !important;
+}
+
+body.dark-theme .notes-title,
+body.dark-theme #notesToggleIcon {
+    color: #7dd3fc !important;
+}
+
+body.dark-theme #aiExplanationResult {
+    background: #1e1b4b !important;
+    border-left-color: #818cf8 !important;
+}
+
+body.dark-theme .btn-outline {
+    background: transparent !important;
+    color: #cbd5e1 !important;
+    border-color: #475569 !important;
+}
+
+body.dark-theme .btn-outline:hover {
+    background: #263348 !important;
+    color: #ffffff !important;
+}
+
+body.dark-theme .tag-pill {
+    background: rgba(59, 130, 246, 0.18) !important;
+    color: #93c5fd !important;
+}
+
+body.dark-theme .diff-EASY { background: rgba(22, 163, 74, 0.2) !important; color: #4ade80 !important; }
+body.dark-theme .diff-MEDIUM { background: rgba(217, 119, 6, 0.2) !important; color: #fbbf24 !important; }
+body.dark-theme .diff-HARD { background: rgba(220, 38, 38, 0.2) !important; color: #f87171 !important; }
+
+body.dark-theme .tc-pass { background: rgba(22, 163, 74, 0.22) !important; color: #4ade80 !important; }
+body.dark-theme .tc-fail { background: rgba(220, 38, 38, 0.22) !important; color: #f87171 !important; }
+
 
