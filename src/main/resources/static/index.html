@@ -3,16 +3,361 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechPrep Academy</title>
+    <title>TechPrep Academy — Placement &amp; DSA Prep</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --surface-soft: #f1f5f9;
+            --text: #0f172a;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --primary: #14b8a6;
+            --primary-dark: #0d9488;
+            --accent: #6366f1;
+        }
+        body.dark-theme {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --surface-soft: #263348;
+            --text: #f1f5f9;
+            --muted: #94a3b8;
+            --border: #334155;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+        html { scroll-behavior: smooth; }
+        body { background: var(--bg); color: var(--text); line-height: 1.6; transition: background 0.25s, color 0.25s; }
+        a { text-decoration: none; color: inherit; }
+
+        /* Navbar */
+        .nav-wrap {
+            position: sticky; top: 0; z-index: 50;
+            background: rgba(248, 250, 252, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+        body.dark-theme .nav-wrap { background: rgba(15, 23, 42, 0.85); }
+        .nav-inner {
+            max-width: 1120px; margin: 0 auto; padding: 0.9rem 1.5rem;
+            display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+        }
+        .brand {
+            font-weight: 800; font-size: 1.25rem; display: flex; align-items: center; gap: 9px;
+            letter-spacing: -0.02em;
+        }
+        .brand-badge {
+            width: 32px; height: 32px; border-radius: 9px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 0.95rem;
+        }
+        .nav-links { display: flex; gap: 1.75rem; font-size: 0.92rem; font-weight: 500; color: var(--muted); }
+        .nav-links a:hover { color: var(--text); }
+        .nav-actions { display: flex; align-items: center; gap: 0.65rem; }
+
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+            padding: 0.55rem 1.1rem; border-radius: 9px; font-weight: 600; font-size: 0.9rem;
+            cursor: pointer; border: 1px solid transparent; transition: all 0.2s;
+        }
+        .btn-primary { background: var(--primary); color: #fff; }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
+        .btn-ghost { background: transparent; color: var(--text); border-color: var(--border); }
+        .btn-ghost:hover { background: var(--surface-soft); }
+        .icon-btn {
+            width: 36px; height: 36px; border-radius: 9px; border: 1px solid var(--border);
+            background: var(--surface); color: var(--muted); cursor: pointer;
+            display: inline-flex; align-items: center; justify-content: center;
+        }
+        .icon-btn:hover { color: var(--text); }
+
+        /* Hero */
+        .hero {
+            max-width: 1120px; margin: 0 auto; padding: 4.5rem 1.5rem 3.5rem;
+            display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 3rem; align-items: center;
+        }
+        .pill {
+            display: inline-flex; align-items: center; gap: 7px;
+            padding: 0.35rem 0.85rem; border-radius: 99px; font-size: 0.8rem; font-weight: 600;
+            background: rgba(20, 184, 166, 0.12); color: var(--primary-dark); margin-bottom: 1.1rem;
+        }
+        body.dark-theme .pill { color: #5eead4; background: rgba(20, 184, 166, 0.18); }
+        .hero h1 {
+            font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; line-height: 1.15;
+            letter-spacing: -0.03em; margin-bottom: 1.1rem;
+        }
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero p { font-size: 1.05rem; color: var(--muted); max-width: 520px; margin-bottom: 1.75rem; }
+        .hero-ctas { display: flex; gap: 0.85rem; flex-wrap: wrap; margin-bottom: 1.75rem; }
+        .hero-ctas .btn { padding: 0.78rem 1.4rem; font-size: 0.96rem; }
+        .hero-meta { display: flex; gap: 1.5rem; flex-wrap: wrap; font-size: 0.85rem; color: var(--muted); }
+        .hero-meta span { display: inline-flex; align-items: center; gap: 6px; }
+        .hero-meta i { color: var(--primary); }
+
+        /* Hero Code Preview Card */
+        .preview-card {
+            background: #0b1120; color: #e2e8f0; border-radius: 16px;
+            border: 1px solid #1e293b; box-shadow: 0 20px 45px rgba(15, 23, 42, 0.18);
+            overflow: hidden;
+        }
+        .preview-top {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0.75rem 1rem; background: #111827; border-bottom: 1px solid #1e293b;
+            font-size: 0.8rem; color: #94a3b8;
+        }
+        .dots { display: flex; gap: 6px; }
+        .dots span { width: 10px; height: 10px; border-radius: 50%; }
+        .preview-code {
+            padding: 1.25rem; font-family: Consolas, 'Courier New', monospace; font-size: 0.86rem;
+            line-height: 1.65; overflow-x: auto; color: #cbd5e1;
+        }
+        .kw { color: #c084fc; } .fn { color: #38bdf8; } .cm { color: #64748b; } .num { color: #34d399; }
+        .preview-footer {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0.75rem 1.15rem; background: #111827; border-top: 1px solid #1e293b;
+            font-size: 0.8rem;
+        }
+        .status-ok { color: #34d399; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
+
+        /* Sections */
+        .section { max-width: 1120px; margin: 0 auto; padding: 3.5rem 1.5rem; }
+        .section-head { text-align: center; max-width: 600px; margin: 0 auto 2.5rem; }
+        .section-head h2 { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+        .section-head p { color: var(--muted); font-size: 0.98rem; }
+
+        .features-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem;
+        }
+        .feature-card {
+            background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+            padding: 1.4rem; transition: transform 0.2s, border-color 0.2s;
+        }
+        .feature-card:hover { transform: translateY(-3px); border-color: var(--primary); }
+        .feature-icon {
+            width: 40px; height: 40px; border-radius: 10px;
+            display: inline-flex; align-items: center; justify-content: center;
+            font-size: 1.05rem; margin-bottom: 0.9rem;
+            background: rgba(20, 184, 166, 0.12); color: var(--primary);
+        }
+        .feature-card h3 { font-size: 1.02rem; font-weight: 700; margin-bottom: 0.4rem; }
+        .feature-card p { font-size: 0.88rem; color: var(--muted); }
+
+        /* Interactive Mini Demo */
+        .demo-card {
+            max-width: 760px; margin: 0 auto;
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 16px; padding: 1.75rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+        }
+        .demo-options {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin: 1.25rem 0;
+        }
+        .demo-opt {
+            display: flex; align-items: center; gap: 10px; padding: 0.8rem 1rem;
+            border: 1.5px solid var(--border); border-radius: 10px; background: var(--surface);
+            color: var(--text); cursor: pointer; text-align: left; font-size: 0.9rem; transition: all 0.2s;
+        }
+        .demo-opt:hover { border-color: var(--primary); background: var(--surface-soft); }
+        .demo-opt.correct { border-color: #10b981; background: rgba(16, 185, 129, 0.12); color: #10b981; font-weight: 600; }
+        .demo-opt.wrong { border-color: #ef4444; background: rgba(239, 68, 68, 0.12); color: #ef4444; }
+        .demo-key {
+            width: 26px; height: 26px; border-radius: 50%; background: var(--surface-soft);
+            display: inline-flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.8rem; flex-shrink: 0;
+        }
+        .demo-feedback {
+            display: none; padding: 0.9rem 1rem; border-radius: 10px;
+            background: var(--surface-soft); font-size: 0.88rem; color: var(--text);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border); padding: 2rem 1.5rem; margin-top: 2rem;
+            text-align: center; color: var(--muted); font-size: 0.88rem;
+        }
+
+        @media (max-width: 880px) {
+            .hero { grid-template-columns: 1fr; padding-top: 2.5rem; }
+            .features-grid { grid-template-columns: repeat(2, 1fr); }
+            .nav-links { display: none; }
+        }
+        @media (max-width: 580px) {
+            .features-grid, .demo-options { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
+    <header class="nav-wrap">
+        <div class="nav-inner">
+            <a href="/" class="brand">
+                <span class="brand-badge"><i class="fas fa-graduation-cap"></i></span>
+                TechPrep Academy
+            </a>
+            <nav class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#try-demo">Try Sample</a>
+            </nav>
+            <div class="nav-actions" id="navActions">
+                <button class="icon-btn" id="landingThemeBtn" title="Toggle Dark Mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <a href="/login.html" class="btn btn-ghost">Log in</a>
+                <a href="/register.html" class="btn btn-primary">Get Started</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div>
+            <span class="pill"><i class="fas fa-sparkles"></i> Placement &amp; DSA Prep Platform</span>
+            <h1>Master Aptitude, CS Core &amp; <span>DSA Coding</span> in One Place.</h1>
+            <p>Practice topic-wise MCQs with AI explanations, solve LeetCode-style problems in a live sandbox, and track your accuracy with visual analytics.</p>
+            <div class="hero-ctas" id="heroCtas">
+                <a href="/register.html" class="btn btn-primary"><i class="fas fa-rocket"></i> Start Practicing Free</a>
+                <a href="#try-demo" class="btn btn-ghost"><i class="fas fa-play"></i> Try a Quick Question</a>
+            </div>
+            <div class="hero-meta">
+                <span><i class="fas fa-check-circle"></i> Java · Python · C++ Runner</span>
+                <span><i class="fas fa-check-circle"></i> Daily Streaks &amp; Notes</span>
+                <span><i class="fas fa-check-circle"></i> 100% Free</span>
+            </div>
+        </div>
+
+        <div class="preview-card">
+            <div class="preview-top">
+                <div class="dots">
+                    <span style="background:#ef4444;"></span>
+                    <span style="background:#f59e0b;"></span>
+                    <span style="background:#10b981;"></span>
+                </div>
+                <span>TwoSum.java — Coding Arena</span>
+            </div>
+            <pre class="preview-code"><span class="kw">class</span> Solution {
+    <span class="kw">public int</span>[] <span class="fn">twoSum</span>(<span class="kw">int</span>[] nums, <span class="kw">int</span> target) {
+        Map&lt;Integer, Integer&gt; map = <span class="kw">new</span> HashMap&lt;&gt;();
+        <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; nums.length; i++) {
+            <span class="kw">int</span> need = target - nums[i];
+            <span class="kw">if</span> (map.containsKey(need))
+                <span class="kw">return new int</span>[]{ map.get(need), i };
+            map.put(nums[i], i);
+        }
+        <span class="kw">return new int</span>[]{};
+    }
+}</pre>
+            <div class="preview-footer">
+                <span class="status-ok"><i class="fas fa-check-circle"></i> Accepted · 4/4 Test Cases</span>
+                <span style="color:#94a3b8;">🔥 7-Day Streak</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="features">
+        <div class="section-head">
+            <h2>Everything You Need to Crack Placements</h2>
+            <p>Built for focused daily practice — without clutter.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <span class="feature-icon"><i class="fas fa-code"></i></span>
+                <h3>DSA Coding Arena</h3>
+                <p>Solve classic interview problems in Java, Python, or C++ with a VS Code–style editor and live test cases.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon" style="color:#f59e0b; background:rgba(245,158,11,0.12);"><i class="fas fa-fire"></i></span>
+                <h3>Daily Challenge &amp; Streaks</h3>
+                <p>Build consistency with a fresh Question of the Day, bonus points, and daily goal tracking.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon" style="color:#6366f1; background:rgba(99,102,241,0.12);"><i class="fas fa-stopwatch"></i></span>
+                <h3>Timed Practice &amp; Notes</h3>
+                <p>Train under real exam timers and save topic-wise sticky notes right beside your questions.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon" style="color:#8b5cf6; background:rgba(139,92,246,0.12);"><i class="fas fa-robot"></i></span>
+                <h3>AI Explanations</h3>
+                <p>Stuck on a tricky concept? Get clear, step-by-step AI explanations with one click.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon" style="color:#10b981; background:rgba(16,185,129,0.12);"><i class="fas fa-chart-pie"></i></span>
+                <h3>Visual Analytics</h3>
+                <p>Spot weak topics fast with difficulty breakdowns, category accuracy, and score timelines.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon" style="color:#ec4899; background:rgba(236,72,153,0.12);"><i class="fas fa-trophy"></i></span>
+                <h3>Mock Tests &amp; Leaderboard</h3>
+                <p>Take full-length placement tests and see how you rank against fellow students.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="try-demo">
+        <div class="section-head">
+            <h2>Try a Sample Question</h2>
+            <p>Click an option below to see instant feedback in action.</p>
+        </div>
+        <div class="demo-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
+                <span class="pill" style="margin:0;">DSA · Time Complexity</span>
+                <span style="font-size:0.82rem; color:var(--muted);">Sample Preview</span>
+            </div>
+            <h3 style="font-size:1.08rem;">What is the average-case time complexity of searching an element in a HashMap (Hash Table)?</h3>
+            <div class="demo-options">
+                <button class="demo-opt" onclick="checkDemo(this, false)"><span class="demo-key">A</span> O(n)</button>
+                <button class="demo-opt" onclick="checkDemo(this, true)"><span class="demo-key">B</span> O(1)</button>
+                <button class="demo-opt" onclick="checkDemo(this, false)"><span class="demo-key">C</span> O(log n)</button>
+                <button class="demo-opt" onclick="checkDemo(this, false)"><span class="demo-key">D</span> O(n log n)</button>
+            </div>
+            <div class="demo-feedback" id="demoFeedback"></div>
+        </div>
+    </section>
+
+    <footer>
+        TechPrep Academy · Built for Placement &amp; DSA Preparation ·
+        <a href="/login.html" style="color:var(--primary); font-weight:600;">Log in</a> ·
+        <a href="/register.html" style="color:var(--primary); font-weight:600;">Sign up</a>
+    </footer>
+
     <script>
-        const token = localStorage.getItem('token');
-        if (token) {
-            // Need to know role. Let's redirect to check auth
-            window.location.href = '/student/dashboard.html'; // Defaulting, checkAuth in specific pages will handle unauthorized
-        } else {
-            window.location.href = '/login.html';
+        // Sync theme with rest of app
+        const savedTheme = localStorage.getItem('theme');
+        const themeBtn = document.getElementById('landingThemeBtn');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-theme');
+            themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        themeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            const isDark = document.body.classList.contains('dark-theme');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            themeBtn.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        });
+
+        // If user already has a token, show "Go to Dashboard" button
+        if (localStorage.getItem('token')) {
+            document.getElementById('navActions').innerHTML = `
+                <button class="icon-btn" id="landingThemeBtn2" title="Toggle Dark Mode">
+                    <i class="fas ${document.body.classList.contains('dark-theme') ? 'fa-sun' : 'fa-moon'}"></i>
+                </button>
+                <a href="/student/dashboard.html" class="btn btn-primary"><i class="fas fa-home"></i> Go to Dashboard</a>
+            `;
+            document.getElementById('landingThemeBtn2').addEventListener('click', () => themeBtn.click());
+        }
+
+        function checkDemo(btn, isCorrect) {
+            document.querySelectorAll('.demo-opt').forEach(b => b.classList.remove('correct', 'wrong'));
+            const fb = document.getElementById('demoFeedback');
+            fb.style.display = 'block';
+            if (isCorrect) {
+                btn.classList.add('correct');
+                fb.innerHTML = '<strong style="color:#10b981;"><i class="fas fa-check-circle"></i> Correct!</strong> Hash tables compute the bucket index directly via the hash function, giving <strong>O(1)</strong> average lookup — the exact reason Two Sum runs in O(n) time!';
+            } else {
+                btn.classList.add('wrong');
+                fb.innerHTML = '<strong style="color:#ef4444;"><i class="fas fa-times-circle"></i> Not quite.</strong> The answer is <strong>O(1)</strong> on average because a hash function maps keys directly to array buckets.';
+            }
         }
     </script>
 </body>
