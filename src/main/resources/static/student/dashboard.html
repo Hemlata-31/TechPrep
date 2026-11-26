@@ -40,21 +40,59 @@
         }
         .dc-option-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 0.85rem;
             margin: 1.25rem 0;
+        }
+        @media (max-width: 768px) {
+            .dc-option-grid { grid-template-columns: 1fr; }
         }
         .dc-option-item {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 0.85rem 1rem;
+            padding: 0.9rem 1.05rem;
             border: 1.5px solid #e2e8f0;
             border-radius: 10px;
             background: #fff;
             cursor: pointer;
             transition: all 0.2s ease;
             user-select: none;
+            min-width: 0;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+            line-height: 1.45;
+        }
+        .dc-option-item > span:last-child {
+            min-width: 0;
+            flex: 1;
+        }
+        body.dark-theme .dc-option-item {
+            background: #162032 !important;
+            border-color: #334155 !important;
+            color: #e2e8f0 !important;
+        }
+        body.dark-theme .dc-option-item:hover {
+            background: #263348 !important;
+            border-color: #6366f1 !important;
+        }
+        body.dark-theme .dc-option-item.selected {
+            background: rgba(99, 102, 241, 0.2) !important;
+            border-color: #818cf8 !important;
+        }
+        body.dark-theme .dc-option-item.correct {
+            background: rgba(16, 185, 129, 0.18) !important;
+            border-color: #10b981 !important;
+            color: #6ee7b7 !important;
+        }
+        body.dark-theme .dc-option-item.wrong {
+            background: rgba(239, 68, 68, 0.18) !important;
+            border-color: #ef4444 !important;
+            color: #fca5a5 !important;
+        }
+        body.dark-theme .dc-option-key {
+            background: #263348 !important;
+            color: #cbd5e1 !important;
         }
         .dc-option-item:hover {
             border-color: #6366f1;

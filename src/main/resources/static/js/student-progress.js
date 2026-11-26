@@ -89,7 +89,7 @@ function renderAccuracyDonut(data) {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            cutout: '65%',
+            cutout: '68%',
             plugins: {
                 legend: { display: false },
                 tooltip: {
@@ -107,15 +107,19 @@ function renderAccuracyDonut(data) {
             beforeDraw(chart) {
                 const { width, height, ctx } = chart;
                 const acc = total > 0 ? ((correct / total) * 100).toFixed(1) : 0;
+                const minDim = Math.min(width, height);
+                const mainSize = Math.max(16, Math.min(26, Math.round(minDim * 0.105)));
+                const subSize = Math.max(11, Math.min(14, Math.round(minDim * 0.055)));
+                const isDark = document.body.classList.contains('dark-theme');
                 ctx.save();
-                ctx.font = `bold ${width / 7}px sans-serif`;
-                ctx.fillStyle = '#1e293b';
+                ctx.font = `700 ${mainSize}px Inter, sans-serif`;
+                ctx.fillStyle = isDark ? '#f1f5f9' : '#1e293b';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
-                ctx.fillText(acc + '%', width / 2, height / 2 - 10);
-                ctx.font = `${width / 14}px sans-serif`;
-                ctx.fillStyle = '#64748b';
-                ctx.fillText('Accuracy', width / 2, height / 2 + 16);
+                ctx.fillText(acc + '%', width / 2, height / 2 - Math.round(subSize * 0.7));
+                ctx.font = `500 ${subSize}px Inter, sans-serif`;
+                ctx.fillStyle = isDark ? '#94a3b8' : '#64748b';
+                ctx.fillText('Accuracy', width / 2, height / 2 + Math.round(mainSize * 0.65));
                 ctx.restore();
             }
         }]
