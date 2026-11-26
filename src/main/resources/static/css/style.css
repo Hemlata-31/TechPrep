@@ -1014,4 +1014,30 @@ body.dark-theme .my-rank-banner {
     border: 1px solid #334155;
 }
 
+body.dark-theme .review-q-card,
+body.dark-theme #reviewList > div,
+body.dark-theme #questionsContainer > div {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+    color: #f1f5f9 !important;
+}
+
+body.dark-theme [style*="border: 1px solid #e2e8f0"],
+body.dark-theme [style*="border:1px solid #e2e8f0"] {
+    border-color: #334155 !important;
+    color: #e2e8f0 !important;
+}
+
+body.dark-theme [style*="background: #f0fdf4"],
+body.dark-theme [style*="background:#f0fdf4"] {
+    background: rgba(34, 197, 94, 0.16) !important;
+    color: #86efac !important;
+}
+
+body.dark-theme [style*="background: #fef2f2"],
+body.dark-theme [style*="background:#fef2f2"] {
+    background: rgba(239, 68, 68, 0.16) !important;
+    color: #fca5a5 !important;
+}
+
 

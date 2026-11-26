@@ -59,6 +59,7 @@ function renderScorecard(res) {
 
     res.questions.forEach(q => {
         const qCard = document.createElement('div');
+        qCard.className = 'card review-q-card';
         qCard.style.cssText = 'border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.5rem; margin-bottom: 1.5rem; background: #ffffff;';
 
         let badgeHtml = '';
