@@ -140,8 +140,33 @@ function initStudentSidebar() {
     initLogoutBtn();
 }
 
+// Unified Admin Sidebar across all /admin/ pages
+function initAdminSidebar() {
+    const path = window.location.pathname;
+    if (!path.startsWith('/admin/')) return;
+    const navList = document.querySelector('.sidebar nav ul');
+    if (!navList) return;
+
+    const items = [
+        { href: '/admin/dashboard.html', icon: 'fas fa-home', label: 'Dashboard', active: path.includes('/dashboard.html') },
+        { href: '/admin/categories.html', icon: 'fas fa-th-list', label: 'Categories & Topics', active: path.includes('/categories.html') || path.includes('/questions.html') },
+        { href: '/admin/tests.html', icon: 'fas fa-laptop-code', label: 'Manage Mock Tests', active: path.includes('/tests.html') },
+        { href: '/admin/content-upload.html', icon: 'fas fa-cloud-upload-alt', label: 'Upload PDFs & DSA', active: path.includes('/content-upload.html') },
+        { href: '/admin/ai-generator.html', icon: 'fas fa-robot', label: 'AI Generator', active: path.includes('/ai-generator.html') },
+        { href: '#', id: 'themeToggleBtn', icon: 'fas fa-moon', label: 'Dark Mode', active: false },
+        { href: '#', id: 'logoutBtn', icon: 'fas fa-sign-out-alt', label: 'Logout', active: false }
+    ];
+
+    navList.innerHTML = items.map(item => `
+        <li><a href="${item.href}"${item.id ? ` id="${item.id}"` : ''}${item.active ? ' class="active"' : ''}><i class="${item.icon}"></i> ${item.label}</a></li>
+    `).join('');
+
+    initLogoutBtn();
+}
+
 // Call on load
 document.addEventListener('DOMContentLoaded', () => {
     initStudentSidebar();
+    initAdminSidebar();
     initTheme();
 });
