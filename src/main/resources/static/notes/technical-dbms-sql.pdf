@@ -1,0 +1,48 @@
+%PDF-1.4
+1 0 obj << /Type /Catalog /Pages 2 0 R >> endobj
+2 0 obj << /Type /Pages /Kids [6 0 R] /Count 1 >> endobj
+3 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> endobj
+4 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >> endobj
+5 0 obj << /Length 2576 >> stream
+BT /F1 8.5 Tf 0.45 0.50 0.58 rg 48 28 Td (TechPrep Academy - Placement & DSA Study Guide) Tj ET
+0.08 0.72 0.65 rg 48 754 499 46 re f
+BT /F2 17 Tf 1 1 1 rg 62 776 Td (Technical CS: DBMS & SQL Cheat Sheet) Tj ET
+BT /F1 10 Tf 0.92 0.99 0.97 rg 62 761 Td (Normalization, ACID, Joins, Indexing & Top Interview SQL Queries) Tj ET
+0.06 0.09 0.16 rg BT /F2 12.5 Tf 48 724 Td (1. ACID Properties & Keys) Tj ET
+0.80 0.84 0.88 RG 0.8 w 48 719 m 547 719 l S
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 703 Td (Atomicity \(All or nothing\), Consistency \(Valid state\), Isolation \(Concurrent) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 689 Td (txns\), Durability \(Committed persists\).) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 672 Td (Super Key -> Candidate Key \(minimal super key\) -> Primary Key \(chosen candidate) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 658 Td (key, NOT NULL & UNIQUE\).) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 641 Td (Foreign Key enforces referential integrity between two tables.) Tj ET
+0.06 0.09 0.16 rg BT /F2 12.5 Tf 48 616 Td (2. Normalization \(1NF to BCNF\)) Tj ET
+0.80 0.84 0.88 RG 0.8 w 48 611 m 547 611 l S
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 595 Td (1NF: Atomic values only, no repeating groups.) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 578 Td (2NF: In 1NF + No partial dependency \(non-prime depends on full candidate key\).) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 561 Td (3NF: In 2NF + No transitive dependency \(non-prime -> non-prime\).) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 544 Td (BCNF: For every functional dependency X -> Y, X must be a Super Key.) Tj ET
+0.06 0.09 0.16 rg BT /F2 12.5 Tf 48 519 Td (3. SQL Joins & Top Interview Queries) Tj ET
+0.80 0.84 0.88 RG 0.8 w 48 514 m 547 514 l S
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 498 Td (INNER JOIN: Matching rows in both. LEFT JOIN: All left + matching right.) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 481 Td (2nd Highest Salary: SELECT MAX\(salary\) FROM emp WHERE salary < \(SELECT MAX\(salary\)) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 467 Td (FROM emp\);) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 450 Td (Nth Highest \(using DENSE_RANK\): SELECT * FROM \(SELECT salary, DENSE_RANK\(\) OVER) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 436 Td (\(ORDER BY salary DESC\) r FROM emp\) t WHERE r = N;) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 419 Td (Find Duplicates: SELECT email, COUNT\(*\) FROM users GROUP BY email HAVING COUNT\(*\)) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 405 Td (> 1;) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 388 Td (WHERE filters rows BEFORE grouping; HAVING filters groups AFTER GROUP BY.) Tj ET
+endstream endobj
+6 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 5 0 R >> endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000185 00000 n 
+0000000260 00000 n 
+0000002888 00000 n 
+trailer << /Size 7 /Root 1 0 R >>
+startxref
+3024
+%%EOF

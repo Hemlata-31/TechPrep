@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 public interface StudyNoteRepository extends JpaRepository<StudyNote, Long> {
     List<StudyNote> findAllByOrderByIdAsc();
+    boolean existsByPdfUrl(String pdfUrl);
 }
 

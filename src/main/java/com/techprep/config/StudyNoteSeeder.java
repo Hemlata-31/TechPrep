@@ -18,10 +18,7 @@ public class StudyNoteSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        if (studyNoteRepository.count() > 0) {
-            return;
-        }
-        studyNoteRepository.saveAll(List.of(
+        List<StudyNote> builtIn = List.of(
                 StudyNote.builder()
                         .title("Percentage — Formulas & Question Types")
                         .category("Aptitude")
@@ -69,9 +66,51 @@ public class StudyNoteSeeder implements CommandLineRunner {
                         .highlights("HashMap: O(1) avg | Binary Search: O(log n) | Kadane's: O(n)")
                         .pdfUrl("/notes/dsa-arrays-complexity.pdf")
                         .fileName("dsa-arrays-complexity.pdf")
+                        .build(),
+                StudyNote.builder()
+                        .title("Logical Reasoning — Series, Syllogisms & Puzzles")
+                        .category("Reasoning")
+                        .description("Number series patterns, Venn rules for syllogisms, blood relation trees, and direction sense shadow shortcuts.")
+                        .highlights("All A are B + All B are C => All A are C | Morning shadow = West, Evening = East")
+                        .pdfUrl("/notes/reasoning-syllogisms-series.pdf")
+                        .fileName("reasoning-syllogisms-series.pdf")
+                        .build(),
+                StudyNote.builder()
+                        .title("Verbal Ability — Grammar & Para-Jumbles")
+                        .category("Verbal")
+                        .description("Subject-verb agreement, confused prepositions, conditional tenses, and para-jumble opening sentence tricks.")
+                        .highlights("Either/Neither -> Nearest subject | Along with/As well as -> First subject | Since vs For")
+                        .pdfUrl("/notes/verbal-grammar-shortcuts.pdf")
+                        .fileName("verbal-grammar-shortcuts.pdf")
+                        .build(),
+                StudyNote.builder()
+                        .title("DBMS & SQL — Normalization, ACID & Queries")
+                        .category("Technical")
+                        .description("ACID properties, 1NF to BCNF, SQL joins, and must-know interview queries like Nth highest salary and duplicates.")
+                        .highlights("BCNF: X -> Y means X is Super Key | WHERE before GROUP BY, HAVING after")
+                        .pdfUrl("/notes/technical-dbms-sql.pdf")
+                        .fileName("technical-dbms-sql.pdf")
+                        .build(),
+                StudyNote.builder()
+                        .title("OS & OOPs — Scheduling, Deadlocks & Java")
+                        .category("Technical")
+                        .description("Process vs Thread, CPU scheduling, 4 Coffman deadlock conditions, paging, OOPs 4 pillars, and Java quick hits.")
+                        .highlights("Deadlock: Mutual Exclusion, Hold & Wait, No Preemption, Circular Wait | == vs .equals()")
+                        .pdfUrl("/notes/technical-os-oops.pdf")
+                        .fileName("technical-os-oops.pdf")
                         .build()
-        ));
-        System.out.println("Seeded 6 Study Guide PDFs.");
+        );
+
+        int added = 0;
+        for (StudyNote note : builtIn) {
+            if (!studyNoteRepository.existsByPdfUrl(note.getPdfUrl())) {
+                studyNoteRepository.save(note);
+                added++;
+            }
+        }
+        if (added > 0) {
+            System.out.println("Seeded " + added + " Study Guide PDFs.");
+        }
     }
 }
 

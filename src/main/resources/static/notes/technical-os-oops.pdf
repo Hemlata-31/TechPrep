@@ -1,0 +1,53 @@
+%PDF-1.4
+1 0 obj << /Type /Catalog /Pages 2 0 R >> endobj
+2 0 obj << /Type /Pages /Kids [6 0 R] /Count 1 >> endobj
+3 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> endobj
+4 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >> endobj
+5 0 obj << /Length 3029 >> stream
+BT /F1 8.5 Tf 0.45 0.50 0.58 rg 48 28 Td (TechPrep Academy - Placement & DSA Study Guide) Tj ET
+0.08 0.72 0.65 rg 48 754 499 46 re f
+BT /F2 17 Tf 1 1 1 rg 62 776 Td (Technical CS: OS & OOPs Quick Revision) Tj ET
+BT /F1 10 Tf 0.92 0.99 0.97 rg 62 761 Td (Scheduling, Deadlocks, Virtual Memory, OOPs Pillars & Java Notes) Tj ET
+0.06 0.09 0.16 rg BT /F2 12.5 Tf 48 724 Td (1. Operating Systems Essentials) Tj ET
+0.80 0.84 0.88 RG 0.8 w 48 719 m 547 719 l S
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 703 Td (Process \(own memory space, heavy\) vs Thread \(shares heap/code of process,) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 689 Td (lightweight\).) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 672 Td (CPU Scheduling: FCFS \(convoy effect\), SJF \(optimal avg wait\), Round Robin \(time) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 658 Td (quantum, fair\).) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 641 Td (Deadlock 4 Coffman Conditions: Mutual Exclusion, Hold & Wait, No Preemption,) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 627 Td (Circular Wait.) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 610 Td (Paging avoids external fragmentation; Virtual Memory uses demand paging + page) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 596 Td (replacement \(LRU, FIFO\).) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 579 Td (Mutex \(ownership, binary locking\) vs Semaphore \(signaling, counting/binary\).) Tj ET
+0.06 0.09 0.16 rg BT /F2 12.5 Tf 48 554 Td (2. OOPs 4 Pillars & Key Concepts) Tj ET
+0.80 0.84 0.88 RG 0.8 w 48 549 m 547 549 l S
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 533 Td (Encapsulation: Wrapping data + methods together with access modifiers \(private) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 519 Td (fields + getters/setters\).) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 502 Td (Abstraction: Hiding implementation details via abstract classes or interfaces.) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 485 Td (Inheritance: 'IS-A' relationship allowing code reuse \(extends / implements\).) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 468 Td (Polymorphism: Compile-time \(Method Overloading\) vs Runtime \(Method Overriding via) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 454 Td (dynamic dispatch\).) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 437 Td (SOLID: Single Responsibility, Open/Closed, Liskov Substitution, Interface) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 423 Td (Segregation, Dependency Inversion.) Tj ET
+0.06 0.09 0.16 rg BT /F2 12.5 Tf 48 398 Td (3. Java Interview Quick Hits) Tj ET
+0.80 0.84 0.88 RG 0.8 w 48 393 m 547 393 l S
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 377 Td (String \(immutable\) vs StringBuilder \(mutable, fast, non-synchronized\) vs) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 363 Td (StringBuffer \(mutable, thread-safe\).) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 346 Td (HashMap allows 1 null key & is O\(1\) avg; TreeMap is sorted Red-Black tree O\(log) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 332 Td (n\).) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 315 Td (== compares references \(addresses\) for objects; .equals\(\) compares content/values.) Tj ET
+endstream endobj
+6 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 5 0 R >> endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000185 00000 n 
+0000000260 00000 n 
+0000003341 00000 n 
+trailer << /Size 7 /Root 1 0 R >>
+startxref
+3477
+%%EOF
