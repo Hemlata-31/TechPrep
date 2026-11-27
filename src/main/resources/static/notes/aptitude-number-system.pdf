@@ -1,0 +1,60 @@
+%PDF-1.4
+1 0 obj << /Type /Catalog /Pages 2 0 R >> endobj
+2 0 obj << /Type /Pages /Kids [6 0 R] /Count 1 >> endobj
+3 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> endobj
+4 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >> endobj
+5 0 obj << /Length 3818 >> stream
+BT /F1 8.5 Tf 0.45 0.50 0.58 rg 48 28 Td (TechPrep Academy - Placement & DSA Study Guide) Tj ET
+0.08 0.72 0.65 rg 48 754 499 46 re f
+BT /F2 17 Tf 1 1 1 rg 62 776 Td (Aptitude: Number System) Tj ET
+BT /F1 10 Tf 0.92 0.99 0.97 rg 62 761 Td (Divisibility Rules, Unit Digit, Remainders, HCF-LCM & Question Types) Tj ET
+0.06 0.09 0.16 rg BT /F2 12.5 Tf 48 724 Td (1. Classification & Basic Identities) Tj ET
+0.80 0.84 0.88 RG 0.8 w 48 719 m 547 719 l S
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 703 Td (Sum of first n natural numbers = n\(n + 1\) / 2) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 686 Td (Sum of squares of first n natural numbers = n\(n + 1\)\(2n + 1\) / 6) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 669 Td (Sum of cubes of first n natural numbers = [n\(n + 1\) / 2]^2) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 652 Td (Dividend = \(Divisor x Quotient\) + Remainder) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 635 Td (HCF\(a, b\) x LCM\(a, b\) = a x b) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 618 Td (HCF of fractions = HCF\(numerators\) / LCM\(denominators\)) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 601 Td (LCM of fractions = LCM\(numerators\) / HCF\(denominators\)) Tj ET
+0.06 0.09 0.16 rg BT /F2 12.5 Tf 48 576 Td (2. Divisibility Rules \(2 to 11\)) Tj ET
+0.80 0.84 0.88 RG 0.8 w 48 571 m 547 571 l S
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 555 Td (By 2: Last digit is even.  |  By 3: Sum of digits divisible by 3.) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 538 Td (By 4: Last 2 digits divisible by 4.  |  By 5: Last digit is 0 or 5.) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 521 Td (By 6: Divisible by both 2 and 3.  |  By 8: Last 3 digits divisible by 8.) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 504 Td (By 9: Sum of digits divisible by 9.  |  By 10: Last digit is 0.) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 487 Td (By 11: |\(Sum of odd-place digits\) - \(Sum of even-place digits\)| is 0 or 11k.) Tj ET
+0.06 0.09 0.16 rg BT /F2 12.5 Tf 48 462 Td (3. Unit Digit Cyclicity & Trailing Zeroes) Tj ET
+0.80 0.84 0.88 RG 0.8 w 48 457 m 547 457 l S
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 441 Td (Cyclicity 1 \(always same unit digit\): 0, 1, 5, 6) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 424 Td (Cyclicity 2: 4 \(odd->4, even->6\) and 9 \(odd->9, even->1\)) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 407 Td (Cyclicity 4: 2, 3, 7, 8 -> Divide power by 4; if rem = 0, use power 4.) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 390 Td (Trailing zeroes in n! = floor\(n/5\) + floor\(n/25\) + floor\(n/125\) + ...) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 373 Td (Number of factors of N = p^a * q^b * r^c is \(a+1\)\(b+1\)\(c+1\).) Tj ET
+0.06 0.09 0.16 rg BT /F2 12.5 Tf 48 348 Td (4. Common Placement Question Types & Solved Examples) Tj ET
+0.80 0.84 0.88 RG 0.8 w 48 343 m 547 343 l S
+BT /F2 10 Tf 0.06 0.09 0.16 rg 54 327 Td (Type 1 - Unit Digit: Find unit digit of 7^105.) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 310 Td (105 mod 4 = 1 => unit digit = 7^1 = 7.) Tj ET
+BT /F2 10 Tf 0.06 0.09 0.16 rg 54 293 Td (Type 2 - Remainder: Find remainder when 2^31 is divided by 5.) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 276 Td (2^2 = 4 = -1 \(mod 5\). 2^31 = \(2^2\)^15 * 2 = \(-1\)^15 * 2 = -2 = 3 \(mod 5\).) Tj ET
+BT /F2 10 Tf 0.06 0.09 0.16 rg 54 259 Td (Type 3 - Trailing Zeroes: How many zeroes at the end of 100! ?) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 242 Td (floor\(100/5\) + floor\(100/25\) = 20 + 4 = 24 zeroes.) Tj ET
+BT /F2 10 Tf 0.06 0.09 0.16 rg 54 225 Td (Type 4 - Divisibility: Find x if 4x56 is divisible by 9.) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 208 Td (4 + x + 5 + 6 = 15 + x => x = 3 \(since 18 is divisible by 9\).) Tj ET
+BT /F2 10 Tf 0.06 0.09 0.16 rg 54 191 Td (Type 5 - Bells/LCM: Bells ring at 6, 8, 12 sec intervals. Next ring together?) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 174 Td (LCM\(6, 8, 12\) = 24 seconds.) Tj ET
+endstream endobj
+6 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 5 0 R >> endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000185 00000 n 
+0000000260 00000 n 
+0000004130 00000 n 
+trailer << /Size 7 /Root 1 0 R >>
+startxref
+4266
+%%EOF

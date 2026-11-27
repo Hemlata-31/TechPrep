@@ -123,6 +123,7 @@ function initStudentSidebar() {
         { href: '/student/dashboard.html', icon: 'fas fa-home', label: 'Dashboard', active: path.includes('/dashboard.html') },
         { href: '/student/categories.html', icon: 'fas fa-th-list', label: 'Categories', active: isCategoriesActive },
         { href: '/student/coding.html', icon: 'fas fa-code', label: 'Coding Arena', active: isCodingActive },
+        { href: '/student/notes.html', icon: 'fas fa-book-open', label: 'Study Notes', active: path.includes('/notes.html') },
         { href: '/student/progress.html', icon: 'fas fa-chart-line', label: 'Progress', active: path.includes('/progress.html') },
         { href: '/student/leaderboard.html', icon: 'fas fa-trophy', label: 'Leaderboard', active: path.includes('/leaderboard.html') },
         { href: '/student/mock-tests.html', icon: 'fas fa-laptop-code', label: 'Mock Tests', active: isMockActive },

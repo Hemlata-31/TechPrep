@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Notes &amp; Formulas - TechPrep Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .notes-tabs { display: flex; gap: 0.75rem; margin-bottom: 1.5rem; border-bottom: 2px solid var(--border); padding-bottom: 0.75rem; }
+        .notes-tab {
+            background: transparent; border: none; padding: 0.55rem 1.2rem; border-radius: 8px;
+            font-weight: 600; font-size: 0.95rem; color: var(--text-secondary); cursor: pointer; transition: all 0.2s;
+        }
+        .notes-tab:hover { background: var(--border-light); color: var(--text-primary); }
+        .notes-tab.active { background: rgba(20, 184, 166, 0.15); color: var(--primary); }
+        .filter-row { display: flex; gap: 0.75rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .filter-row input, .filter-row select {
+            padding: 0.55rem 0.9rem; border: 1px solid var(--border); border-radius: 8px;
+            background: var(--bg-card); color: var(--text-primary); font-size: 0.9rem;
+        }
+        .guides-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 1.25rem; }
+        .guide-card {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px;
+            padding: 1.4rem; display: flex; flex-direction: column; justify-content: space-between;
+            box-shadow: var(--shadow); transition: transform 0.2s, border-color 0.2s;
+        }
+        .guide-card:hover { transform: translateY(-2px); border-color: var(--primary); }
+        .cat-badge {
+            display: inline-block; padding: 3px 10px; border-radius: 99px; font-size: 0.75rem;
+            font-weight: 700; background: rgba(59, 130, 246, 0.14); color: #3b82f6; margin-bottom: 0.6rem;
+        }
+        .formula-strip {
+            margin: 0.85rem 0 1.1rem; padding: 0.7rem 0.85rem; border-radius: 8px;
+            background: var(--bg-main); border-left: 3px solid var(--primary);
+            font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5;
+        }
+        .guide-actions { display: flex; gap: 0.65rem; }
+        .personal-note-card {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+            padding: 1.25rem; margin-bottom: 1rem;
+        }
+        .personal-note-card textarea {
+            width: 100%; min-height: 95px; margin-top: 0.65rem; padding: 0.7rem;
+            border-radius: 8px; border: 1px solid var(--border); background: var(--input-bg);
+            color: var(--text-primary); font-family: inherit; font-size: 0.92rem; resize: vertical;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <h2>TechPrep</h2>
+            <nav>
+                <ul>
+                    <li><a href="/student/dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="/student/notes.html" class="active"><i class="fas fa-book-open"></i> Study Notes</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="header">
+                <div>
+                    <h1><i class="fas fa-book-open" style="color:var(--primary);"></i> Study Notes &amp; Formula PDFs</h1>
+                    <p style="color: var(--text-secondary); margin-top: 4px;">Download formula cheat sheets with solved question types, or review your personal topic notes.</p>
+                </div>
+            </div>
+
+            <div class="notes-tabs">
+                <button class="notes-tab active" id="tabGuidesBtn" onclick="switchNotesTab('guides')">
+                    <i class="fas fa-file-pdf"></i> Formula &amp; Study PDFs
+                </button>
+                <button class="notes-tab" id="tabMyNotesBtn" onclick="switchNotesTab('myNotes')">
+                    <i class="fas fa-sticky-note"></i> My Practice Notes
+                </button>
+            </div>
+
+            <!-- Tab 1: Study Guides & PDFs -->
+            <div id="guidesPane">
+                <div class="filter-row">
+                    <input type="text" id="guideSearch" placeholder="Search notes (e.g. Percentage, Number System)..." style="min-width:260px;">
+                    <select id="guideCategoryFilter">
+                        <option value="">All Categories</option>
+                    </select>
+                </div>
+                <div class="guides-grid" id="guidesGrid">
+                    <p style="color:var(--text-secondary);">Loading study guides...</p>
+                </div>
+            </div>
+
+            <!-- Tab 2: Personal Topic Notes -->
+            <div id="myNotesPane" style="display:none;">
+                <div id="myNotesContainer">
+                    <p style="color:var(--text-secondary);">Loading your personal notes...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/student-notes.js"></script>
+</body>
+</html>
+

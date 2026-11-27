@@ -1,0 +1,47 @@
+%PDF-1.4
+1 0 obj << /Type /Catalog /Pages 2 0 R >> endobj
+2 0 obj << /Type /Pages /Kids [6 0 R] /Count 1 >> endobj
+3 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> endobj
+4 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >> endobj
+5 0 obj << /Length 2349 >> stream
+BT /F1 8.5 Tf 0.45 0.50 0.58 rg 48 28 Td (TechPrep Academy - Placement & DSA Study Guide) Tj ET
+0.08 0.72 0.65 rg 48 754 499 46 re f
+BT /F2 17 Tf 1 1 1 rg 62 776 Td (Aptitude: Profit, Loss & Discount) Tj ET
+BT /F1 10 Tf 0.92 0.99 0.97 rg 62 761 Td (CP/SP/MP Formulas, Dishonest Dealer & Placement Question Types) Tj ET
+0.06 0.09 0.16 rg BT /F2 12.5 Tf 48 724 Td (1. Core Formulas) Tj ET
+0.80 0.84 0.88 RG 0.8 w 48 719 m 547 719 l S
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 703 Td (Profit = SP - CP   |   Profit % = \(Profit / CP\) x 100) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 686 Td (Loss = CP - SP     |   Loss % = \(Loss / CP\) x 100) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 669 Td (SP = CP x \(100 + P%\) / 100   |   SP = CP x \(100 - L%\) / 100) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 652 Td (Discount = MP - SP   |   Discount % = \(Discount / MP\) x 100) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 635 Td (Successive Discounts d1%, d2%: Net Discount = d1 + d2 - \(d1*d2\)/100) Tj ET
+0.06 0.09 0.16 rg BT /F2 12.5 Tf 48 610 Td (2. Special Placement Shortcuts) Tj ET
+0.80 0.84 0.88 RG 0.8 w 48 605 m 547 605 l S
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 589 Td (If two items are sold at the SAME SP, one at x% gain and one at x% loss:) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 572 Td (Always a net LOSS of \(x^2 / 100\)%.) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 555 Td (Dishonest Dealer \(uses false weight W_used instead of W_true\):) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 538 Td (Gain % = \(\(W_true - W_used\) / W_used\) x 100) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 521 Td (CP to MP relation: CP / MP = \(100 - Discount%\) / \(100 + Profit%\)) Tj ET
+0.06 0.09 0.16 rg BT /F2 12.5 Tf 48 496 Td (3. Solved Question Types) Tj ET
+0.80 0.84 0.88 RG 0.8 w 48 491 m 547 491 l S
+BT /F2 10 Tf 0.06 0.09 0.16 rg 54 475 Td (Type 1 - Article sold at Rs 720 gives 20% profit. Find CP.) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 458 Td (CP = 720 * 100 / 120 = Rs 600.) Tj ET
+BT /F2 10 Tf 0.06 0.09 0.16 rg 54 441 Td (Type 2 - Dishonest seller uses 800g weight for 1kg at CP.) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 424 Td (Profit % = \(200 / 800\) * 100 = 25%.) Tj ET
+BT /F2 10 Tf 0.06 0.09 0.16 rg 54 407 Td (Type 3 - Successive discounts of 20% and 10%.) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 390 Td (Single equivalent discount = 20 + 10 - \(200/100\) = 28%.) Tj ET
+endstream endobj
+6 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 5 0 R >> endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000185 00000 n 
+0000000260 00000 n 
+0000002661 00000 n 
+trailer << /Size 7 /Root 1 0 R >>
+startxref
+2797
+%%EOF

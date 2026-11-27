@@ -1,0 +1,43 @@
+%PDF-1.4
+1 0 obj << /Type /Catalog /Pages 2 0 R >> endobj
+2 0 obj << /Type /Pages /Kids [6 0 R] /Count 1 >> endobj
+3 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> endobj
+4 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >> endobj
+5 0 obj << /Length 1952 >> stream
+BT /F1 8.5 Tf 0.45 0.50 0.58 rg 48 28 Td (TechPrep Academy - Placement & DSA Study Guide) Tj ET
+0.08 0.72 0.65 rg 48 754 499 46 re f
+BT /F2 17 Tf 1 1 1 rg 62 776 Td (Aptitude: Time, Speed & Distance) Tj ET
+BT /F1 10 Tf 0.92 0.99 0.97 rg 62 761 Td (Relative Speed, Trains, Boats & Streams Formulas) Tj ET
+0.06 0.09 0.16 rg BT /F2 12.5 Tf 48 724 Td (1. Core Formulas & Conversions) Tj ET
+0.80 0.84 0.88 RG 0.8 w 48 719 m 547 719 l S
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 703 Td (Speed = Distance / Time   |   1 km/h = 5/18 m/s   |   1 m/s = 18/5 km/h) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 686 Td (Average Speed \(equal distances at speeds x, y\) = 2xy / \(x + y\)) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 669 Td (Relative Speed \(opposite directions\) = S1 + S2) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 652 Td (Relative Speed \(same direction\) = |S1 - S2|) Tj ET
+0.06 0.09 0.16 rg BT /F2 12.5 Tf 48 627 Td (2. Trains & Boats) Tj ET
+0.80 0.84 0.88 RG 0.8 w 48 622 m 547 622 l S
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 606 Td (Train of length L crossing a pole/man: Time = L / Speed) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 589 Td (Train \(L1\) crossing platform/bridge \(L2\): Time = \(L1 + L2\) / Speed) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 572 Td (Boats: Downstream = B + S, Upstream = B - S) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 555 Td (Boat speed B = \(Down + Up\) / 2   |   Stream speed S = \(Down - Up\) / 2) Tj ET
+0.06 0.09 0.16 rg BT /F2 12.5 Tf 48 530 Td (3. Solved Question Types) Tj ET
+0.80 0.84 0.88 RG 0.8 w 48 525 m 547 525 l S
+BT /F2 10 Tf 0.06 0.09 0.16 rg 54 509 Td (Type 1 - 150m train at 54 km/h crosses a pole in?) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 492 Td (54 km/h = 15 m/s => Time = 150 / 15 = 10 seconds.) Tj ET
+BT /F2 10 Tf 0.06 0.09 0.16 rg 54 475 Td (Type 2 - Car travels A->B at 40 km/h and returns at 60 km/h.) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 458 Td (Average speed = \(2 * 40 * 60\) / \(40 + 60\) = 48 km/h.) Tj ET
+endstream endobj
+6 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 5 0 R >> endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000185 00000 n 
+0000000260 00000 n 
+0000002264 00000 n 
+trailer << /Size 7 /Root 1 0 R >>
+startxref
+2400
+%%EOF

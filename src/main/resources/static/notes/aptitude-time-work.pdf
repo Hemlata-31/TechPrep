@@ -1,0 +1,41 @@
+%PDF-1.4
+1 0 obj << /Type /Catalog /Pages 2 0 R >> endobj
+2 0 obj << /Type /Pages /Kids [6 0 R] /Count 1 >> endobj
+3 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> endobj
+4 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >> endobj
+5 0 obj << /Length 1688 >> stream
+BT /F1 8.5 Tf 0.45 0.50 0.58 rg 48 28 Td (TechPrep Academy - Placement & DSA Study Guide) Tj ET
+0.08 0.72 0.65 rg 48 754 499 46 re f
+BT /F2 17 Tf 1 1 1 rg 62 776 Td (Aptitude: Time & Work) Tj ET
+BT /F1 10 Tf 0.92 0.99 0.97 rg 62 761 Td (Efficiency, Chain Rule & Pipes and Cisterns) Tj ET
+0.06 0.09 0.16 rg BT /F2 12.5 Tf 48 724 Td (1. Core Formulas) Tj ET
+0.80 0.84 0.88 RG 0.8 w 48 719 m 547 719 l S
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 703 Td (If A finishes work in x days, A's 1-day work = 1/x) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 686 Td (If A takes x days and B takes y days, together = \(xy\) / \(x + y\) days) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 669 Td (Chain Rule: \(M1 * D1 * H1\) / W1 = \(M2 * D2 * H2\) / W2) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 652 Td (Efficiency is inversely proportional to Time taken.) Tj ET
+0.06 0.09 0.16 rg BT /F2 12.5 Tf 48 627 Td (2. Pipes & Cisterns) Tj ET
+0.80 0.84 0.88 RG 0.8 w 48 622 m 547 622 l S
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 606 Td (Inlet fills in x hrs \(+1/x\), Outlet empties in y hrs \(-1/y\).) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 589 Td (Net part filled per hour = 1/x - 1/y.) Tj ET
+0.06 0.09 0.16 rg BT /F2 12.5 Tf 48 564 Td (3. Solved Question Types) Tj ET
+0.80 0.84 0.88 RG 0.8 w 48 559 m 547 559 l S
+BT /F2 10 Tf 0.06 0.09 0.16 rg 54 543 Td (Type 1 - A does work in 10 days, B in 15 days. Together?) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 526 Td (LCM\(10, 15\) = 30 units. A = 3 u/day, B = 2 u/day => 30 / 5 = 6 days.) Tj ET
+BT /F2 10 Tf 0.06 0.09 0.16 rg 54 509 Td (Type 2 - 12 men finish work in 8 days. How many days for 16 men?) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 492 Td (12 * 8 = 16 * D => D = 6 days.) Tj ET
+endstream endobj
+6 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 5 0 R >> endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000185 00000 n 
+0000000260 00000 n 
+0000002000 00000 n 
+trailer << /Size 7 /Root 1 0 R >>
+startxref
+2136
+%%EOF

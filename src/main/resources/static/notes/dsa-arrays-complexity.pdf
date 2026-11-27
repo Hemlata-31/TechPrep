@@ -1,0 +1,42 @@
+%PDF-1.4
+1 0 obj << /Type /Catalog /Pages 2 0 R >> endobj
+2 0 obj << /Type /Pages /Kids [6 0 R] /Count 1 >> endobj
+3 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> endobj
+4 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >> endobj
+5 0 obj << /Length 1955 >> stream
+BT /F1 8.5 Tf 0.45 0.50 0.58 rg 48 28 Td (TechPrep Academy - Placement & DSA Study Guide) Tj ET
+0.08 0.72 0.65 rg 48 754 499 46 re f
+BT /F2 17 Tf 1 1 1 rg 62 776 Td (DSA: Complexity & Array Patterns) Tj ET
+BT /F1 10 Tf 0.92 0.99 0.97 rg 62 761 Td (Big-O Cheat Sheet, Two Pointers, Sliding Window & Hashing) Tj ET
+0.06 0.09 0.16 rg BT /F2 12.5 Tf 48 724 Td (1. Time Complexity Quick Reference) Tj ET
+0.80 0.84 0.88 RG 0.8 w 48 719 m 547 719 l S
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 703 Td (O\(1\): HashMap lookup, array index access) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 686 Td (O\(log n\): Binary Search on sorted array) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 669 Td (O\(n\): Single pass \(Kadane's, Two Pointers, Sliding Window\)) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 652 Td (O\(n log n\): Merge Sort, Quick Sort \(avg\), Heap Sort) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 635 Td (O\(n^2\): Nested loops, Bubble/Insertion Sort) Tj ET
+0.06 0.09 0.16 rg BT /F2 12.5 Tf 48 610 Td (2. Top Interview Patterns) Tj ET
+0.80 0.84 0.88 RG 0.8 w 48 605 m 547 605 l S
+BT /F2 10 Tf 0.06 0.09 0.16 rg 54 589 Td (HashMap Pattern \(Two Sum, Contains Duplicate, Valid Anagram\):) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 572 Td (Store seen values/frequencies for O\(1\) lookup -> reduces O\(n^2\) to O\(n\).) Tj ET
+BT /F2 10 Tf 0.06 0.09 0.16 rg 54 555 Td (Two Pointers \(Move Zeroes, Container With Most Water\):) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 538 Td (Use left/right or slow/fast pointers for in-place O\(1\) space solutions.) Tj ET
+BT /F2 10 Tf 0.06 0.09 0.16 rg 54 521 Td (Kadane's Algorithm \(Maximum Subarray\):) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 504 Td (currMax = max\(nums[i], currMax + nums[i]\); globalMax = max\(globalMax, currMax\).) Tj ET
+BT /F2 10 Tf 0.06 0.09 0.16 rg 54 487 Td (Stack Pattern \(Valid Parentheses\):) Tj ET
+BT /F1 10 Tf 0.20 0.25 0.33 rg 54 470 Td (Push opening brackets; on closing bracket check stack top matches.) Tj ET
+endstream endobj
+6 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 5 0 R >> endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000185 00000 n 
+0000000260 00000 n 
+0000002267 00000 n 
+trailer << /Size 7 /Root 1 0 R >>
+startxref
+2403
+%%EOF
